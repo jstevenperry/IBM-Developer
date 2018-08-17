@@ -370,63 +370,63 @@ describe(`POST /rest/lists/:newListId/items`, function testListsAddItem() {
     });
 });
 
-describe(`GET /rest/lists/:listId/items`, function testListsFindByIdWithAllItems() {
-    it('should return a collection of lists whose length is > 0 and whose first item belongs to its shopping list', (done) => {// eslint-disable-line max-len
-        request('POST', `/rest/lists`, `{ "description" : "Test Shopping List for testListsFindByIdWithAllItems()" }`, (err, data) => {// eslint-disable-line max-len
-            if (err) {
-                logger.error(`TEST FAILED with message: ${err.message} `, 'testListsFindByIdWithAllItems()');
-                return;
-            }
-            if (data) {
-                logger.debug('Raw response data: ' + data, 'testListsFindByIdWithAllItems()');
-                let jsonData = JSON.parse(data);
-                // Store the list id and rev so it can be cleaned up
-                testResults.push({ id: jsonData.createdId, rev: jsonData.createdRevId });
-                let newListId = jsonData.createdId;
-                request('POST', `/rest/lists/${newListId}/items`, `{ "itemId": "${ftItemId}" }`, (err, data) => {// eslint-disable-line max-len
-                    if (err) {
-                        logger.error(`TEST FAILED with message: ${err.message} `, 'testListsAddItem()');
-                        return;
-                    }
-                    // If not an error, then process the request data
-                    if (data) {
-                        // This request returns JSON data
-                        let jsonData = JSON.parse(data);
-                        // Store the list id and rev so it can be cleaned up
-                        testResults.push({ id: jsonData.updatedId, rev: jsonData.updatedRevId });
-                        logger.debug('Raw response data: ' + data, 'testListsAddItem()');
-                        request('GET', `/rest/lists/${newListId}/items`, '{}', (err, data) => {
-                            if (err) {
-                                logger.error(`TEST FAILED with message: ${err.message} `, 'testListsFindByIdWithAllItems()');//eslint-disable-line
-                                return;
-                            }
-                            // If not an error, then process the request data
-                            if (data) {
-                                try {
-                                    logger.debug('Raw response data: ' + data, 'testListsFindByIdWithAllItems(2)');
-                                    // This request returns JSON data
-                                    let jsonData = JSON.parse(data);
-                                    // Crude, but should work as a first approximation
-                                    expect(jsonData[0]._id).to.equal(ftItemId);
-                                    logger.debug('TEST PASSED', 'testListsFindByIdWithAllItems()');
-                                } catch (err) {
-                                    logger.error(`TEST FAILED. Try again.`, 'testListsFindByIdWithAllItems()');
-                                    logger.error(`ERROR MESSAGE: ${err.message}.`, 'testListsFindByIdWithAllItems()');
-                                    throw new Error('Test failed with message: ' + err.message);
-                                }
-                            } else {
-                                let message = 'testListsFindByIdWithAllItems(): TEST FAILED. No data to be processed. Try again.';// eslint-disable-line max-len
-                                logger.error(message, 'testListsFindByIdWithAllItems()');
-                                throw new Error(message);
-                            }
-                            done();
-                        });    
-                    }
-                });
-            }
-        });
-    });
-});
+// describe(`GET /rest/lists/:listId/items`, function testListsFindByIdWithAllItems() {
+//     it('should return a collection of lists whose length is > 0 and whose first item belongs to its shopping list', (done) => {// eslint-disable-line max-len
+//         request('POST', `/rest/lists`, `{ "description" : "Test Shopping List for testListsFindByIdWithAllItems()" }`, (err, data) => {// eslint-disable-line max-len
+//             if (err) {
+//                 logger.error(`TEST FAILED with message: ${err.message} `, 'testListsFindByIdWithAllItems()');
+//                 return;
+//             }
+//             if (data) {
+//                 logger.debug('Raw response data: ' + data, 'testListsFindByIdWithAllItems()');
+//                 let jsonData = JSON.parse(data);
+//                 // Store the list id and rev so it can be cleaned up
+//                 testResults.push({ id: jsonData.createdId, rev: jsonData.createdRevId });
+//                 let newListId = jsonData.createdId;
+//                 request('POST', `/rest/lists/${newListId}/items`, `{ "itemId": "${ftItemId}" }`, (err, data) => {// eslint-disable-line max-len
+//                     if (err) {
+//                         logger.error(`TEST FAILED with message: ${err.message} `, 'testListsAddItem()');
+//                         return;
+//                     }
+//                     // If not an error, then process the request data
+//                     if (data) {
+//                         // This request returns JSON data
+//                         let jsonData = JSON.parse(data);
+//                         // Store the list id and rev so it can be cleaned up
+//                         testResults.push({ id: jsonData.updatedId, rev: jsonData.updatedRevId });
+//                         logger.debug('Raw response data: ' + data, 'testListsAddItem()');
+//                         request('GET', `/rest/lists/${newListId}/items`, '{}', (err, data) => {
+//                             if (err) {
+//                                 logger.error(`TEST FAILED with message: ${err.message} `, 'testListsFindByIdWithAllItems()');//eslint-disable-line
+//                                 return;
+//                             }
+//                             // If not an error, then process the request data
+//                             if (data) {
+//                                 try {
+//                                     logger.debug('Raw response data: ' + data, 'testListsFindByIdWithAllItems(2)');
+//                                     // This request returns JSON data
+//                                     let jsonData = JSON.parse(data);
+//                                     // Crude, but should work as a first approximation
+//                                     expect(jsonData[0]._id).to.equal(ftItemId);
+//                                     logger.debug('TEST PASSED', 'testListsFindByIdWithAllItems()');
+//                                 } catch (err) {
+//                                     logger.error(`TEST FAILED. Try again.`, 'testListsFindByIdWithAllItems()');
+//                                     logger.error(`ERROR MESSAGE: ${err.message}.`, 'testListsFindByIdWithAllItems()');
+//                                     throw new Error('Test failed with message: ' + err.message);
+//                                 }
+//                             } else {
+//                                 let message = 'testListsFindByIdWithAllItems(): TEST FAILED. No data to be processed. Try again.';// eslint-disable-line max-len
+//                                 logger.error(message, 'testListsFindByIdWithAllItems()');
+//                                 throw new Error(message);
+//                             }
+//                             done();
+//                         });    
+//                     }
+//                 });
+//             }
+//         });
+//     });
+// });
 
 describe('PUT /rest/lists/', function testListsUpdate() {
     it('should successfully update one and only one row', (done) => {

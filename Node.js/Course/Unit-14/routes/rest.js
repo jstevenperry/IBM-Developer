@@ -31,8 +31,6 @@ router.get('/lists/:listId', restController.read);
 router.put('/lists/:listId', restController.update);
 // REST service - add an item to the specified shopping list
 router.post('/lists/:listId/items', restController.addItem);
-// REST service - fetch all items for the specified shopping list
-router.get('/lists/:listId/items', restController.fetchAllItems);
 // REST service - update the specified item for the specified list
 router.put('/lists/:listId/items/:itemId', restController.updateItem);
 // REST service - remove the specified item from the specified list

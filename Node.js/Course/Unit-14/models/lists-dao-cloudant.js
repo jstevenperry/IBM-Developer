@@ -139,32 +139,6 @@ function findById(id) {
 }
 
 /**
- * Find the shopping list with the specified id
- * and return all items associated with it
- * 
- * @param {number} id - the id of the shopping list record
- * to be fetched.
- * 
- * @return {Promise} - promise that will be resolved (or rejected)
- * when the call to the DB completes
- */
-function findByIdWithAllItems(id) {
-    return new Promise((resolve, reject) => {
-        db.get(id, (err, response) => {
-            if (err) {
-                logger.error('Error occurred: ' + err.message, 'findById()');
-                reject(err);
-            } else {
-                if (logger.isDebug()) {
-                    logger.debug('Raw response: ' + JSON.stringify(response), 'findByIdWithAllItems()');
-                }
-                resolve({ data: JSON.stringify(response.items), statusCode: (response.items) ? 200 : 404 });        
-            }
-        });
-    });
-}
-
-/**
  * Update the shopping list with the specified id
  * with new field values
  * 
@@ -284,7 +258,6 @@ function removeItem(listId, itemId) {
 module.exports.fetchAll = fetchAll;
 module.exports.create = create;
 module.exports.findById = findById;
-module.exports.findByIdWithAllItems = findByIdWithAllItems;
 module.exports.update = update;
 module.exports.addItem = addItem;
 module.exports.removeItem = removeItem;

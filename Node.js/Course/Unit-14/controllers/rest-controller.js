@@ -79,24 +79,6 @@ function read(req, res, next) {
 }
 
 /**
- * Fetches the specified list and all of its items
- * and returns it to the caller.
- * 
- * @param {Request} req - the Request object
- * @param {Response} res - the Response object
- * @param {Object} next - the next middleware function in the req/res cycle
- */
-function fetchAllItems(req, res, next) {
-    let listId = req.params.listId;
-
-    listsDao.findByIdWithAllItems(listId).then((result) => {
-        utils.writeServerJsonResponse(res, result.data, result.statusCode);
-    }).catch((err) => {
-        next(err);
-    });
-}
-
-/**
  * 
  * @param {Request} req - the Request object
  * @param {Response} res - the Response object
@@ -209,7 +191,6 @@ function itemSearch(req, res, next) {
 module.exports.fetchAll = fetchAll;
 module.exports.create = create;
 module.exports.read = read;
-module.exports.fetchAllItems = fetchAllItems;
 module.exports.update = update;
 module.exports.addItem = addItem;
 module.exports.updateItem = updateItem;

@@ -84,17 +84,6 @@ function renderViewPage(req, res, next) {
                 }
             });
         },
-        items: function(callback) {
-            request('GET', '/rest/lists/'+listId+'/items', null, (err, data) => {
-                if (err) {
-                    next(err);
-                } else {
-                    // Parse the JSON object string coming back from the service
-                    let jsonData = JSON.parse(data);
-                    callback(null, jsonData);
-                }
-            });
-        },
     }, function(err, results) {
         if (err) {
             next(err);
@@ -105,7 +94,7 @@ function renderViewPage(req, res, next) {
         res.render('lists-view', { 
             title: 'View Shopping List', 
             list: results.list, 
-            items: results.items, 
+            items: results.list.items, 
             whenCreated: whenCreated, 
             whenModified: whenModified 
         });
@@ -167,17 +156,6 @@ function renderItemSearchPage(req, res, next) {
                 }
             });
         },
-        items: function(callback) {
-            request('GET', '/rest/lists/'+listId+'/items', null, (err, data) => {
-                if (err) {
-                    next(err);
-                } else {
-                    // Parse the JSON object string coming back from the service
-                    let jsonData = JSON.parse(data);
-                    callback(null, jsonData);
-                }
-            });
-        },
         searchResults: function(callback) {
             let query = url.parse(req.url).query;
             if (query) {
@@ -204,7 +182,7 @@ function renderItemSearchPage(req, res, next) {
                 title: 'Search Items', 
                 listId: listId, 
                 list: results.list, 
-                items: results.items, 
+                items: results.list.items, 
                 searchResults: results.searchResults,
                 whenCreated: whenCreated,
                 whenModified: whenModified
