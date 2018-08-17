@@ -1,0 +1,30 @@
+{
+  "name": "shopping-list",
+  "version": "1.0.0",
+  "description": "Shopping List",
+  "main": "server.js",
+  "scripts": {
+    "load-db": "node ./utils/load-db",
+    "start": "node server.js",
+    "start-dev": "nodemon server.js",
+    "unit-test": "node ./test/unit-test",
+    "test": "node ./test/functional-test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jstevenperry/IBM-Code.git"
+  },
+  "keywords": [
+    "node",
+    "npm"
+  ],
+  "author": "J Steven Perry",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/jstevenperry/IBM-Code/issues"
+  },
+  "homepage": "https://github.com/jstevenperry/IBM-Code#readme",
+  "dependencies": {
+    "sqlite3": "^4.0.1"
+  }
+}

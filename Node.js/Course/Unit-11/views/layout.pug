@@ -1,0 +1,30 @@
+doctype html
+html(lang='en')
+  head
+    title= title
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel="stylesheet", href='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    div(class='container-fluid')
+      div(class='row')
+        div(class='col-sm-2')
+          block sidebar
+            ul(class='sidebar-nav')
+              li 
+                //- Stateless navigation goes here
+                a(href='/lists') Home                
+        div(class='col-sm-10')
+          //- Replace individual page content in the block below
+          block content
+          //- The page footer
+          block foot
+            //- Render errors in the footer
+            if errors 
+              p
+              h3 You have errors:
+              ul
+                for error in errors
+                  li.list-group-item-danger= error.msg

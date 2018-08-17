@@ -1,0 +1,72 @@
+{
+  "name": "unit-10",
+  "version": "1.0.0",
+  "main": "unit-10.js",
+  "license": "Apache-2.0",
+  "scripts": {
+    "lint": "eslint .",
+    "lint-fix": "npm run lint -- --fix",
+    "pre-run": "npm run lint && mkdir -p logs",
+    "example-1": "npm run pre-run && node ./example-1",
+    "example-2": "npm run pre-run && node ./example-2",
+    "example-3": "npm run pre-run && node ./example-3",
+    "example-4": "npm run pre-run && node ./example-4",
+    "example-5": "npm run pre-run && node ./example-5",
+    "example-6": "npm run pre-run && node ./example-6",
+    "example-7": "npm run pre-run && node ./example-7",
+    "example-8": "npm run pre-run && node ./example-8",
+    "example-9": "npm run pre-run && node ./example-9",
+    "example-10": "npm run pre-run && node ./example-10",
+    "example-11": "npm run pre-run && node ./example-11",
+    "example-12": "npm run pre-run && node ./example-12",
+    "example-13": "npm run pre-run && node ./example-13",
+    "example-14": "npm run pre-run && node ./example-14",
+    "example-15": "npm run pre-run && node ./example-15",
+    "example-16": "npm run pre-run && node ./example-16",
+    "example-17": "npm run pre-run && node ./example-17"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jstevenperry/node-modules.git"
+  },
+  "dependencies": {
+    "log4js": "^3.0.2",
+    "winston": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "eslint": "^5.2.0",
+    "eslint-config-google": "^0.9.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "google"
+    ],
+    "env": {
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 6
+    },
+    "rules": {
+      "max-len": [
+        2,
+        120,
+        4,
+        {
+          "ignoreUrls": true
+        }
+      ],
+      "spaced-comment": 0,
+      "no-trailing-spaces": 0,
+      "comma-dangle": 0,
+      "object-curly-spacing": 0,
+      "array-bracket-spacing": 0,
+      "no-console": 0
+    }
+  },
+  "eslintIgnore": [
+    "node_modules"
+  ]
+}

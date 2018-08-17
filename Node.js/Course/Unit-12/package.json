@@ -1,0 +1,84 @@
+{
+  "name": "unit-12",
+  "version": "1.0.0",
+  "author": "J Steven Perry",
+  "license": "Apache-2.0",
+  "scripts": {
+    "inspect": "npm run pre-run && node inspect ./bin/www",
+    "lint": "eslint .",
+    "lint-fix": "npm run lint -- --fix",
+    "load-db": "node ./utils/load-mongodb",
+    "pre-run": "mkdir -p ./logs",
+    "start": "npm run pre-run && node ./bin/www",
+    "start-dev": "npm run pre-run && nodemon --verbose -e js,pug,css,json ./bin/www",
+    "start-dev-inspect": "npm run pre-run && nodemon --inspect --verbose -e js,pug,css,json ./bin/www",
+    "start-mongod": "mongod --dbpath ~/home/mongodb-data/shoppingList/",
+    "test": "npm run pre-run && mocha ./test/test-rest-services"
+  },
+  "bugs": {
+    "url": "https://github.com/jstevenperry/IBM-Code/issues"
+  },
+  "homepage": "https://github.com/jstevenperry/IBM-Code#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jstevenperry/IBM-Code.git"
+  },
+  "keywords": [
+    "node",
+    "npm"
+  ],
+  "dependencies": {
+    "async": "^2.6.1",
+    "cookie-parser": "~1.4.3",
+    "dateformat": "^3.0.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "express-validator": "^5.3.0",
+    "http-errors": "~1.6.2",
+    "log4js": "^3.0.2",
+    "mongodb": "^3.1.1",
+    "mongoose": "^5.2.7",
+    "morgan": "~1.9.0",
+    "pug": "^2.0.0",
+    "sqlite3": "^4.0.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "chai": "^4.1.2",
+    "eslint": "^5.2.0",
+    "eslint-config-google": "^0.9.1",
+    "mocha": "^5.2.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "google"
+    ],
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2017
+    },
+    "rules": {
+      "max-len": [
+        2,
+        120,
+        4,
+        {
+          "ignoreUrls": true
+        }
+      ],
+      "spaced-comment": 0,
+      "no-trailing-spaces": 0,
+      "comma-dangle": 0,
+      "object-curly-spacing": 0,
+      "array-bracket-spacing": 0,
+      "no-console": 0
+    }
+  },
+  "eslintIgnore": [
+    "node_modules"
+  ]
+}

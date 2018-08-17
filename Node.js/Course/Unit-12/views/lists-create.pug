@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  
+  p Enter required fields and click the Save link to create your new shopping list.
+
+  form(method='POST' action='/lists')
+    div.form-group
+      label(for='description') Description*:
+      input(type='text', placeholder='Description' name='description') 
+    div.form-group
+
+    button.btn.btn-primary(type='submit') Create

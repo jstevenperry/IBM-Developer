@@ -1,0 +1,21 @@
+{
+  "name": "Unit-8",
+  "version": "1.0.0",
+  "description": "Node.js Course Unit 8 Example Code",
+  "main": "unit-8.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "J Steven Perry <jstevenperry@gmail.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "makoto-logger": "^1.0.2",
+    "sqlite3": "^4.0.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "eslint": "^5.1.0",
+    "eslint-config-strongloop": "^2.1.0"
+  }
+}

@@ -1,0 +1,50 @@
+extends layout
+
+block content
+  h1= title
+  h2= list.description
+  div(class='container-fluid')
+    p.text-success 
+    | #[strong Created:] #{list.when_created}
+    | #[strong Last Modified:] #{list.when_modified}
+    p
+    strong There are #{items.length} items in your shopping list:
+    p
+    ul
+      each item in items
+        li #{item.item_description}
+      else
+        li values to display
+    p
+    h2 Search for more items
+    p
+    //- Perform the search
+    form(method='POST' action='/lists/'+listId+'/itemSearch')
+      div.form-group
+        label(for='description') Partial Description*:
+        input(type='text', placeholder='Description' name='description') 
+      div.form-group
+
+      button.btn.btn-primary(type='submit') Search
+
+    if searchResults && searchResults.length > 0
+      p Your query produced: #{searchResults.length} results.
+      p
+      p Select the results you want to add, then click the Add button
+      form(method='POST' action='/lists/'+listId+'/addItems')
+        div.form-group
+          each result in searchResults
+            div
+              //- Set the value of the checkbox to the item ID
+              input(type='checkbox' name='selected' value=result.item_id) 
+              |   #{result.item_description}
+              p
+            div
+          else
+            p No values to display
+        div.form-group
+
+        button.btn.btn-primary(type='submit') Add Selected Item(s)
+    else
+      p Note: Search results will display here
+  div

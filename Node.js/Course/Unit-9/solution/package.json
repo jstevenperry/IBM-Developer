@@ -1,0 +1,43 @@
+{
+  "name": "logger",
+  "version": "1.0.0",
+  "main": "logger.js",
+  "license": "Apache-2.0",
+  "scripts": {
+    "lint": "eslint .",
+    "lint-fix": "npm run lint -- --fix",
+    "pretest": "npm run lint",
+    "test": "nyc mocha ./test",
+    "test-exercise-1": "npm run pretest && nyc mocha ./solution/exercise-1/test",
+    "test-solution": "npm run pretest && nyc mocha ./solution/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jstevenperry/node-modules.git"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "chai": "^4.1.2",
+    "eslint": "^5.2.0",
+    "eslint-config-google": "^0.9.1",
+    "mocha": "^5.2.0",
+    "nyc": "^12.0.2",
+    "sinon": "^6.1.4"
+  },
+  "eslintConfig": {
+    "extends": ["eslint:recommended", "google"],
+    "env": {
+      "node" : true
+    },
+    "parserOptions": {
+      "ecmaVersion": 6
+    },
+    "rules" : {
+      "max-len": [2, 120, 4, {"ignoreUrls": true}],
+      "no-console": 0
+    }
+  },
+  "eslintIgnore": [
+    "node_modules"
+  ]
+}

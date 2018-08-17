@@ -1,0 +1,15 @@
+**/*.out
+**/node_modules
+**/*.log
+**/.DS_Store
+**/launch.json
+**/*.log.txt
+**/*.prof.txt
+**/*.sha512
+**/.vagrant/**
+**/*.xlsx
+**/*.db
+**/.nyc_output/*
+**/*clinic*
+**/*0x
+**/vcap-local.json

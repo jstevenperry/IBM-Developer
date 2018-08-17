@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+  
+  p You have #{data.length} shopping lists.
+
+  p Click on a shopping list below to view it.
+
+  ul 
+    each item in data
+      li
+        a(href='/lists/'+item.id) #{item.description}
+    else
+      li No values to display
+
+  a(class='button', href='/lists/create') New Shopping List

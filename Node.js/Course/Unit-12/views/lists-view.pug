@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h1= title
+  h2= list.description
+  div(class='container-fluid')
+    p.text-success 
+    | #[strong Created:] #{whenCreated}
+    | #[strong Last Modified:] #{whenModified}
+    p
+    a(class='button', href='/lists/'+list.id+'/update') Edit Shopping List
+    p
+    strong There are #{items.length} items in your shopping list:
+    p
+    form(method='POST' action='/lists/'+list.id+'/items/delete')
+      each item in items
+        div
+          input(type='checkbox' name='selected' value=item.items[0].id)
+          | 
+          strong #{item.items[0].itemDescription}
+        div
+      else
+        p #[strong No values to display]
+      p  
+      button.btn.btn-primary(type='submit') Remove Selected Item(s)
+    p
+    a(class='button', href='/lists/'+list.id+'/itemSearch') Add Item to Shopping List
+  div

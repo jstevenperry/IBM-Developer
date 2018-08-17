@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1= title
+  h2= list.description
+  div(class='container-fluid')
+    p.text-success 
+    | #[strong Created:] #{list.when_created}
+    | #[strong Last Modified:] #{list.when_modified}
+    p
+    
+    p Enter required fields and click the Update button to save your changes.
+
+    form(method='POST' action='/lists/'+list.id)
+      div.form-group
+        label(for='description') New Description:
+        input.form-control(type='text', placeholder='Description' name='description' value=list.description) 
+      div.form-group
+
+      button.btn.btn-primary(type='submit') Update
+  div

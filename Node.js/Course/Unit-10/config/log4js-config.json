@@ -1,0 +1,15 @@
+{
+    "appenders": { 
+        "consoleAppender": { 
+            "type": "console", "layout": { 
+                "type": "pattern", "pattern": "%d - %c:[%p]: %m" 
+            } 
+        } 
+    },
+    "categories": { 
+        "default": { 
+            "appenders": ["consoleAppender"], 
+            "level": "info" 
+        }
+    }
+}

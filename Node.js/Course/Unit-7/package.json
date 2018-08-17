@@ -1,0 +1,22 @@
+{
+  "name": "Unit-7",
+  "version": "1.0.0",
+  "description": "Sample code for Unit 7",
+  "main": "logger.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretest": "eslint --ignore-path ../../.gitignore ."
+  },
+  "keywords": [],
+  "author": "J Steven Perry",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jstevenperry/IBM-Code.git"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.5",
+    "eslint": "^5.1.0",
+    "eslint-config-strongloop": "^2.1.0"
+  }
+}
