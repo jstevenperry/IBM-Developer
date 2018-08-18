@@ -116,9 +116,7 @@ function processBatch() {
  * a clean slate reload of the DB.
  */
 async function initializeDb() {
-    logger.info('TODO: Write code, stupid', 'initializeDb()');
-    // TODO: Delete all items in the DB
-    // Make sure to throttle this b/c of IBM Cloud throughput throttling
+    // NOTHING TO DO (YET)
 }
 
 // Get or create the DB
