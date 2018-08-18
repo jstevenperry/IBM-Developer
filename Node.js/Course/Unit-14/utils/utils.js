@@ -19,8 +19,7 @@
 const http = require('http');
 // For tesing
 const assert = require('assert');
-// For MongoDB stuff
-const mongodb = require('mongodb');
+
 // For Cloudant
 const Cloudant = require('@cloudant/cloudant');
 // Logger

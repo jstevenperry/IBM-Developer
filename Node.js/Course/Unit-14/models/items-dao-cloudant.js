@@ -27,7 +27,7 @@ const utils = require('../utils/utils');
 
 // Local logger
 const logger = require('../utils/logger');
-//logger.setLogLevel(logger.Level.DEBUG);
+// logger.setLogLevel(logger.Level.DEBUG);
 
 // Cloudant DB reference
 let db;
@@ -40,6 +40,7 @@ let db;
         db = database;
     }).catch((err) => {
         logger.error('Error while initializing DB: ' + err.message, 'items-dao-cloudant.getDbConnection()');
+        throw err;
     });
 })();
 
@@ -59,17 +60,17 @@ function findById(id) {
     return new Promise((resolve, reject) => {
         db.get(id, (err, document) => {
             if (err) {
-                logger.error('Error fetching document: ' + err.message, 'findById()');
-                throw err;
-            }
-            if (document) {
+                if (err.message == 'missing') {
+                    logger.warn(`Document id ${id} does not exist.`, 'findById()');
+                    resolve({ data: {}, statusCode: 404 });
+                } else {
+                    logger.error('Error fetching document: ' + err.message, 'findById()');
+                    reject(err);
+                }
+            } else {
                 let data = JSON.stringify(document);
                 logger.debug('Received response document: ' + data, 'findById()');
                 resolve({ data: data, statusCode: 200});
-            } else {
-                let message = 'No document matching id: ' + id + ' could be found!';
-                logger.error(message, 'findById()');
-                reject(message);
             }
         });
     });

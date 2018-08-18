@@ -39,6 +39,7 @@
 
 // Do not check camelcase for this file
 /* eslint camelcase: 0 */
+/* eslint max-len: 0 */
 
 // UUID generator
 const uuidv4 = require('uuid/v4');

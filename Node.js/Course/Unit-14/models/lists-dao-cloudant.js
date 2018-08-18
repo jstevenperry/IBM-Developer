@@ -46,6 +46,7 @@ let db;
         db = database;
     }).catch((err) => {
         logger.error('Error while initializing DB: ' + err.message, 'lists-dao-cloudant.getDbConnection()');
+        throw err;
     });
 })();
 
@@ -90,7 +91,7 @@ function create(description) {
     return new Promise((resolve, reject) => {
         let listId = uuidv4();
         let whenCreated = Date.now();
-        let item = {
+        let list = {
             _id: listId,
             id: listId,
             type: 'shoppingList',
@@ -99,7 +100,7 @@ function create(description) {
             whenCreated: whenCreated,
             whenUpdated: null
         };
-        db.insert(item, (err, result) => {
+        db.insert(list, (err, result) => {
             if (err) {
                 logger.error('Error occurred: ' + err.message, 'create()');
                 reject(err);
@@ -123,16 +124,15 @@ function findById(id) {
     return new Promise((resolve, reject) => {
         db.get(id, (err, document) => {
             if (err) {
-                logger.error('Error occurred: ' + err.message, 'findById()');
-                reject(err);    
-            } else {
-                if (document) {
-                    resolve({ data: JSON.stringify(document), statusCode: 200 });
+                if (err.message == 'missing') {
+                    logger.warn(`Document id ${id} does not exist.`, 'findById()');
+                    resolve({ data: {}, statusCode: 404 });
                 } else {
-                    let message = 'No document matching id: ' + id + ' could be found!';
-                    logger.error(message, 'findById()');
-                    reject(message);
-                }    
+                    logger.error('Error occurred: ' + err.message, 'findById()');
+                    reject(err);
+                }
+            } else {
+                resolve({ data: JSON.stringify(document), statusCode: 200 });
             }
         });
     });
