@@ -98,80 +98,25 @@ function assertEqual(actual, expected) {
 }
 
 /**
- * The DB connection variable
- */
-let db;
-let mongodbClient;
-
-/**
  * Connects to the Cloudant DB
  * @return {Promise} - when resolved, contains the db, ready to go
  */
 function dbCloudantConnect() {
     return new Promise((resolve, reject) => {
-        if (db === undefined) {
-            Cloudant({  // eslint-disable-line
-//                url: appSettings.cloudant_url
-                url: vcap.services.cloudantNoSQLDB.credentials.url
-            }, ((err, cloudant) => {
-                if (err) {
-                    logger.error('Connect failure: ' + err.message + ' for Cloudant DB: ' +
-                        appSettings.cloudant_db_name);
-                    reject(err);
-                } else {
-                    db = cloudant.use(appSettings.cloudant_db_name);
-                    logger.info('Connect success! Connected to DB: ' + appSettings.cloudant_db_name);
-                    resolve(db);
-                }
-            }));
-        } else {
-            resolve(db);
-        }
-    });
-}
-
-/**
- * Initializes the MongoDB.
- * 
- * @return {Promise}
- */
-function dbMongoConnect() {
-    return new Promise((resolve, reject) => {
-        logger.debug('Connecting to MongoDB database: ' + appSettings.mongodb_dbpath, 'utils.dbConnect()');
-        if (db) {
-            logger.debug('MongoDB already connected, returning open connection.', 'utils.dbConnect()');
-            resolve(db);
-        } else {
-            logger.debug('MongoDB not connected. Creating new MongoDB connection.', 'utils.dbConnect()');
-            mongodb.MongoClient.connect(appSettings.mongodb_url, { useNewUrlParser: true }, function(err, client) {
-                if (err) {
-                    logger.error('Error connecting to the MongoDB URL: ' + appSettings.mongodb_url);
-                    reject(err);
-                }
-                logger.debug('MongoDB connected.', 'utils.dbConnect()');
-                mongodbClient = client;
-                db = mongodbClient.db(appSettings.mongodb_db_name);
-                // Make sure connection closes when Node exits
-                process.on('exit', (code) => {
-                    logger.debug(`Closing MongoDB connection (node exit code ${code})...`, 'dbConnect()');
-                    dbMongoClose();
-                    logger.debug(`MongoDB connection closed.`, 'dbConnect()');
-                });
+        Cloudant({  // eslint-disable-line
+            url: vcap.services.cloudantNoSQLDB.credentials.url
+        }, ((err, cloudant) => {
+            if (err) {
+                logger.error('Connect failure: ' + err.message + ' for Cloudant DB: ' +
+                    appSettings.cloudant_db_name);
+                reject(err);
+            } else {
+                let db = cloudant.use(appSettings.cloudant_db_name);
+                logger.info('Connect success! Connected to DB: ' + appSettings.cloudant_db_name);
                 resolve(db);
-            });    
-        }
+            }
+        }));
     });
-}
-
-/**
- * Closes the MongoDB client connection
- */
-function dbMongoClose() {
-    if (mongodbClient && mongodbClient.isConnected()) {
-        logger.debug('Closing MongoDB connection...');
-        mongodbClient.close();
-        logger.debug('MongoDB connection closed.');
-    }
 }
 
 /**
@@ -250,8 +195,6 @@ function eatCpu(millisToEat) {
 module.exports.writeServerResponse = writeServerResponse;
 module.exports.writeServerJsonResponse = writeServerJsonResponse;
 module.exports.transformChunkIntoLines = transformChunkIntoLines;
-module.exports.dbMongoConnect = dbMongoConnect;
-module.exports.dbMongoClose = dbMongoClose;
 module.exports.dbCloudantConnect = dbCloudantConnect;
 module.exports.assertEqual = assertEqual;
 module.exports.httpRequest = httpRequest;
