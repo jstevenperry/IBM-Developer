@@ -67,11 +67,6 @@ const ftItemDescription = 'Fake item for functional test';
 let testResults = [];
 
 before(function(done) {
-    logger.warn('**********************************************************************************');
-    logger.warn('* WARNING: Before running this functional test suite, make sure the DB is empty! *');
-    logger.warn('*          If you do not, the tests will most likely fail! You have been warned. *');
-    logger.warn('**********************************************************************************');
-
     utils.dbCloudantConnect().then((database) => {
         db = database;
         // Insert item record
