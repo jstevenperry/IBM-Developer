@@ -1,4 +1,11 @@
 /**
+ * The main function that drives the program
+ */
+fun main(args: Array<String>) {
+    runByteExample()
+}
+
+/**
  * Run the example to demonstrate
  */
 fun runByteExample() {
@@ -17,11 +24,4 @@ fun runByteExample() {
 
     byte = 0b01100100
     println("The value of byte(0b01100100) is: $byte")
-}
-
-/**
- * The main function that drives the program
- */
-fun main(args: Array<String>) {
-    runByteExample()
 }

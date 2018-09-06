@@ -1,4 +1,11 @@
 /**
+ * The main function that drives the program
+ */
+fun main(args: Array<String>) {
+    intExamples()
+}
+
+/**
  * Run the example to demonstrate
  */
 fun intExamples() {
@@ -18,10 +25,4 @@ fun intExamples() {
 
     int = 0b11110100001001000000
     println("The value of int(0b11110100001001000000) is: $int")
-}
-/**
- * The main function that drives the program
- */
-fun main(args: Array<String>) {
-    intExamples()
 }

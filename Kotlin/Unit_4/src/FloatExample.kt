@@ -1,4 +1,11 @@
 /**
+ * The main function that drives the program
+ */
+fun main(args: Array<String>) {
+    floatExamples()
+}
+
+/**
  * Run the example to demonstrate
  */
 fun floatExamples() {
@@ -7,6 +14,7 @@ fun floatExamples() {
     var floatMax: Float = Float.MAX_VALUE
     println("The value of floatMin is: $floatMin")
     println("The value of floatMax is $floatMax")
+    println("The value of floatMax is $floatMax")
 
     // Declare Float variable and initialize to a literal value
     var float: Float = 1000000000.0f
@@ -14,10 +22,8 @@ fun floatExamples() {
 
     float = 1_000_000_000.0f
     println("The value of float(1_000_000_000.0f) is: $float")
-}
-/**
- * The main function that drives the program
- */
-fun main(args: Array<String>) {
-    floatExamples()
+
+    // Negate, with no loss in precision
+    float = -Float.MAX_VALUE;
+    println("The value of float(-Float.MAX_VALUE) is: $float")
 }

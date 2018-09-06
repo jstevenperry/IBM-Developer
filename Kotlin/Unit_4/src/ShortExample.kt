@@ -1,4 +1,11 @@
 /**
+ * The main function that drives the program
+ */
+fun main(args: Array<String>) {
+    runShortExample()
+}
+
+/**
  * Run the example to demonstrate
  */
 fun runShortExample() {
@@ -21,10 +28,5 @@ fun runShortExample() {
     short = 0b001111101000
     println("The value of short(0b001111101000) is: $short")
 }
-/**
- * The main function that drives the program
- */
-fun main(args: Array<String>) {
-    runShortExample()
-}
+
 

@@ -1,4 +1,11 @@
 /**
+ * The main function that drives the program
+ */
+fun main(args: Array<String>) {
+    doubleExamples()
+}
+
+/**
  * Run the example to demonstrate
  */
 fun doubleExamples() {
@@ -14,10 +21,9 @@ fun doubleExamples() {
 
     double = 1.0e22
     println("The value of double(1.0e22) is: $double")
-}
-/**
- * The main function that drives the program
- */
-fun main(args: Array<String>) {
-    doubleExamples()
+
+    // Negate, with no loss in precision
+    double = -Double.MAX_VALUE;
+    println("The value of double(-Double.MAX_VALUE) is: $double")
+
 }

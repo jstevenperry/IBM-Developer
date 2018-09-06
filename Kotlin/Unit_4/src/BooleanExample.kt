@@ -1,4 +1,11 @@
 /**
+ * The main function that drives the program
+ */
+fun main(args: Array<String>) {
+    booleanExamples()
+}
+
+/**
  * Run the example to demonstrate
  */
 fun booleanExamples() {
@@ -8,10 +15,4 @@ fun booleanExamples() {
 
     val booleanFalse: Boolean = false
     println("The value of booleanFalse is: $booleanFalse")
-}
-/**
- * The main function that drives the program
- */
-fun main(args: Array<String>) {
-    booleanExamples()
 }

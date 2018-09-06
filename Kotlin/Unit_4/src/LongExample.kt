@@ -1,4 +1,11 @@
 /**
+ * The main function that drives the program
+ */
+fun main(args: Array<String>) {
+    runLongExample()
+}
+
+/**
  * Run the example to demonstrate
  */
 fun runLongExample() {
@@ -24,10 +31,4 @@ fun runLongExample() {
     long = 0b1110_1000_1101_0100_1010_0101_0001_0000_0000_0000
     println("The value of long(0b1110_1000_1101_0100_1010_0101_0001_0000_0000_0000) is: $long")
 
-}
-/**
- * The main function that drives the program
- */
-fun main(args: Array<String>) {
-    runLongExample()
 }
