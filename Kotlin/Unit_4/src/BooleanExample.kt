@@ -10,9 +10,9 @@ fun main(args: Array<String>) {
  */
 fun booleanExamples() {
     // Declare Boolean variables
-    val booleanTrue: Boolean = true
+    val booleanTrue = true
     println("The value of booleanTrue is: $booleanTrue")
 
-    val booleanFalse: Boolean = false
+    val booleanFalse = false
     println("The value of booleanFalse is: $booleanFalse")
 }

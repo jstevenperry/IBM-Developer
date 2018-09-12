@@ -13,7 +13,7 @@ fun runLongExample() {
     val longMin: Long = Long.MIN_VALUE
     val longMax: Long = Long.MAX_VALUE
     println("The value of longMin is: $longMin")
-    println("The value of longMax is: $longMin")
+    println("The value of longMax is: $longMax")
 
     // Declare Long variable and initialize to a literal value
     var long: Long = 1000000000000L
