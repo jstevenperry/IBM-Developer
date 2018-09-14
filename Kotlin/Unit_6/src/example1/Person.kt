@@ -1,9 +1,9 @@
 package com.makotogo.learn.kotlin.example1
 
-class Person(val name: String)
+class Person
 
 fun main(args: Array<String>) {
-    val person = Person("Joe")
+    val person = Person()
 
-    println("Person: Name=${person.name}")
+    println("Person: $person")
 }

@@ -2,15 +2,16 @@ package com.makotogo.learn.kotlin.example2
 
 import java.time.LocalDate
 
-object foo
-
-class Person(val name: String, val dateOfBirth: LocalDate)
+class Person(val givenName: String, val familyName: String, val dateOfBirth: LocalDate)
 
 fun main(args: Array<String>) {
     val person = Person(
-            "Joe",
-            LocalDate.of(1980, 3, 17)
+            "Susan",
+            "Neumann",
+            LocalDate.of(1980, 3, 17) // 17 mar 1980
     )
 
-    println("Person: Name=${person.name}, Date of Birth=${person.dateOfBirth}")
+    println("Person: Family Name=${person.familyName}, " +
+            "Given Name=${person.givenName}, " +
+            "Date of Birth=${person.dateOfBirth}")
 }
