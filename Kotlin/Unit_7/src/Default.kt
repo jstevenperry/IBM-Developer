@@ -8,9 +8,13 @@ fun createLocalDate(year: Int, month: Int, day: Int) : LocalDate {
     return LocalDate.of(year, month, day)
 }
 
-fun createLocalDateTime(year: Int, month: Int, day: Int, hour: Int = 0, minute: Int = 0, second: Int = 0) : LocalDateTime {
-    return LocalDateTime.of(year, month, day, hour, minute, second)
-}
+fun createLocalDateTime(
+        year: Int,
+        month: Int,
+        day: Int,
+        hour: Int = 0,
+        minute: Int = 0,
+        second: Int = 0) : LocalDateTime = LocalDateTime.of(year, month, day, hour, minute, second)
 
 fun formatLocalDate(localDate: LocalDate, formatString: String = "MM/dd/yyyy") : String {
     val dateTimeFormatter = DateTimeFormatter.ofPattern(formatString)

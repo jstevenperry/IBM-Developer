@@ -14,10 +14,10 @@ fun formatLocalDate(localDate: LocalDate, formatString: String) : String {
 }
 
 fun formatLocalDateOldSchool(localDate: LocalDate, formatString: String?) : String {
-    if (formatString == null) {
-        return formatLocalDateLenient(localDate)
-    } else {
+    if (formatString != null) {
         return formatLocalDate(localDate, formatString)
+    } else {
+        return formatLocalDateLenient(localDate)
     }
 }
 

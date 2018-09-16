@@ -3,40 +3,59 @@ package com.makotogo.learn.kotlin.lambda
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-val localDateFactory: (Int, Int, Int) -> LocalDate = {
-    year, month, day -> LocalDate.of(year, month, day)
+/**
+ * Function that takes a [LocalDate] factory function called [localDateFactory].
+ * The factory function is invoked, and the returned LocalDate object is
+ * formatted to a String and that String is returned to the caller.
+ */
+fun formatLocalDate(localDateFactory: () -> LocalDate): String {
+    return localDateFactory().format(DateTimeFormatter.ofPattern("E MM/dd/yyyy"))
 }
 
-val newYearsDayFactory: (Int) -> LocalDate = {
-    year -> LocalDate.of(year, 1, 1)
+/**
+ * Function that takes a LocalDate factory, a year, and optional format String.
+ * Works just like its namesake above, except that the LocalDate factory function
+ * can be passed a year value, making it a little more generic.
+ */
+fun formatLocalDate(localDateFactory: (Int, Int, Int) -> LocalDate, year: Int, month: Int, day: Int) : String {
+    return localDateFactory(year, month, day).format(DateTimeFormatter.ofPattern("E MM/dd/yyyy"))
 }
 
-val piDay2019Factory = {
-    LocalDate.of(2019, 3, 14)
-}
-
+/**
+ * Lambda expression to generate a [LocalDate] that corresponds to "now"
+ * Note, the [LocalDate] will be "now" when the function is actually invoked,
+ * not when it is defined or passed as a value.
+ */
 val now = {
     LocalDate.now()
 }
 
-fun formatLocalDate(localDate: LocalDate, formatString: String = "E MM/dd/yyyy") : String {
-    val dateTimeFormatter = DateTimeFormatter.ofPattern(formatString)
-    return localDate.format(dateTimeFormatter)
+/**
+ * Lambda expression to generate a [LocalDate] for the specified [year], [month], [day]
+ */
+val localDateFactory: (year: Int, month: Int, day: Int) -> LocalDate = { year, month, day ->
+    LocalDate.of(year, month, day)
 }
 
+/**
+ * The ubiquitous main function. Don't leave home without it.
+ */
 fun main(args: Array<String>) {
-    var localDate = localDateFactory(2018, 3, 14)
-    println("The LocalDate is: ${formatLocalDate(localDate = localDate)}")
+    // Define the function on the fly
+    var formattedLocalDate = formatLocalDate { LocalDate.now() }
+    // same as
+    // formattedLocalDate = formatLocalDate({ LocalDate.now() })
+    println("The LocalDate is: $formattedLocalDate")
 
-    localDate = localDateFactory(2019, 4, 23)
+    // Use the function stored in a variable
+    formattedLocalDate = formatLocalDate(localDateFactory = now)
+    println("The LocalDate is: $formattedLocalDate")
 
-    val year = 2019
-    localDate = newYearsDayFactory(year)
-    println("New year's day $year is: ${formatLocalDate(localDate = localDate)}")
+    // Use the function stored in a variable
+    formattedLocalDate = formatLocalDate(localDateFactory, 2019, 3, 14)
+    println("The LocalDate is: $formattedLocalDate")
 
-    localDate = piDay2019Factory()
-    println("National Pi day 2018 is: ${formatLocalDate(localDate = localDate)}")
-
-    localDate = now()
-    println("Now is ${formatLocalDate(localDate)}")
+    // Pi day, in the year 2023
+    formattedLocalDate = formatLocalDate(localDateFactory, 2023, 3, 14)
+    println("The LocalDate is: $formattedLocalDate")
 }

@@ -14,8 +14,13 @@ fun createLocalDate(year: Int, month: Int, day: Int): LocalDate = LocalDate.of(y
  * Creates a java.time.LocalDateTime object using the specified
  * [year], [month], [day], [hour], [minute], and [second]
  */
-fun createLocalDateTime(year: Int, month: Int, day: Int, hour: Int = 0, minute: Int = 0, second: Int = 0)
-        : LocalDateTime = LocalDateTime.of(year, month, day, hour, minute, second)
+fun createLocalDateTime(
+        year: Int,
+        month: Int,
+        day: Int,
+        hour: Int = 0,
+        minute: Int = 0,
+        second: Int = 0) : LocalDateTime = LocalDateTime.of(year, month, day, hour, minute, second)
 
 /**
  * Creates a rather strangely focused java.time.LocalDateTime object using the specified
@@ -48,13 +53,19 @@ fun formatDateTime(localDateTime: LocalDateTime, formatString: String = "MM/dd/y
  */
 fun main(args: Array<String>) {
     // Exercise LocalDate functions
-    val localDate = createLocalDate(year = 2018, month = 9, day = 15)
+    val localDate = createLocalDate(year = 2018, month = 9, day = 2)
     println("Local date: $localDate")
     println("Local date (formatted): ${formatLocalDate(localDate = localDate)}")
     println("Local date (formatted): ${formatLocalDate(localDate = localDate, formatString = "E dd MMMM yyyy")}")
 
     // Exercise the LocalDateTime functions
-    var localDateTime = createLocalDateTime(year = 2018, month = 9, day = 15, hour = 12, minute = 7, second = 23)
+    var localDateTime = createLocalDateTime(
+            month = 9,
+            year = 2018,
+            day = 2,
+            minute = 7,
+            hour = 12,
+            second = 23)
     println("Local date/time: $localDateTime")
     println("Local date/time (formatted): ${formatDateTime(localDateTime = localDateTime)}")
     println("Local date/time (formatted): ${formatDateTime(localDateTime = localDateTime, formatString = "EEEE dd MMMM yyyy hh:mm:ss a")}")
