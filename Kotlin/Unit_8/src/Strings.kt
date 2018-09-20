@@ -19,23 +19,23 @@ import java.time.LocalDateTime
 
 fun main(args: Array<String>) {
 
-    println("literals()")
+    println("********** literals() **********")
     // Demonstrate string literals
     literals()
 
-    println("concatenate()")
+    println("********** concatenate() **********")
     // Demonstrate string concatenation
     concatenate()
 
-    println("template()")
+    println("********** template() **********")
     // Demonstrate string template use
     template()
 
-    println("numericConversion()")
+    println("********** numericConversion() **********")
     // Demonstrate numeric conversion
     numericConversion()
 
-    println("handyUtilities()")
+    println("********** handyUtilities() **********")
     // Demonstrate some handy utilities
     handyUtilities()
 
@@ -89,7 +89,7 @@ fun template() {
             $hello, $world
     """
 
-    println("$hello, world")
+    println("${hello}, world")
 
     println("$hello, $world")
 
@@ -107,7 +107,7 @@ fun template() {
  * Demonstrate numeric conversion
  */
 fun numericConversion() {
-    var numberAsString = "42"
+    val numberAsString = "42"
     var numberAsInt = numberAsString.toInt()
     println("The string \"$numberAsString\" when converted to Int evaluates to $numberAsInt")
     println("The string \"42\" when converted to Int evaluates to ${"42".toInt()}")
@@ -119,6 +119,15 @@ fun numericConversion() {
     val numericValue: String = numberAsInt.toString()
     println("The Int $numberAsInt when converted to String evaluates to \"$numericValue\"")
 
+    // Convert number to numeric string when augmenting
+    println("The expression \"$numberAsString\"+100 evaluates to ${numberAsString+100}")
+    var numberAccumulator = numberAsString
+    println("The statement \"$numberAccumulator\"+=100: ")
+    numberAccumulator+= 100
+    println("numberAccumulator = ${numberAccumulator}")
+
+    val x = 10
+    // x += "2" Compile error!
 }
 
 /**
@@ -134,10 +143,11 @@ fun handyUtilities() {
     }
     println("Trimmed string (better):\"$trimmedString\"")
 
-    val trimmedStringUpperCase = trimmedString.toUpperCase()
-    println("Trimmed string (UPPER CASE): \"$trimmedStringUpperCase\"")
+    val caseString = "This sentence 42 no cent$ makes"
+    val caseStringUpperCase = caseString.toUpperCase()
+    println("Trimmed string (UPPER CASE): \"$caseStringUpperCase\"")
 
-    println("Trimmed string (lower case): \"${trimmedStringUpperCase.toLowerCase()}\"")
+    println("Trimmed string (lower case): \"${caseStringUpperCase.toLowerCase()}\"")
 
     // filter()
     val stringWithCommas = "This, string had ,,lots of, commas,, ,,in,,,,, it"
