@@ -62,6 +62,30 @@ fun greaterOrEqualToThan() {
     println("Expression \"2\" >= \"2\": ${twoString >= twoString}")
 }
 
+fun and() {
+    println("********** and() **********")
+
+    println("Expression 2 < 3 && 3 > 2: ${twoInt < threeInt && threeInt > twoInt}")
+    println("Expression 2 < 3 && 3 < 2: ${twoInt < threeInt && threeInt < twoInt}")
+}
+
+fun or() {
+    println("********** or() **********")
+
+    println("Expression 2 > 3 || 3 > 2: ${twoInt > threeInt || threeInt > twoInt}")
+    println("Expression 2 > 3 || 3 < 2: ${twoInt > threeInt || threeInt < twoInt}")
+    println("Expression true || false: ${true || false}")
+    println("Expression false || false: ${false || false}")
+
+}
+
+fun not() {
+    println("********** not() **********")
+
+    println("Expression !false || false: ${!false || false}")
+    println("Expression !true && false: ${!true && false}")
+}
+
 fun main(args: Array<String>) {
     // <
     lessThan()
@@ -71,4 +95,10 @@ fun main(args: Array<String>) {
     greaterThan()
     // >=
     greaterOrEqualToThan()
+    // &&
+    and()
+    // ||
+    or()
+    // !
+    not()
 }

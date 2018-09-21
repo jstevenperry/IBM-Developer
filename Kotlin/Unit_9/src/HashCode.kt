@@ -44,6 +44,16 @@ fun hashCodeChar() {
     println("$rcurlyBraceChar: rcurlyBraceChar.hashCode() = ${rcurlyBraceChar.hashCode()}")
 }
 
+fun hashCodeBoolean() {
+    println("********** hashCodeBoolean() **********")
+
+    val btrue = true
+    println("$btrue: btrue.hashCode() = ${btrue.hashCode()}")
+
+    val bfalse = false
+    println("$bfalse: bfalse.hashCode() = ${bfalse.hashCode()}")
+}
+
 fun hashCodeNumericString() {
     println("********** hashCodeNumericString() **********")
 
@@ -75,6 +85,7 @@ fun hashCodePerson() {
 fun main(args: Array<String>) {
     hashCodeNumber()
     hashCodeChar()
+    hashCodeBoolean()
     hashCodeNumericString()
     hashCodePerson()
 }
