@@ -21,7 +21,7 @@ import com.makotogo.learn.kotlin.defaultargs.createLocalDate
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-fun formatLocalDateLenient(localDate: LocalDate, formatString: String? = null) : String {
+fun formatLocalDateLenient(localDate: LocalDate, formatString: String?) : String {
     return formatLocalDate(localDate, formatString ?: "yyyy/MM/dd")
 }
 
@@ -30,26 +30,14 @@ fun formatLocalDate(localDate: LocalDate, formatString: String) : String {
     return localDate.format(dateTimeFormatter)
 }
 
-fun formatLocalDateOldSchool(localDate: LocalDate, formatString: String?) : String {
-    if (formatString != null) {
-        return formatLocalDate(localDate, formatString)
-    } else {
-        return formatLocalDateLenient(localDate)
-    }
-}
-
-fun formatLocalDateNewSchool(localDate: LocalDate, formatString: String? = null) : String {
-    formatString?.let {
-        return formatLocalDate(localDate, it)
-    }
-    return formatLocalDateLenient(localDate)
-}
-
 fun main(args: Array<String>) {
 
-    println("Hooray! It's: ${formatLocalDateLenient(createLocalDate(1999, 12, 31))}")
-    println("Hooray! It's: ${formatLocalDateNewSchool(createLocalDate(1999, 12, 31))}")
+    var formatString: String? = null
 
-    println("Hooray! It's: ${formatLocalDate(createLocalDate(1999, 12, 31), "dd MMMM yyyy")}")
+    println("Hooray! It's: ${formatLocalDateLenient(createLocalDate(1999, 12, 31), formatString)}")
+
+    formatString = "dd MMMM yyyy"
+
+    println("Hooray! It's: ${formatLocalDate(createLocalDate(1999, 12, 31), formatString)}")
 
 }

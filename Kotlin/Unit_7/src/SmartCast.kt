@@ -28,20 +28,22 @@ private fun purposeGrantsEntry(purpose: String) : Boolean {
     // Other purposes would go here
 }
 
-fun admitEntrance(person: Person) : Boolean {
+fun admitEntrance(something: Any) : Boolean {
     var ret: Boolean = false
-    if (person is Employee) {
+    if (something is Employee) {
         ret = true
-        println("Employee access granted for ${person.title}: ${formatName(person)}.")
-    } else if (person is Guest) {
-        if (purposeGrantsEntry(person.purpose)) {
+        println("Employee access granted for ${something.title}: ${formatName(something)}.")
+    } else if (something is Guest) {
+        if (purposeGrantsEntry(something.purpose)) {
             ret = true
-            println("Guest access granted for the purpose of ${person.purpose}: ${formatName(person)}.")
+            println("Guest access granted for the purpose of ${something.purpose}: ${formatName(something)}.")
         } else {
-            println("Access Denied, purpose: ${person.purpose}: ${formatName(person)}.")
+            println("Access Denied, purpose: ${something.purpose}: ${formatName(something)}.")
         }
+    } else if (something is Person) {
+        println("Access Denied, ${formatName(something)}, you are but a mere Person.")
     } else {
-        println("Access Denied, ${formatName(person)}, you are but a mere Person.")
+        println("Access denied, $something, you could be anything (including not a Person)")
     }
     return ret
 }
@@ -51,9 +53,11 @@ fun main(args: Array<String>) {
     val janeAnderson = Guest(purpose = "Maintenance", familyName = "Anderson", givenName = "Jane")
     val jackDavis = Guest(purpose = "Unknown", familyName = "Davis", givenName = "Jack")
     val valerieJones = Employee(title = "CEO", familyName = "Jones", givenName = "Valerie", employeeId = 1)
+    val gardenGnome = Any()
 
     admitEntrance(joeSmith)
     admitEntrance(janeAnderson)
     admitEntrance(jackDavis)
     admitEntrance(valerieJones)
+    admitEntrance(gardenGnome)
 }
