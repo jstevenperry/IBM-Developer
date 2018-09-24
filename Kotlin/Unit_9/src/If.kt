@@ -29,6 +29,24 @@ private fun purposeGrantsEntry(purpose: String) : Boolean {
 }
 
 fun admitEntrance(person: Person) : Boolean {
+    var ret: Boolean = false
+    if (person is Employee) {
+        ret = true
+        println("Employee access granted for ${person.title}: ${formatName(person)}.")
+    } else if (person is Guest) {
+        if (purposeGrantsEntry(person.purpose)) {
+            ret = true
+            println("Guest access granted for the purpose of ${person.purpose}: ${formatName(person)}.")
+        } else {
+            println("Access Denied, purpose: ${person.purpose}: ${formatName(person)}.")
+        }
+    } else {
+        println("Access Denied, ${formatName(person)}, you are but a mere Person.")
+    }
+    return ret
+}
+
+fun admitEntranceWithExpression(person: Person) : Boolean {
     return if (person is Employee) {
         println("Employee access granted for ${person.title}: ${formatName(person)}.")
         true
@@ -46,6 +64,14 @@ fun admitEntrance(person: Person) : Boolean {
     }
 }
 
+fun myFunc(isTrue: Boolean) : String {
+    return if (isTrue) {
+        true.toString()
+    } else {
+        false.toString()
+    }
+}
+
 fun main(args: Array<String>) {
     val joeSmith = Person(givenName = "Joe", familyName = "Smith")
     val janeAnderson = Guest(purpose = "Maintenance", familyName = "Anderson", givenName = "Jane")
@@ -53,7 +79,17 @@ fun main(args: Array<String>) {
     val valerieJones = Employee(title = "CEO", familyName = "Jones", givenName = "Valerie", employeeId = 1)
 
     admitEntrance(joeSmith)
+    admitEntranceWithExpression(joeSmith)
+
     admitEntrance(janeAnderson)
+    admitEntranceWithExpression(janeAnderson)
+
     admitEntrance(jackDavis)
+    admitEntranceWithExpression(jackDavis)
+
     admitEntrance(valerieJones)
+    admitEntranceWithExpression(valerieJones)
+
+    println("My function returns: ${myFunc(true)}")
+    println("My function returns: ${myFunc(false)}")
 }

@@ -1,89 +1,103 @@
 package com.makotogo.learn.kotlin.comparison
 
-const val twoInt = 2
-const val threeInt = 3
-
-const val twoString = "2"
-const val threeString = "3"
-
 fun lessThan() {
-    println("********** lessThan() **********")
+    println("********** lessThan() - Numbers **********")
 
-    println("Expression 2 < 3: ${twoInt < threeInt}")
-    println("Expression 3 < 2: ${threeInt < twoInt}")
-    println("Expression 2 < 2: ${twoInt < twoInt}")
+    println("2 < 3: ${2 < 3}")
+    println("3 < 2: ${3 < 2}")
+    println("2 < 2: ${2 < 2}")
 
-    println("********** lessThanNumericString() **********")
+    println("********** lessThan() - Numeric String **********")
 
-    println("Expression \"2\" < \"3\": ${twoString < threeString}")
-    println("Expression \"3\" < \"2\": ${threeString < twoString}")
-    println("Expression \"2\" < \"2\": ${twoString < twoString}")
+    println("\"2\" < \"3\": ${"2" < "3"}")
+    println("\"3\" < \"2\": ${"3" < "2"}")
+    println("\"2\" < \"2\": ${"2" < "2"}")
+    println("\"aaaaa\" < \"aaaab\": ${"aaaaa" < "aaaab"}")
+
 }
 
 fun lessThanOrEqualTo() {
-    println("********** lessThanOrEqualTo() **********")
+    println("********** lessThanOrEqualTo() - Numbers **********")
 
-    println("Expression 2 <= 3: ${twoInt <= threeInt}")
-    println("Expression 3 <= 2: ${threeInt <= twoInt}")
-    println("Expression 2 <= 2: ${twoInt <= twoInt}")
+    println("2 <= 3: ${2 <= 3}")
+    println("3 <= 2: ${3 <= 2}")
+    println("2 <= 2: ${2 <= 2}")
 
-    println("********** lessThanOrEqualToNumericString() **********")
+    println("********** lessThanOrEqualTo() - NumericString **********")
 
-    println("Expression \"2\" <= \"3\": ${twoString <= threeString}")
-    println("Expression \"3\" <= \"2\": ${threeString <= twoString}")
-    println("Expression \"2\" <= \"2\": ${twoString <= twoString}")
+    println("\"2\" <= \"3\": ${"2" <= "3"}")
+    println("\"3\" <= \"2\": ${"3" <= "2"}")
+    println("\"2\" <= \"2\": ${"2" <= "2"}")
+    println("\"aaaaa\" <= \"aaaab\": ${"aaaaa" <= "aaaab"}")
+
 }
 
 fun greaterThan() {
-    println("********** greaterThan() **********")
+    println("********** greaterThan() - Numbers **********")
 
-    println("Expression 2 > 3: ${twoInt > threeInt}")
-    println("Expression 3 > 2: ${threeInt > twoInt}")
-    println("Expression 2 > 2: ${twoInt > twoInt}")
+    println("2 > 3: ${2 > 3}")
+    println("3 > 2: ${3 > 2}")
+    println("2 > 2: ${2 > 2}")
 
-    println("********** greaterThanNumericString() **********")
+    println("********** greaterThan() - NumericString **********")
 
-    println("Expression \"2\" > \"3\": ${twoString > threeString}")
-    println("Expression \"3\" > \"2\": ${threeString > twoString}")
-    println("Expression \"2\" > \"2\": ${twoString > twoString}")
+    println("\"2\" > \"3\": ${"2" > "3"}")
+    println("\"3\" > \"2\": ${"3" > "2"}")
+    println("\"2\" > \"2\": ${"2" > "2"}")
+    println("\"aaaaa\" > \"aaaab\": ${"aaaaa" > "aaaab"}")
+
 }
 
 fun greaterOrEqualToThan() {
-    println("********** greaterOrEqualToThan() **********")
+    println("********** greaterOrEqualTo() - Numbers **********")
 
-    println("Expression 2 >= 3: ${twoInt >= threeInt}")
-    println("Expression 3 >= 2: ${threeInt >= twoInt}")
-    println("Expression 2 >= 2: ${twoInt >= twoInt}")
+    println("2 >= 3: ${2 >= 3}")
+    println("3 >= 2: ${3 >= 2}")
+    println("2 >= 2: ${2 >= 2}")
 
-    println("********** greaterOrEqualToThanNumericString() **********")
+    println("********** greaterOrEqualTo() - NumericString **********")
 
-    println("Expression \"2\" >= \"3\": ${twoString >= threeString}")
-    println("Expression \"3\" >= \"2\": ${threeString >= twoString}")
-    println("Expression \"2\" >= \"2\": ${twoString >= twoString}")
+    println("\"2\" >= \"3\": ${"2" >= "3"}")
+    println("\"3\" >= \"2\": ${"3" >= "2"}")
+    println("\"2\" >= \"2\": ${"2" >= "2"}")
+    println("\"aaaaa\" >= \"aaaab\": ${"aaaaa" >= "aaaab"}")
+
+}
+
+fun underTheHood() {
+    println("********** Comparison operators - Under the hood **********")
+    println("2 < 3 (2.compareTo(3) < 0): ${2.compareTo(3) < 0}")
+    println("3 < 3 (3.compareTo(3) < 0): ${3.compareTo(3) < 0}")
+    println("2 <= 3 (2.compareTo(3) <= 0): ${2.compareTo(3) <= 0}")
+    println("3 <= 3 (3.compareTo(3) <= 0): ${3.compareTo(3) <= 0}")
+    println("2 > 3 (2.compareTo(3) > 0): ${2.compareTo(3) > 0}")
+    println("3 > 2 (3.compareTo(2) > 0): ${3.compareTo(2) > 0}")
+    println("2 >= 3 (2.compareTo(3) >= 0): ${2.compareTo(3) >= 0}")
+    println("3 >= 3 (3.compareTo(3) >= 0): ${3.compareTo(3) >= 0}")
 }
 
 fun and() {
     println("********** and() **********")
 
-    println("Expression 2 < 3 && 3 > 2: ${twoInt < threeInt && threeInt > twoInt}")
-    println("Expression 2 < 3 && 3 < 2: ${twoInt < threeInt && threeInt < twoInt}")
+    println("2 < 3 && 3 > 2: ${2 < 3 && 3 > 2}")
+    println("2 < 3 && 3 < 2: ${2 < 3 && 3 < 2}")
 }
 
 fun or() {
     println("********** or() **********")
 
-    println("Expression 2 > 3 || 3 > 2: ${twoInt > threeInt || threeInt > twoInt}")
-    println("Expression 2 > 3 || 3 < 2: ${twoInt > threeInt || threeInt < twoInt}")
-    println("Expression true || false: ${true || false}")
-    println("Expression false || false: ${false || false}")
+    println("2 > 3 || 3 > 2: ${2 > 3 || 3 > 2}")
+    println("2 > 3 || 3 < 2: ${2 > 3 || 3 < 2}")
+    println("true || false: ${true || false}")
+    println("false || false: ${false || false}")
 
 }
 
 fun not() {
     println("********** not() **********")
 
-    println("Expression !false || false: ${!false || false}")
-    println("Expression !true && false: ${!true && false}")
+    println("!false || false: ${!false || false}")
+    println("!true && false: ${!true && false}")
 }
 
 fun main(args: Array<String>) {
@@ -95,6 +109,8 @@ fun main(args: Array<String>) {
     greaterThan()
     // >=
     greaterOrEqualToThan()
+    // Now go under the hood with comparison operators
+    underTheHood()
     // &&
     and()
     // ||
