@@ -15,8 +15,9 @@
  *
  */
 
-
-
+/**
+ * Demonstrates the for loop
+ */
 class For {
 
     fun demoForInts() {
@@ -35,7 +36,9 @@ class For {
 
 }
 
-
+/**
+ * The ubiquitous main() function, we meet again.
+ */
 fun main(args: Array<String>) {
     val forLoop = For()
     forLoop.demoForInts()

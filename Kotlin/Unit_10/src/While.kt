@@ -15,10 +15,8 @@
  *
  */
 
-import java.lang.StringBuilder
-
 /**
- * Demonstrates the while demoLoop
+ * Demonstrates the while oop
  */
 class WhileLoop {
 
@@ -34,7 +32,7 @@ class WhileLoop {
 }
 
 /**
- * Demonstrates the do/while demoLoop
+ * Demonstrates the do/while loop
  */
 class DoWhileLoop {
 
@@ -51,6 +49,9 @@ class DoWhileLoop {
 
 }
 
+/**
+ * The ubiquitous main() function, we meet again.
+ */
 fun main(args: Array<String>) {
     val whileLoop = WhileLoop()
     whileLoop.demoIntIterator(intArray)

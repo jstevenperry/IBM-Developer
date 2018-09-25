@@ -15,7 +15,9 @@
  *
  */
 
-
+/**
+ * Declare some internal variables that will be used throughout
+ */
 
 // An array of Int
 internal val intArray: IntArray = intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
@@ -29,6 +31,9 @@ internal val stringArray: Array<String> = arrayOf("1", "2", "3", "4", "5", "6", 
 // Empty String array
 internal val emptyStringArray: Array<String> = emptyArray()
 
+/**
+ * The ubiquitous main() function, we meet again.
+ */
 fun main(args: Array<String>) {
     // Calls toString() on the object (spoiler alert: not very interesting)
     println("intArray = $intArray")
