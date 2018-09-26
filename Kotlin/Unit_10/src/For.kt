@@ -18,29 +18,39 @@
 /**
  * Demonstrates the for loop
  */
-class For {
-
-    fun demoForInts() {
-        println("********** demoForInts() **********")
-        for (int in intArray) {
-            println("The number: $int")
-        }
+fun demoForInts(intArray: IntArray) {
+    println("********** demoForInts() **********")
+    for (int in intArray) {
+        println("The number: $int")
     }
+    println("Loop is done.")
+}
 
-    fun demoForStrings() {
-        println("********** demoForStrings() **********")
-        for (string in stringArray) {
-            println("The string: '$string'")
+fun demoForIntsWithBreak(intArray: IntArray) {
+    println("********** demoForInts() **********")
+    for (int in intArray) {
+        if (int === 5) {
+            println("At object $int, terminating loop")
+            break
         }
+        println("The number: $int")
     }
+    println("Loop is done.")
+}
 
+fun demoForStrings(stringArray: Array<String>) {
+    println("********** demoForStrings() **********")
+    for (string in stringArray) {
+        println("The string: '$string'")
+    }
+    println("Loop is done.")
 }
 
 /**
  * The ubiquitous main() function, we meet again.
  */
 fun main(args: Array<String>) {
-    val forLoop = For()
-    forLoop.demoForInts()
-    forLoop.demoForStrings()
+    demoForInts(intArray)
+    demoForIntsWithBreak(intArray)
+    demoForStrings(stringArray)
 }

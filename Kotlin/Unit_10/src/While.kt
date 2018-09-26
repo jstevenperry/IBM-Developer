@@ -18,46 +18,57 @@
 /**
  * Demonstrates the while oop
  */
-class WhileLoop {
+fun demoIntIterator(intArray: IntArray) {
+    println("********** WhileLoop.demoIntIterator() **********")
+    val iterator = intArray.iterator()
+    while (iterator.hasNext()) {
+        val int = iterator.next()
+        println("The number: $int")
+    }
+    println("Loop is done.")
+}
 
-    fun demoIntIterator(intArray: IntArray) {
-        println("********** WhileLoop.demoIntIterator() **********")
-        val iterator = intArray.iterator()
-        while (iterator.hasNext()) {
-            val int = iterator.next()
-            println("The number: $int")
+/**
+ * Loop until [timeout] milliseconds have passed, then `break`
+ */
+fun demoLoopWithBreak(timeout: Long) {
+    println("********** WhileLoop.demoLoopWithBreak($timeout) **********")
+    val startTime = System.currentTimeMillis()
+    println("Start time: $startTime")
+    while (true) {
+        val currentTime = System.currentTimeMillis()
+        if (currentTime > startTime + timeout) {
+            // Time to go
+            break
         }
     }
-
+    println("Stopped at: ${System.currentTimeMillis()}")
 }
 
 /**
  * Demonstrates the do/while loop
  */
-class DoWhileLoop {
-
-    fun demoStringIterator(stringArray: Array<String>) {
-        println("********** DoWhileLoop.demoStringIterator **********")
-        val iterator = stringArray.iterator()
-        val stringAccum = StringBuilder()
-        if (iterator.hasNext()) do {
-            val string = iterator.next()
-            stringAccum.append(string)
-        } while(iterator.hasNext())
-        println("The accumulated string: $stringAccum")
-    }
-
+fun demoStringIterator(stringArray: Array<String>) {
+    println("********** DoWhileLoop.demoStringIterator **********")
+    val iterator = stringArray.iterator()
+    val stringAccum = StringBuilder()
+    if (iterator.hasNext()) do {
+        val string = iterator.next()
+        stringAccum.append(string)
+        stringAccum.append('|')
+    } while (iterator.hasNext())
+    println("Loop is done.")
+    println("The accumulated string: $stringAccum")
 }
 
 /**
  * The ubiquitous main() function, we meet again.
  */
 fun main(args: Array<String>) {
-    val whileLoop = WhileLoop()
-    whileLoop.demoIntIterator(intArray)
-    whileLoop.demoIntIterator(emptyIntArray)
+    demoIntIterator(intArray)
+    demoIntIterator(emptyIntArray)
+    demoLoopWithBreak(10)
 
-    val doWhileLoop = DoWhileLoop()
-    doWhileLoop.demoStringIterator(stringArray)
-    doWhileLoop.demoStringIterator(emptyStringArray)
+    demoStringIterator(stringArray)
+    demoStringIterator(emptyStringArray)
 }
