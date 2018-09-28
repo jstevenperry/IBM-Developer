@@ -17,64 +17,66 @@
 
 package com.makotogo.learn.kotlin
 
-import createChar
-import createEmployee
-import createFloat
+import com.makotogo.learn.kotlin.controller.processChar
+import com.makotogo.learn.kotlin.controller.processEmployee
+import com.makotogo.learn.kotlin.controller.processFloat
+import com.makotogo.learn.kotlin.controller.processPerson
+import com.makotogo.learn.kotlin.util.createChar
+import com.makotogo.learn.kotlin.util.createEmployee
+import com.makotogo.learn.kotlin.util.createFloat
+import com.makotogo.learn.kotlin.util.createPerson
 
 /**
- * Create and return a FloatArray of five elements.
- * Each element is based on a random number between 0 and 100
+ * The ubiquitous main() function. We meet again.
  */
-fun createFloatArray() = floatArrayOf(
-        createFloat(),
-        createFloat(),
-        createFloat(),
-        createFloat(),
-        createFloat()
-)
-
-/**
- * Create and return a CharArray of five elements.
- * Each element is a printable ASCII character
- */
-fun createCharArray() = charArrayOf(
-        createChar(),
-        createChar(),
-        createChar(),
-        createChar(),
-        createChar()
-)
-
-/**
- * Create and return an Array<Employee> of five elements.
- * The Employee has attributes that are randomly generated.
- */
-fun createEmployeeArray() = Array(5) { createEmployee() }
-
-
 fun main(args: Array<String>) {
 
+    val char = createChar()
     // Create a Char array where each Char is a printable ASCII character
-    val charArray = createCharArray()
+    val charArray = charArrayOf(
+            createChar(),
+            createChar(),
+            createChar(),
+            // Now add the same char multiple times
+            // (arrays allow duplicate elements)
+            char,
+            char
+    )
     for (char in charArray) {
-        print(char)
-        print('(')
-        print(char.toLong())
-        print(')')
-        print('|')
+        processChar(char)
     }
-    println()
 
-    // Create a Float array where each Float is 1/r where r is a random number
-    val floatArray = createFloatArray()
+    // Create an Array of Float
+    val floatArray = Array(5) { index -> createFloat(index) }
     for (float in floatArray) {
-        println("Float: $float")
+        processFloat(float)
     }
 
+    // Create an Array of Person
+    val personArray = arrayOf(
+            createPerson(),
+            createPerson(),
+            createPerson(),
+            createPerson(),
+            createPerson()
+    )
+    for (person in personArray) {
+        processPerson(person)
+    }
+
+    val employee = createEmployee()
     // Create an Employee array
-    val employeeArray = createEmployeeArray()
+    val employeeArray = arrayOf(
+            createEmployee(),
+            createEmployee(),
+            createEmployee(),
+            // Add the same Employee twice - never a good idea
+            // (unless you're demonstrating a List)
+            employee,
+            employee
+    )
     for (employee in employeeArray) {
-        println("Employee: $employee")
+        processEmployee(employee)
     }
 
 }

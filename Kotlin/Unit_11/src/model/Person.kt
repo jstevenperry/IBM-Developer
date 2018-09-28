@@ -22,7 +22,7 @@ package com.makotogo.learn.kotlin.model
  */
 open class Person(val familyName: String, val givenName: String) {
     override fun toString(): String {
-        return "[familyName=$familyName, givenName=$givenName]"
+        return "Person: [familyName=$familyName, givenName=$givenName]"
     }
 }
 
@@ -31,7 +31,7 @@ open class Person(val familyName: String, val givenName: String) {
  */
 class Guest(familyName: String, givenName: String, val purpose: String) : Person(familyName, givenName) {
     override fun toString(): String {
-        return "[Person=${super.toString()}, purpose=$purpose]"
+        return "Guest: [Person=${super.toString()}, purpose=$purpose]"
     }
 }
 
@@ -40,7 +40,7 @@ class Guest(familyName: String, givenName: String, val purpose: String) : Person
  */
 class Employee(familyName: String, givenName: String, val employeeId: Int, val title: String) : Person(familyName, givenName) {
     override fun toString(): String {
-        return "[Person=${super.toString()}, employeeId=$employeeId, title=$title]"
+        return "Employee: [Person=${super.toString()}, employeeId=$employeeId, title=$title]"
     }
 }
 

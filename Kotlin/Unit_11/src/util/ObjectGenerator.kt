@@ -15,53 +15,59 @@
  *
  */
 
+package com.makotogo.learn.kotlin.util
+
 import com.makotogo.learn.kotlin.model.Employee
 import com.makotogo.learn.kotlin.model.Person
 import java.util.Random
 
+/**
+ * Java pseudo-random number generator
+ */
 private val rng = Random(System.currentTimeMillis())
 
 /**
- * Create a Person object using randomly generated data.
+ * Generate a random floating point number between zero
+ * and 1000, and return it.
+ *
+ * Make sure the denominator is never zero
  */
-fun createPerson(): Person {
-    return Person(generateRandomFamilyName(), generateRandomGivenName())
-}
-
-/**
- * Create an Employee object filled with random data
- */
-fun createEmployee(): Employee {
-    val familyName = generateRandomFamilyName()
-    val givenName = generateRandomGivenName()
-    val employeeId = generateRandomEmployeeId()
-    val title = generateRandomTitle(employeeId)
-    return Employee(familyName = familyName, givenName = givenName, employeeId = employeeId, title = title)
-}
-
-/**
- * Generate and return a random floating point number
- */
-fun createFloat() = (1.0f / generateRandomNumber(100).toFloat()) * 1000
+fun createFloat(index: Int) = (generateRandomNumber(upperBoundExclusive = index) + index)
 
 /**
  * Generate and return a random Char from one of the printable ASCII characters
- *
+ * (that is, 33 - 126)
  */
-fun createChar() = (generateRandomNumber(bound = (127 - 33)) + 33).toChar()
+fun createChar() = (generateRandomInt(upperBoundExclusive = (127 - 33)) + 33).toChar()
 
 /**
- * Generate and return a random number between zero and [bound]
+ * Generate a random integer between zero and the [upperBoundExclusive]
+ * and return it to the caller.
  */
-internal fun generateRandomNumber(bound: Int): Int {
-    // Warmup the generator first
-    for (aa in 0..111) {
-        rng.nextInt(bound)
-    }
-    // Generate a "random" number
-    return rng.nextInt(bound)
+internal fun generateRandomInt(upperBoundExclusive: Int): Int {
+    return (generateRandomNumber() * upperBoundExclusive).toInt()
 }
 
+/**
+ * Generate a random floating point number between zero and 1.0f (exclusive)
+ * and return it to the caller.
+ */
+internal fun generateRandomNumber(upperBoundExclusive: Int): Float {
+    return (generateRandomNumber() * upperBoundExclusive.toFloat())
+}
+
+/**
+ * Generate and return a random number between zero (inclusive)
+ * and [upperBoundExclusive] (exclusive)
+ */
+private fun generateRandomNumber(): Float {
+    return rng.nextFloat()
+}
+
+/**
+ * A few (weird) family names. Not from around here.
+ * As in anywhere on (this) Earth.
+ */
 private val FAMILY_NAME = arrayOf(
         "Anon",
         "Bazog",
@@ -92,9 +98,12 @@ private val FAMILY_NAME = arrayOf(
  * along with a random index into the array.
  */
 private fun generateRandomFamilyName(): String {
-    return FAMILY_NAME[generateRandomNumber(FAMILY_NAME.size)]
+    return FAMILY_NAME[generateRandomInt(FAMILY_NAME.size)]
 }
 
+/**
+ * A few (weird) given names. Frankly, I'd give 'em back.
+ */
 private val GIVEN_NAME = arrayOf(
         "Ag",
         "Bog",
@@ -128,15 +137,13 @@ private val GIVEN_NAME = arrayOf(
  * along with a random index into the array.
  */
 private fun generateRandomGivenName(): String {
-    return GIVEN_NAME[generateRandomNumber(GIVEN_NAME.size)]
+    return GIVEN_NAME[generateRandomInt(GIVEN_NAME.size)]
 }
 
 /**
  * Generate a random [employeeId] from 0 - 99999
  */
-private fun generateRandomEmployeeId(): Int {
-    return generateRandomNumber(99999)
-}
+private fun generateRandomEmployeeId() = generateRandomInt(99999)
 
 /**
  * Some random title suffixes
@@ -148,8 +155,8 @@ private val TITLE_SUFFIX = arrayOf("ist", "er", "onator", "erator", "o")
  */
 private fun generateRandomTitle(employeeId: Int?): String {
     var ret = ""
-    val baseTitle = GIVEN_NAME[generateRandomNumber(GIVEN_NAME.size)] +
-            TITLE_SUFFIX[generateRandomNumber(TITLE_SUFFIX.size)]
+    val baseTitle = GIVEN_NAME[generateRandomInt(GIVEN_NAME.size)] +
+            TITLE_SUFFIX[generateRandomInt(TITLE_SUFFIX.size)]
     when (employeeId) {
         in 0..2000 -> {
             ret = "Chief $baseTitle"
@@ -166,3 +173,23 @@ private fun generateRandomTitle(employeeId: Int?): String {
     }
     return ret
 }
+
+/**
+ * Create a Person object using randomly generated data.
+ */
+fun createPerson(): Person {
+    return Person(generateRandomFamilyName(), generateRandomGivenName())
+}
+
+/**
+ * Create a new [Employee], fill it with random data,
+ * and return it.
+ */
+fun createEmployee(): Employee {
+    val familyName = generateRandomFamilyName()
+    val givenName = generateRandomGivenName()
+    val employeeId = generateRandomEmployeeId()
+    val title = generateRandomTitle(employeeId)
+    return Employee(familyName = familyName, givenName = givenName, employeeId = employeeId, title = title)
+}
+

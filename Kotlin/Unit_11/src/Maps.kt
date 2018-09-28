@@ -15,4 +15,9 @@
  *
  */
 
+package com.makotogo.learn.kotlin
+
+/**
+ * The ubiquitous main() function. We meet again.
+ */
 
