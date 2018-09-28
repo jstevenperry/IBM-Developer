@@ -28,7 +28,7 @@ fun demoIn() {
         println("The number is: ${simpleArray[index]}")
     }
     // until()
-    for (index in 0 until 4) {
+    for (index in 0 until simpleArray.size) {
         println("The number is: ${simpleArray[index]}")
     }
 }
@@ -89,7 +89,7 @@ class RangesUnderTheHood {
             println("********** until() **********")
             // Under the hood: Int.until() => IntRange.iterator() => Iterator
             // Intermediate variables tell the tale...
-            val intRange = 0.until(4)           // IntRange
+            val intRange = 0.until(simpleArray.size)           // IntRange
             val iterator = intRange.iterator()     // Iterator
             while (iterator.hasNext()) {
                 val index = iterator.next()
