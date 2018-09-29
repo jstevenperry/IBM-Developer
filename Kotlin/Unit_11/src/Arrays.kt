@@ -19,12 +19,8 @@ package com.makotogo.learn.kotlin
 
 import com.makotogo.learn.kotlin.controller.processChar
 import com.makotogo.learn.kotlin.controller.processEmployee
-import com.makotogo.learn.kotlin.controller.processFloat
-import com.makotogo.learn.kotlin.controller.processPerson
 import com.makotogo.learn.kotlin.util.createChar
 import com.makotogo.learn.kotlin.util.createEmployee
-import com.makotogo.learn.kotlin.util.createFloat
-import com.makotogo.learn.kotlin.util.createPerson
 
 /**
  * The ubiquitous main() function. We meet again.
@@ -42,26 +38,9 @@ fun main(args: Array<String>) {
             char,
             char
     )
-    for (char in charArray) {
-        processChar(char)
-    }
-
-    // Create an Array of Float
-    val floatArray = Array(5) { index -> createFloat(index) }
-    for (float in floatArray) {
-        processFloat(float)
-    }
-
-    // Create an Array of Person
-    val personArray = arrayOf(
-            createPerson(),
-            createPerson(),
-            createPerson(),
-            createPerson(),
-            createPerson()
-    )
-    for (person in personArray) {
-        processPerson(person)
+    println("********** Process charArray **********")
+    for (c in charArray) {
+        processChar(c)
     }
 
     val employee = createEmployee()
@@ -75,8 +54,8 @@ fun main(args: Array<String>) {
             employee,
             employee
     )
-    for (employee in employeeArray) {
-        processEmployee(employee)
+    println("********** Process employeeArray **********")
+    for (e in employeeArray) {
+        processEmployee(e)
     }
-
 }

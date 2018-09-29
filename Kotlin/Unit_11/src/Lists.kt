@@ -19,34 +19,9 @@ package com.makotogo.learn.kotlin
 
 import com.makotogo.learn.kotlin.controller.processChar
 import com.makotogo.learn.kotlin.controller.processEmployee
-import com.makotogo.learn.kotlin.controller.processFloat
-import com.makotogo.learn.kotlin.controller.processPerson
 import com.makotogo.learn.kotlin.model.Employee
-import com.makotogo.learn.kotlin.model.Person
 import com.makotogo.learn.kotlin.util.createChar
 import com.makotogo.learn.kotlin.util.createEmployee
-import com.makotogo.learn.kotlin.util.createFloat
-import com.makotogo.learn.kotlin.util.createPerson
-
-/**
- * Processes a [List] of "things" of [Any] type.
- * Uses smart cast to determine exactly what the "thing"
- * is, and then delegates to the correct [Processor]
- * to handle it.
- */
-fun processList(things: List<Any>, description: String? = null) {
-    println("********** processList(${description ?: ""}) **********")
-    for (thing in things) {
-        when (thing) {
-            // Quiz question: Why list Employee first?
-            is Employee -> processEmployee(employee = thing)
-            is Person -> processPerson(person = thing)
-            is Float -> processFloat(float = thing)
-            is Char -> processChar(char = thing)
-            else -> println("Unknown thing: $thing")
-        }
-    }
-}
 
 /**
  * The ubiquitous main() function. We meet again.
@@ -56,6 +31,7 @@ fun main(args: Array<String>) {
     val char = createChar()
     // Create a MutableList of Char
     val mutableCharList = mutableListOf(
+            // Add three elements
             createChar(),
             createChar(),
             createChar(),
@@ -64,13 +40,7 @@ fun main(args: Array<String>) {
             char,
             char
     )
-    // Create a List of Float
-    val floatList = List(5) { index -> createFloat(index) }
-    // Quiz question: Why doesn't this work?
-    // floatList.add(createFloat(10))
-
-    // Create a List of Person
-    val personList = List(5) { _ -> createPerson() }
+    processList(mutableCharList)
 
     // Create a List of Employee
     val employeeList = MutableList(3) { createEmployee() }
@@ -79,11 +49,24 @@ fun main(args: Array<String>) {
     val employee = createEmployee()
     employeeList.add(employee)
     employeeList.add(employee)
+    processList(employeeList)
+}
 
-    // Process the Lists. Yeah, that's a thing.
-    processList(mutableCharList, description = "mutableCharList")
-    processList(floatList, description = "floatList")
-    processList(personList, description = "personList")
-    processList(employeeList, description = "employeeList")
+/**
+ * Process the specified [list]
+ */
+private fun processList(list: List<Any>) {
+    println("********** Process List **********")
+    for (item in list) {
+        when (item) {
+            is Char -> {
+                processChar(item)
+            }
+            is Employee -> {
+                processEmployee(item)
+            }
+            else -> println("Unknown item: $item")
+        }
+    }
 
 }

@@ -17,7 +17,61 @@
 
 package com.makotogo.learn.kotlin
 
+import com.makotogo.learn.kotlin.controller.processChar
+import com.makotogo.learn.kotlin.controller.processEmployee
+import com.makotogo.learn.kotlin.model.Employee
+import com.makotogo.learn.kotlin.util.createChar
+import com.makotogo.learn.kotlin.util.createEmployee
+
 /**
  * The ubiquitous main() function. We meet again.
  */
+fun main(args: Array<String>) {
+    // Mutable Char Map
+    val mutableCharMap = mutableMapOf<Char, Char>()
+    var char = createChar()
+    mutableCharMap[char] = char
+    char = createChar()
+    mutableCharMap[char] = char
+    char = createChar()
+    mutableCharMap[char] = char
+    // Now try to add the same item more than once
+    char = createChar()
+    mutableCharMap[char] = char
+    mutableCharMap[char] = char
+    processMap(mutableCharMap)
 
+    // Mutable Employee Map
+    val mutableEmployeeMap = mutableMapOf<Int, Employee>()
+    var employee = createEmployee()
+    mutableEmployeeMap[employee.employeeId] = employee
+    employee = createEmployee()
+    mutableEmployeeMap[employee.employeeId] = employee
+    employee = createEmployee()
+    mutableEmployeeMap[employee.employeeId] = employee
+    // Now try and add the same item more than once
+    employee = createEmployee()
+    mutableEmployeeMap[employee.employeeId] = employee
+    mutableEmployeeMap[employee.employeeId] = employee
+    processMap(mutableEmployeeMap)
+}
+
+/**
+ * Process the specified [map]
+ */
+private fun processMap(map: MutableMap<*, *>) {
+    println("********** Process Map **********")
+    for ((key, value) in map) {
+        when (value) {
+            is Char -> {
+                processChar(value)
+            }
+            is Employee -> {
+                processEmployee(value)
+            }
+            else -> {
+                println("Unknown item: $value")
+            }
+        }
+    }
+}
