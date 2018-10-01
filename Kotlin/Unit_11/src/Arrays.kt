@@ -19,6 +19,7 @@ package com.makotogo.learn.kotlin
 
 import com.makotogo.learn.kotlin.controller.processChar
 import com.makotogo.learn.kotlin.controller.processEmployee
+import com.makotogo.learn.kotlin.model.Employee
 import com.makotogo.learn.kotlin.util.createChar
 import com.makotogo.learn.kotlin.util.createEmployee
 
@@ -27,17 +28,24 @@ import com.makotogo.learn.kotlin.util.createEmployee
  */
 fun main(args: Array<String>) {
 
-    val char = createChar()
     // Create a Char array where each Char is a printable ASCII character
-    val charArray = charArrayOf(
+    val charArray: CharArray = charArrayOf(
             createChar(),
+            ' ', // placeholder
             createChar(),
-            createChar(),
-            // Now add the same char multiple times
-            // (arrays allow duplicate elements)
-            char,
-            char
+            ' ', // placeholder
+            ' '  // placeholder
     )
+    println("********** Pre-Process charArray **********")
+    for (c in charArray) {
+        processChar(c)
+    }
+    // Arrays are mutable, overwrite the blank placeholder Chars at
+    // the specified indices
+    charArray[1] = createChar()
+    charArray[3] = createChar()
+    charArray[4] = createChar()
+
     println("********** Process charArray **********")
     for (c in charArray) {
         processChar(c)
@@ -45,14 +53,12 @@ fun main(args: Array<String>) {
 
     val employee = createEmployee()
     // Create an Employee array
-    val employeeArray = arrayOf(
+    val employeeArray: Array<Employee> = arrayOf(
             createEmployee(),
             createEmployee(),
             createEmployee(),
-            // Add the same Employee twice - never a good idea
-            // (unless you're demonstrating a List)
             employee,
-            employee
+            employee // same as above
     )
     println("********** Process employeeArray **********")
     for (e in employeeArray) {

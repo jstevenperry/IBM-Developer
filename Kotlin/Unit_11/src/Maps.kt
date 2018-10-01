@@ -27,22 +27,25 @@ import com.makotogo.learn.kotlin.util.createEmployee
  * The ubiquitous main() function. We meet again.
  */
 fun main(args: Array<String>) {
-    // Mutable Char Map
-    val mutableCharMap = mutableMapOf<Char, Char>()
-    var char = createChar()
-    mutableCharMap[char] = char
-    char = createChar()
-    mutableCharMap[char] = char
-    char = createChar()
-    mutableCharMap[char] = char
-    // Now try to add the same item more than once
-    char = createChar()
-    mutableCharMap[char] = char
-    mutableCharMap[char] = char
-    processMap(mutableCharMap)
+    // Create a few chars
+    val chars = charArrayOf(
+            createChar(),
+            createChar(),
+            createChar(),
+            createChar()
+    )
+    // Immutable Char Map
+    val charMap: Map<Char, Char> = mapOf(
+            Pair(chars[0], chars[0]), //
+            Pair(chars[1], chars[1]), //
+            Pair(chars[2], chars[2]), //
+            Pair(chars[3], chars[3]), // Try to add same char again
+            Pair(chars[3], chars[3])  // and again
+    )
+    processMap(charMap)
 
     // Mutable Employee Map
-    val mutableEmployeeMap = mutableMapOf<Int, Employee>()
+    val mutableEmployeeMap: MutableMap<Int, Employee> = mutableMapOf()
     var employee = createEmployee()
     mutableEmployeeMap[employee.employeeId] = employee
     employee = createEmployee()
@@ -53,13 +56,14 @@ fun main(args: Array<String>) {
     employee = createEmployee()
     mutableEmployeeMap[employee.employeeId] = employee
     mutableEmployeeMap[employee.employeeId] = employee
+    mutableEmployeeMap[employee.employeeId] = employee
     processMap(mutableEmployeeMap)
 }
 
 /**
  * Process the specified [map]
  */
-private fun processMap(map: MutableMap<*, *>) {
+private fun processMap(map: Map<*, *>) {
     println("********** Process Map **********")
     for ((key, value) in map) {
         when (value) {

@@ -29,21 +29,19 @@ import com.makotogo.learn.kotlin.util.createEmployee
  */
 fun main(args: Array<String>) {
 
-    // Create a MutableSet of Char
-    val mutableCharSet: MutableSet<Char> = mutableSetOf()
-    // Add three elements
-    mutableCharSet.add(createChar())
-    mutableCharSet.add(createChar())
-    mutableCharSet.add(createChar())
-    // Add element four times
-    // (Or try to - sets do not allow duplicates)
     val char = createChar()
-    mutableCharSet.add(char)
-    mutableCharSet.add(char)
-    processSet(mutableCharSet)
+    // Create a Set of Char
+    val charSet: Set<Char> = setOf(
+            createChar(),
+            createChar(),
+            createChar(),
+            char,
+            char
+    )
+    processSet(charSet)
 
-    // Create a Set of Employee
-    val employeeSet = mutableSetOf(
+    // Create a MutableSet of Employee
+    val employeeSet: MutableSet<Employee> = mutableSetOf(
             createEmployee(),
             createEmployee(),
             createEmployee()

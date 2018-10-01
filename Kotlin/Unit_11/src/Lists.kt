@@ -30,25 +30,20 @@ fun main(args: Array<String>) {
 
     val char = createChar()
     // Create a MutableList of Char
-    val mutableCharList = mutableListOf(
-            // Add three elements
+    val charList: List<Char> = listOf(
             createChar(),
             createChar(),
             createChar(),
-            // Add the same element four times
-            // (Lists allow duplicates)
             char,
-            char
+            char // same as above
     )
-    processList(mutableCharList)
+    processList(charList)
 
     // Create a List of Employee
-    val employeeList = MutableList(3) { createEmployee() }
-    // Add the same Employee twice - never a good idea
-    // (unless you're demonstrating a List)
+    val employeeList: MutableList<Employee> = MutableList(3) { createEmployee() }
     val employee = createEmployee()
     employeeList.add(employee)
-    employeeList.add(employee)
+    employeeList.add(employee) // same as above
     processList(employeeList)
 }
 
@@ -68,5 +63,4 @@ private fun processList(list: List<Any>) {
             else -> println("Unknown item: $item")
         }
     }
-
 }
