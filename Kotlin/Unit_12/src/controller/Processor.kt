@@ -18,6 +18,7 @@
 package com.makotogo.learn.kotlin.controller
 
 import com.makotogo.learn.kotlin.model.Employee
+import com.makotogo.learn.kotlin.model.Guest
 import com.makotogo.learn.kotlin.model.Person
 
 /**
@@ -34,6 +35,14 @@ fun processEmployee(employee: Employee) {
  */
 fun processPerson(person: Person) {
     println("Processing Person => $person")
+}
+
+/**
+ * Process a [Guest] object.
+ * For this simple exercise, that just means printing it out.
+ */
+fun processGuest(guest: Guest) {
+    println("Processing Guest => $guest")
 }
 
 /**

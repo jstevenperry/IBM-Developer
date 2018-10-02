@@ -18,6 +18,7 @@
 package com.makotogo.learn.kotlin.util
 
 import com.makotogo.learn.kotlin.model.Employee
+import com.makotogo.learn.kotlin.model.Guest
 import com.makotogo.learn.kotlin.model.Person
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -233,10 +234,27 @@ private fun generateRandomTitle(employeeId: Int?): String {
 }
 
 /**
+ * Some random purposes
+ */
+private val PURPOSE = arrayOf("Maintenance", "Package Delivery", "Consulting", "Family Member")
+
+/**
+ * Generate a random purpose
+ */
+private fun generateRandomPurpose(): String {
+    return PURPOSE[generateRandomInt(PURPOSE.size)]
+}
+
+/**
  * Create a Person object using randomly generated data.
  */
 fun createPerson(): Person {
     return Person(generateRandomFamilyName(), generateRandomGivenName(), generateRandomDateOfBirth())
+}
+
+fun createGuest(): Guest {
+    println("Creating Guest object")
+    return Guest(generateRandomFamilyName(), generateRandomGivenName(), generateRandomDateOfBirth(), generateRandomPurpose())
 }
 
 /**

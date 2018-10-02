@@ -18,24 +18,67 @@
 package com.makotogo.learn.kotlin.model
 
 import com.makotogo.learn.kotlin.controller.processEmployee
+import com.makotogo.learn.kotlin.controller.processGuest
 import com.makotogo.learn.kotlin.util.createEmployee
+import com.makotogo.learn.kotlin.util.createGuest
 import java.time.LocalDate
+import java.time.LocalDateTime
+
+open abstract class Human(open val dateOfBirth: LocalDate) {
+    open abstract fun configure()
+}
 
 /**
  * Person class - the base class for all humans in this application
  */
-open class Person(open var familyName: String, open var givenName: String, open val dateOfBirth: LocalDate) {
+open class Person(open val familyName: String,
+                  open val givenName: String,
+                  dateOfBirth: LocalDate) : Human(dateOfBirth) {
+    // Init block
+    init {
+        println("*** Person Init Block running... ***")
+        configure()
+        println("*** Person Init Block done. ***")
+    }
+
+    // Configure the instance
+    override fun configure() {
+        println("*** Person configure() running... ***")
+        this.whenInstantiated = LocalDateTime.now()
+        println("Person class instantiated at: $whenInstantiated")
+        this.fullName = "$familyName/$givenName"
+        println("*** Person configure() done. ***")
+    }
+
+    // Private property - has access to constructor properties
+    private var fullName: String? = null
+
+    // Private property - when the class was instantiated
+    protected var whenInstantiated: LocalDateTime? = null
+
     override fun toString(): String {
-        return "Person: [familyName=$familyName, givenName=$givenName]"
+        return "Person(familyName=$familyName, givenName=$givenName, fullName=$fullName, dateOfBirth=$dateOfBirth)"
     }
 }
 
 /**
  * A Person, but a guest with a purpose
  */
-data class Guest(override var familyName: String,
-                 override var givenName: String,
-                 override var dateOfBirth: LocalDate) : Person(familyName, givenName, dateOfBirth) {
+data class Guest(override val familyName: String,
+                 override val givenName: String,
+                 override val dateOfBirth: LocalDate) : Person(familyName, givenName, dateOfBirth) {
+    // Init block
+    init {
+        println("*** Guest Init Block running... ***")
+        println("*** Guest Init Block done. ***")
+    }
+
+    override fun configure() {
+        println("*** Guest configure() running... ***")
+        super.configure()
+        println("*** Guest configure() done. ***")
+    }
+
     //
     // Private properties
     private var purpose: String? = null
@@ -48,34 +91,29 @@ data class Guest(override var familyName: String,
                 purpose: String) : this(familyName, givenName, dateOfBirth) {
         this.purpose = purpose
     }
+
+    override fun toString(): String {
+        return "Guest(Parent=${super.toString()}, purpose=$purpose)"
+    }
 }
 
 /**
  * A Person, but an employee of Megacorp (with title and everything!)
  */
-data class Employee(override var familyName: String,
-                    override var givenName: String,
-                    override val dateOfBirth: LocalDate) : Person(familyName, givenName, dateOfBirth) {
-    //
-    // Private properties
-    private var employeeId: Int? = null
-    private var title: String? = null
-
-    operator fun component4() = employeeId
-    operator fun component5() = title
-
-    //
-    // Secondary constructor
-    constructor(familyName: String,
-                givenName: String,
-                dateOfBirth: LocalDate,
-                employeeId: Int,
-                title: String) : this(familyName, givenName, dateOfBirth) {
-        this.employeeId = employeeId
-        this.title = title
+data class Employee(override val familyName: String,
+                    override val givenName: String,
+                    override val dateOfBirth: LocalDate,
+                    val employeeId: Int,
+                    val title: String) : Person(familyName, givenName, dateOfBirth) {
+    // Init block - REMOVE?
+    init {
+        println("Employee class instantiated at: ${super.whenInstantiated}")
     }
 }
 
+/**
+ * The ubiquitous main function. We meet again.
+ */
 fun main(args: Array<String>) {
     var employee: Employee = createEmployee()
 
@@ -90,4 +128,7 @@ fun main(args: Array<String>) {
     processEmployee(employee)
     // Print out the destructured attributes
     println("Destructured properties: FamilyName=$familyName, givenName=$givenName, dateOfBirth=$dateOfBirth, employeeId=$employeeId, title=$title")
+
+    val guest = createGuest()
+    processGuest(guest)
 }
