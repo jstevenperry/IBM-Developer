@@ -19,6 +19,7 @@ package com.makotogo.learn.kotlin.util
 
 import com.makotogo.learn.kotlin.model.Employee
 import com.makotogo.learn.kotlin.model.Person
+import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.YearMonth
 import java.util.Random
@@ -163,7 +164,7 @@ private fun generateRandomDateOfBirth(): LocalDate {
  * Could we just pass these parameters to LocalDate.of()? Absolutely.
  * But where's the fun in that?? (pun intended)
  */
-fun <A : Int, B : Int, C : Int> Triple<out A, out B, out C>.toLocalDate(): LocalDate =
+fun Triple<Int, Int, Int>.toLocalDate(): LocalDate =
         LocalDate.of(
                 this.first, // Year
                 this.second, // Month
@@ -174,14 +175,14 @@ fun <A : Int, B : Int, C : Int> Triple<out A, out B, out C>.toLocalDate(): Local
  * [latestYear]
  */
 private fun generateRandomYear(earliestYear: Int, latestYear: Int): Int {
-    return (generateRandomInt(latestYear - earliestYear) + earliestYear).toInt()
+    return (generateRandomInt(latestYear - earliestYear) + earliestYear)
 }
 
 /**
  * Generate a random month between 1-12
  */
 private fun generateRandomMonth(): Int {
-    return (generateRandomInt(12) + 1).toInt()
+    return (generateRandomInt(12) + 1)
 }
 
 /**
@@ -194,11 +195,11 @@ private fun generateRandomMonth(): Int {
 private fun generateRandomDayOfMonth(year: Int, month: Int): Int {
     // Get the last day of the month for the year/month pair
     val maxDayOfMonth = YearMonth.of(year, month).atEndOfMonth().dayOfMonth
-    return (generateRandomInt(upperBoundExclusive = maxDayOfMonth) + 1).toInt()
+    return (generateRandomInt(upperBoundExclusive = maxDayOfMonth) + 1)
 }
 
 /**
- * Generate a random [employeeId] from 0 - 99999
+ * Generate a random employeeId from 0 - 99999
  */
 private fun generateRandomEmployeeId() = generateRandomInt(99999)
 
@@ -208,10 +209,10 @@ private fun generateRandomEmployeeId() = generateRandomInt(99999)
 private val TITLE_SUFFIX = arrayOf("ist", "er", "onator", "erator", "o")
 
 /**
- * Generate and return a random (and probably silly) [title]
+ * Generate and return a random (and probably silly) title
  */
 private fun generateRandomTitle(employeeId: Int?): String {
-    var ret = ""
+    val ret: String
     val baseTitle = GIVEN_NAME[generateRandomInt(GIVEN_NAME.size)] +
             TITLE_SUFFIX[generateRandomInt(TITLE_SUFFIX.size)]
     when (employeeId) {
@@ -251,3 +252,114 @@ fun createEmployee(): Employee {
     return Employee(familyName = familyName, givenName = givenName, dateOfBirth = dateOfBirth, employeeId = employeeId, title = title)
 }
 
+class ObjectGeneratorTest {
+
+    /**
+     * Simple histogram map. Stores the result and a running total
+     * of the number of times that result has come up.
+     */
+    private fun storeResults(result: Int, resultsMap: MutableMap<Int, Int>) {
+        // Get the
+        val results = resultsMap[result]
+        if (results == null) {
+            // Current result not in map, initialize it
+            resultsMap[result] = 1
+        } else {
+            // Current result seen before, increment the count
+            resultsMap[result] = results.toInt() + 1
+        }
+    }
+
+    /**
+     * Dump the results to the console via println from
+     * the specified [resultsMap]. Will sort the results
+     * if [isSorted] is true, otherwise it uses the MutableMap
+     * that is passed in as-is.
+     */
+    private fun dumpResults(title: String, resultsMap: MutableMap<Int, Int>, isSorted: Boolean = true) {
+        val mapToUse: Map<Int, Int> = if (isSorted) {
+            resultsMap.toSortedMap()
+        } else {
+            resultsMap
+        }
+        println("********** $title **********")
+        for ((key, value) in mapToUse) {
+            println("Year: $key, Number of hits: $value")
+        }
+    }
+
+    @Test
+    fun testGenerateRandomYear() {
+        val numberOfTests = 100000
+        val earliestYear = 1950
+        val latestYear = 2000
+        val resultsMap = linkedMapOf<Int, Int>()
+        // Run the test (so many tests)
+        for (testNumber in 1..numberOfTests) {
+            val year = generateRandomYear(earliestYear, latestYear)
+            storeResults(year, resultsMap)
+            assert(year in earliestYear..latestYear) {
+                "Failure on test number: $testNumber: Year ($year) is not between $earliestYear and $latestYear."
+            }
+        }
+        // Dump out the results
+        dumpResults("testGenerateRandomYear", resultsMap)
+    }
+
+    @Test
+    fun testGenerateRandomMonth() {
+        val numberOfTests = 100000
+        val minMonth = 1
+        val maxMonth = 12
+        val resultsMap = linkedMapOf<Int, Int>()
+        // Run the test (so many tests)
+        for (testNumber in 1..numberOfTests) {
+            val month = generateRandomMonth()
+            storeResults(month, resultsMap)
+            assert(month in minMonth..maxMonth) {
+                "Failure on test number: $testNumber: Month: $month is not between $minMonth and $maxMonth."
+            }
+        }
+        // Dump out the results
+        dumpResults("testGenerateRandomMonth", resultsMap)
+    }
+
+    @Test
+    fun testGenerateRandomDayOfMonth() {
+        testGenerateRandomDayOfMonthGuts(testTitle = "testGenerateRandomDayOfMonth: January 2000", month = 1, maxDay = 31)
+        testGenerateRandomDayOfMonthGuts(testTitle = "testGenerateRandomDayOfMonth: February 2000", month = 2, maxDay = 29)
+        testGenerateRandomDayOfMonthGuts(testTitle = "testGenerateRandomDayOfMonth: March 2000", month = 3, maxDay = 31)
+        testGenerateRandomDayOfMonthGuts(testTitle = "testGenerateRandomDayOfMonth: April 2000", month = 4, maxDay = 30)
+        testGenerateRandomDayOfMonthGuts(testTitle = "testGenerateRandomDayOfMonth: May 2000", month = 5, maxDay = 31)
+        testGenerateRandomDayOfMonthGuts(testTitle = "testGenerateRandomDayOfMonth: June 2000", month = 6, maxDay = 30)
+        testGenerateRandomDayOfMonthGuts(testTitle = "testGenerateRandomDayOfMonth: July 2000", month = 7, maxDay = 31)
+        testGenerateRandomDayOfMonthGuts(testTitle = "testGenerateRandomDayOfMonth: August 2000", month = 8, maxDay = 31)
+        testGenerateRandomDayOfMonthGuts(testTitle = "testGenerateRandomDayOfMonth: September 2000", month = 9, maxDay = 30)
+        testGenerateRandomDayOfMonthGuts(testTitle = "testGenerateRandomDayOfMonth: October 2000", month = 10, maxDay = 31)
+        testGenerateRandomDayOfMonthGuts(testTitle = "testGenerateRandomDayOfMonth: November 2000", month = 11, maxDay = 30)
+        testGenerateRandomDayOfMonthGuts(testTitle = "testGenerateRandomDayOfMonth: December 2000", month = 12, maxDay = 31)
+    }
+
+    /**
+     * Common code for testGenerateRnadomDayOfMonth()
+     */
+    private fun testGenerateRandomDayOfMonthGuts(testTitle: String,
+                                                 numberOfTests: Int = 100000,
+                                                 year: Int = 2000,
+                                                 month: Int,
+                                                 minDay: Int = 1,
+                                                 maxDay: Int,
+                                                 resultsMap: MutableMap<Int, Int> = linkedMapOf()) {
+
+        // Run the test (so many tests)
+        for (testNumber in 1..numberOfTests) {
+            val dayOfMonth = generateRandomDayOfMonth(year, month)
+            storeResults(dayOfMonth, resultsMap)
+            assert(dayOfMonth in minDay..maxDay) {
+                "Failure on test number: $testNumber: Day of month: $dayOfMonth is not between $minDay and $maxDay."
+            }
+        }
+        // Dump out the results
+        dumpResults(title = testTitle, resultsMap = resultsMap)
+    }
+}
