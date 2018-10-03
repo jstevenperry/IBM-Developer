@@ -20,6 +20,7 @@ package com.makotogo.learn.kotlin.util
 import com.makotogo.learn.kotlin.model.Employee
 import com.makotogo.learn.kotlin.model.Guest
 import com.makotogo.learn.kotlin.model.Person
+import com.makotogo.learn.kotlin.model.Worker
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.YearMonth
@@ -75,7 +76,7 @@ private fun generateRandomNumber(): Float {
 private val FAMILY_NAME = arrayOf(
         "Anon",
         "Bazog",
-        "Con",
+        "Coln",
         "Daon",
         "Engan",
         "Fan",
@@ -101,7 +102,7 @@ private val FAMILY_NAME = arrayOf(
  * Generate a random last name using the FAMILY_NAME array
  * along with a random index into the array.
  */
-private fun generateRandomFamilyName(): String {
+internal fun generateRandomFamilyName(): String {
     return FAMILY_NAME[generateRandomInt(FAMILY_NAME.size)]
 }
 
@@ -123,7 +124,7 @@ private val GIVEN_NAME = arrayOf(
         "Lar",
         "Mog",
         "Nor",
-        "Oon",
+        "Ojon",
         "Ptal",
         "Quon",
         "Rag",
@@ -140,23 +141,20 @@ private val GIVEN_NAME = arrayOf(
  * Generate a random first name using the GIVEN_NAME array
  * along with a random index into the array.
  */
-private fun generateRandomGivenName(): String {
+internal fun generateRandomGivenName(): String {
     return GIVEN_NAME[generateRandomInt(GIVEN_NAME.size)]
 }
 
 /**
  * Generate a random date of birth
  */
-private fun generateRandomDateOfBirth(): LocalDate {
+internal fun generateRandomYearMonthDayTriple(): Triple<Int, Int, Int> {
     val year = generateRandomYear(earliestYear = 1950, latestYear = 2000)
     val month = generateRandomMonth()
     val day = generateRandomDayOfMonth(year, month)
 
-    // Return a new LocalDate with the random YMD in it
-    // Use the Triple extension function to convert it
-    // Completely unnecessary (except to show how extension
-    // functions work)
-    return Triple(year, month, day).toLocalDate()
+    // Return the YMD components as a Triple object
+    return Triple(year, month, day)
 
 }
 
@@ -165,7 +163,7 @@ private fun generateRandomDateOfBirth(): LocalDate {
  * Could we just pass these parameters to LocalDate.of()? Absolutely.
  * But where's the fun in that?? (pun intended)
  */
-fun Triple<Int, Int, Int>.toLocalDate(): LocalDate =
+internal fun Triple<Int, Int, Int>.toLocalDate(): LocalDate =
         LocalDate.of(
                 this.first, // Year
                 this.second, // Month
@@ -202,7 +200,7 @@ private fun generateRandomDayOfMonth(year: Int, month: Int): Int {
 /**
  * Generate a random employeeId from 0 - 99999
  */
-private fun generateRandomEmployeeId() = generateRandomInt(99999)
+internal fun generateRandomEmployeeId() = generateRandomInt(99999)
 
 /**
  * Some random title suffixes
@@ -212,7 +210,7 @@ private val TITLE_SUFFIX = arrayOf("ist", "er", "onator", "erator", "o")
 /**
  * Generate and return a random (and probably silly) title
  */
-private fun generateRandomTitle(employeeId: Int?): String {
+internal fun generateRandomTitle(employeeId: Int?): String {
     val ret: String
     val baseTitle = GIVEN_NAME[generateRandomInt(GIVEN_NAME.size)] +
             TITLE_SUFFIX[generateRandomInt(TITLE_SUFFIX.size)]
@@ -241,20 +239,46 @@ private val PURPOSE = arrayOf("Maintenance", "Package Delivery", "Consulting", "
 /**
  * Generate a random purpose
  */
-private fun generateRandomPurpose(): String {
+internal fun generateRandomPurpose(): String {
     return PURPOSE[generateRandomInt(PURPOSE.size)]
+}
+
+/**
+ * Generate random (fake) tax ID number of the form
+ * 000-00-0000
+ */
+internal fun generateRandomTaxIdNumber(): String {
+
+    // Simple but (more important) readable
+    val part1 = "000"
+    val part2 = "00" + generateRandomInt(99).toString()
+    val part3 = "0000" + generateRandomInt(9999).toString()
+
+    return "$part1-${part2.substring(part2.length - 2)}-${part3.substring(part3.length - 4)}"
 }
 
 /**
  * Create a Person object using randomly generated data.
  */
 fun createPerson(): Person {
-    return Person(generateRandomFamilyName(), generateRandomGivenName(), generateRandomDateOfBirth())
+    return Person(generateRandomFamilyName(), generateRandomGivenName(), generateRandomYearMonthDayTriple().toLocalDate())
+}
+
+fun createWorker(): Worker {
+    return Worker(generateRandomFamilyName(),
+            generateRandomGivenName(),
+            generateRandomYearMonthDayTriple().toLocalDate(),
+            generateRandomTaxIdNumber())
 }
 
 fun createGuest(): Guest {
-    println("Creating Guest object")
-    return Guest(generateRandomFamilyName(), generateRandomGivenName(), generateRandomDateOfBirth(), generateRandomPurpose())
+    return Guest(
+            generateRandomFamilyName(),
+            generateRandomGivenName(),
+            generateRandomYearMonthDayTriple().toLocalDate(),
+            generateRandomTaxIdNumber(),
+            generateRandomPurpose()
+    )
 }
 
 /**
@@ -264,10 +288,17 @@ fun createGuest(): Guest {
 fun createEmployee(): Employee {
     val familyName = generateRandomFamilyName()
     val givenName = generateRandomGivenName()
-    val dateOfBirth = generateRandomDateOfBirth()
+    val dateOfBirth = generateRandomYearMonthDayTriple().toLocalDate()
     val employeeId = generateRandomEmployeeId()
-    val title = generateRandomTitle(employeeId)
-    return Employee(familyName = familyName, givenName = givenName, dateOfBirth = dateOfBirth, employeeId = employeeId, title = title)
+    val title = generateRandomTitle(employeeId = employeeId)
+    val taxIdNumber = generateRandomTaxIdNumber()
+
+    return Employee(familyName = familyName,
+            givenName = givenName,
+            dateOfBirth = dateOfBirth,
+            employeeId = employeeId,
+            title = title,
+            taxIdNumber = taxIdNumber)
 }
 
 class ObjectGeneratorTest {

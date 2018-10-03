@@ -19,116 +19,171 @@ package com.makotogo.learn.kotlin.model
 
 import com.makotogo.learn.kotlin.controller.processEmployee
 import com.makotogo.learn.kotlin.controller.processGuest
+import com.makotogo.learn.kotlin.controller.processPerson
 import com.makotogo.learn.kotlin.util.createEmployee
 import com.makotogo.learn.kotlin.util.createGuest
+import com.makotogo.learn.kotlin.util.createPerson
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-open abstract class Human(open val dateOfBirth: LocalDate) {
-    open abstract fun configure()
-}
-
 /**
  * Person class - the base class for all humans in this application
+ * Class header formatting according to:
+ * https://kotlinlang.org/docs/reference/coding-conventions.html#class-header-formatting
  */
-open class Person(open val familyName: String,
-                  open val givenName: String,
-                  dateOfBirth: LocalDate) : Human(dateOfBirth) {
-    // Init block
+open class Person(
+        open val familyName: String,
+        open val givenName: String,
+        open val dateOfBirth: LocalDate) {
+
+    /**
+     * Class layout according to:
+     * https://kotlinlang.org/docs/reference/coding-conventions.html#class-layout
+     */
+    // Declare properties first - good style
+    //
+    // Private property
+    protected var fullName: String = "$familyName $givenName"
+    //
+    // Private property - when the class was instantiated
+    private var whenInstantiated: LocalDateTime? = null
+    //
+    // Private property - configured - write custom getter/setter
+    protected var configured: Boolean = false
+        get() {
+            println("Person.getConfigured(): Accessing 'configured' property")
+            return field
+        }
+        set(value) {
+            println("Person.setConfigured($value): Setting 'configured' property")
+            field = value
+        }
+
+    /**
+     * Init block
+     */
     init {
-        println("*** Person Init Block running... ***")
+        println("*** Person Init Block start... ***")
+        // Call configure
         configure()
         println("*** Person Init Block done. ***")
     }
 
-    // Configure the instance
-    override fun configure() {
-        println("*** Person configure() running... ***")
+    /**
+     * Configure this instance:
+     * Print some output indicating this is in progress
+     * Set property values
+     * Print output indicating configuration complete
+     */
+    open fun configure() {
+        println("Person.configure(): start...")
+        // Init when instantiated timestamp
         this.whenInstantiated = LocalDateTime.now()
         println("Person class instantiated at: $whenInstantiated")
-        this.fullName = "$familyName/$givenName"
-        println("*** Person configure() done. ***")
+        configured = true // calls setter
+        println("Person.configure(): done.")
     }
 
-    // Private property - has access to constructor properties
-    private var fullName: String? = null
-
-    // Private property - when the class was instantiated
-    protected var whenInstantiated: LocalDateTime? = null
-
+    /**
+     * Override toString() - because the default one is sub-optimal
+     */
     override fun toString(): String {
-        return "Person(familyName=$familyName, givenName=$givenName, fullName=$fullName, dateOfBirth=$dateOfBirth)"
+        return "Person(familyName=$familyName, givenName=$givenName, fullName=$fullName, " +
+                "dateOfBirth=$dateOfBirth, whenInstantiated=$whenInstantiated)"
+    }
+}
+
+open class Worker(override val familyName: String,
+                  override val givenName: String,
+                  override val dateOfBirth: LocalDate,
+                  open val taxIdNumber: String) : Person(familyName, givenName, dateOfBirth) {
+    override fun toString(): String {
+        return "Worker(${super.toString()}, taxIdNumber=$taxIdNumber)"
     }
 }
 
 /**
  * A Person, but a guest with a purpose
  */
-data class Guest(override val familyName: String,
-                 override val givenName: String,
-                 override val dateOfBirth: LocalDate) : Person(familyName, givenName, dateOfBirth) {
-    // Init block
-    init {
-        println("*** Guest Init Block running... ***")
-        println("*** Guest Init Block done. ***")
-    }
-
-    override fun configure() {
-        println("*** Guest configure() running... ***")
-        super.configure()
-        println("*** Guest configure() done. ***")
-    }
-
+class Guest : Worker {
+    /**
+     * Class layout according to:
+     * https://kotlinlang.org/docs/reference/coding-conventions.html#class-layout
+     */
     //
-    // Private properties
-    private var purpose: String? = null
+    // Class properties
+    var purpose: String? = null
+
+    /**
+     * Init block
+     */
+    init {
+        println("\t*** Guest Init Block start... ***")
+        // If not configured, call configure()
+        if (!configured) { // Invokes getter
+            configure()
+        }
+        // Initialize full name (given name first)
+        this.fullName = "$givenName $familyName"
+        println("\t*** Guest Init Block done. ***")
+    }
 
     //
     // Secondary constructor
     constructor(familyName: String,
                 givenName: String,
                 dateOfBirth: LocalDate,
-                purpose: String) : this(familyName, givenName, dateOfBirth) {
+                taxIdNumber: String,
+                purpose: String) : super(familyName, givenName, dateOfBirth, taxIdNumber) {
+        println("\tGuest: secondary constructor start...")
         this.purpose = purpose
+        println("\tGuest: secondary constructor done.")
     }
 
+    /**
+     * Configure the instance - delegate to parent class
+     */
+    override fun configure() {
+        println("\tGuest.configure(): start...")
+        super.configure()
+        println("\tGuest.configure(): done.")
+    }
+
+    /**
+     * Override toString()
+     */
     override fun toString(): String {
-        return "Guest(Parent=${super.toString()}, purpose=$purpose)"
+        return "Guest(${super.toString()}, purpose=$purpose)"
     }
 }
 
 /**
  * A Person, but an employee of Megacorp (with title and everything!)
+ * Class header formatting according to:
+ * https://kotlinlang.org/docs/reference/coding-conventions.html#class-header-formatting
  */
-data class Employee(override val familyName: String,
-                    override val givenName: String,
-                    override val dateOfBirth: LocalDate,
-                    val employeeId: Int,
-                    val title: String) : Person(familyName, givenName, dateOfBirth) {
-    // Init block - REMOVE?
-    init {
-        println("Employee class instantiated at: ${super.whenInstantiated}")
-    }
-}
+data class Employee(
+        override val familyName: String,
+        override val givenName: String,
+        override val dateOfBirth: LocalDate,
+        override val taxIdNumber: String,
+        val employeeId: Int,
+        val title: String) : Worker(familyName, givenName, dateOfBirth, taxIdNumber)
 
 /**
  * The ubiquitous main function. We meet again.
  */
 fun main(args: Array<String>) {
-    var employee: Employee = createEmployee()
+    // Person example
+    val person = createPerson()
+    processPerson(person = person)
 
-    processEmployee(employee)
-
-    // Create new Employee
-    employee = createEmployee()
-
-    // Destructure its attributes
-    val (familyName, givenName, dateOfBirth, employeeId, title) = employee
-    // Process the Employee
-    processEmployee(employee)
-    // Print out the destructured attributes
-    println("Destructured properties: FamilyName=$familyName, givenName=$givenName, dateOfBirth=$dateOfBirth, employeeId=$employeeId, title=$title")
-
+    // Guest example
     val guest = createGuest()
-    processGuest(guest)
+    processGuest(guest = guest)
+
+    // Data class example
+    val employee: Employee = createEmployee()
+    processEmployee(employee = employee)
+
 }
