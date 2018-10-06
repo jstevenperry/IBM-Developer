@@ -14,6 +14,7 @@
  *    limitations under the License.
  *
  */
+package com.makotogo.learn.kotlin
 
 import com.makotogo.learn.kotlin.model.Guest
 import com.makotogo.learn.kotlin.util.generateRandomFamilyName
@@ -23,6 +24,9 @@ import com.makotogo.learn.kotlin.util.generateRandomTaxIdNumber
 import com.makotogo.learn.kotlin.util.generateRandomYearMonthDayTriple
 import com.makotogo.learn.kotlin.util.toLocalDate
 
+/**
+ * Demonstrate property access
+ */
 fun accessProperty() {
     println("********** accessProperty() **********")
     // Generate random attribute values
@@ -46,6 +50,9 @@ fun accessProperty() {
             "purpose=${guest.purpose}")
 }
 
+/**
+ * The ubiquitous main function. We meet again.
+ */
 fun main(args: Array<String>) {
     accessProperty()
 }

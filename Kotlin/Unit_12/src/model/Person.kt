@@ -17,12 +17,8 @@
 
 package com.makotogo.learn.kotlin.model
 
-import com.makotogo.learn.kotlin.controller.processEmployee
 import com.makotogo.learn.kotlin.controller.processGuest
-import com.makotogo.learn.kotlin.controller.processPerson
-import com.makotogo.learn.kotlin.util.createEmployee
 import com.makotogo.learn.kotlin.util.createGuest
-import com.makotogo.learn.kotlin.util.createPerson
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -43,7 +39,7 @@ open class Person(
     // Declare properties first - good style
     //
     // Private property
-    protected var fullName: String = "$familyName $givenName"
+    private var fullName: String = "$familyName $givenName"
     //
     // Private property - when the class was instantiated
     private var whenInstantiated: LocalDateTime? = null
@@ -93,10 +89,13 @@ open class Person(
     }
 }
 
-open class Worker(override val familyName: String,
-                  override val givenName: String,
-                  override val dateOfBirth: LocalDate,
+open class Worker(familyName: String,
+                  givenName: String,
+                  dateOfBirth: LocalDate,
                   open val taxIdNumber: String) : Person(familyName, givenName, dateOfBirth) {
+    init {
+        println("\t*** Init block: Worker start ***")
+    }
     override fun toString(): String {
         return "Worker(${super.toString()}, taxIdNumber=$taxIdNumber)"
     }
@@ -118,14 +117,14 @@ class Guest : Worker {
      * Init block
      */
     init {
-        println("\t*** Guest Init Block start... ***")
+        println("\t\t*** Guest Init Block start... ***")
         // If not configured, call configure()
         if (!configured) { // Invokes getter
             configure()
         }
         // Initialize full name (given name first)
-        this.fullName = "$givenName $familyName"
-        println("\t*** Guest Init Block done. ***")
+        //this.fullName = "$givenName $familyName"
+        println("\t\t*** Guest Init Block done. ***")
     }
 
     //
@@ -135,18 +134,18 @@ class Guest : Worker {
                 dateOfBirth: LocalDate,
                 taxIdNumber: String,
                 purpose: String) : super(familyName, givenName, dateOfBirth, taxIdNumber) {
-        println("\tGuest: secondary constructor start...")
+        println("\t\tGuest: secondary constructor start...")
         this.purpose = purpose
-        println("\tGuest: secondary constructor done.")
+        println("\t\tGuest: secondary constructor done.")
     }
 
     /**
      * Configure the instance - delegate to parent class
      */
     override fun configure() {
-        println("\tGuest.configure(): start...")
+        println("\t\tGuest.configure(): start...")
         super.configure()
-        println("\tGuest.configure(): done.")
+        println("\t\tGuest.configure(): done.")
     }
 
     /**
@@ -169,21 +168,20 @@ data class Employee(
         override val taxIdNumber: String,
         val employeeId: Int,
         val title: String) : Worker(familyName, givenName, dateOfBirth, taxIdNumber)
+// UNCOMMENT if you want to override toString() in this data class and still
+// have all the other cool features of data classes...
+//{
+//    override fun toString(): String {
+//        return "Employee(${super.toString()}, employeeId=$employeeId, title=$title)"
+//    }
+//}
 
 /**
  * The ubiquitous main function. We meet again.
  */
 fun main(args: Array<String>) {
-    // Person example
-    val person = createPerson()
-    processPerson(person = person)
-
     // Guest example
     val guest = createGuest()
     processGuest(guest = guest)
-
-    // Data class example
-    val employee: Employee = createEmployee()
-    processEmployee(employee = employee)
 
 }

@@ -14,6 +14,7 @@
  *    limitations under the License.
  *
  */
+package com.makotogo.learn.kotlin
 
 import com.makotogo.learn.kotlin.controller.processGuest
 import com.makotogo.learn.kotlin.controller.processPerson
@@ -34,7 +35,7 @@ import java.time.LocalDate
  */
 fun instantiatePerson() {
     println("********** instantiatePerson() **********")
-    println("Instantiating Person")
+    println("Calling Person() constructor")
     val person = Person(
             familyName = "Jones",
             givenName = "Mike",
@@ -56,7 +57,7 @@ private fun betterPersonInstantiation() {
     //
     // Create a Person object with random attribute values
     // Invoke primary constructor
-    println("Instantiating Person")
+    println("Calling Person() constructor")
     val person = Person(familyName, givenName, dateOfBirth)
     //
     // Now process that Person object
@@ -73,7 +74,7 @@ fun instantiateWorker() {
     //
     // Create a Worker object with random attribute values
     // Invoke primary constructor
-    println("Instantiating Worker")
+    println("Calling Worker() constructor")
     val worker = Worker(familyName, givenName, dateOfBirth, taxIdNumber)
     //
     // Now process that Worker object
@@ -92,7 +93,7 @@ fun instantiateGuest() {
     val taxIdNumber = generateRandomTaxIdNumber()
     //
     // Create a Guest - invoke secondary constructor
-    println("Instantiating Guest")
+    println("Calling Guest() constructor")
     val guest = Guest(
             familyName = familyName,
             givenName = givenName,
@@ -123,7 +124,5 @@ fun main(args: Array<String>) {
     // Instantiate a Guest
     instantiateGuest()
 
-    // Property access examples
-    accessProperty()
 }
 
