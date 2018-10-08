@@ -17,8 +17,6 @@
 
 package com.makotogo.learn.kotlin.model
 
-import com.makotogo.learn.kotlin.controller.process
-import com.makotogo.learn.kotlin.javainterop.createGuest
 import java.time.LocalDate
 
 /**
@@ -78,14 +76,4 @@ class Employee(
     override fun toString(): String {
         return "Employee(${super.toString()}, employeeId=$employeeId, title=$title)"
     }
-}
-
-/**
- * The ubiquitous main function. We meet again.
- */
-fun main(args: Array<String>) {
-    // Guest example
-    val guest = createGuest()
-    process(guest = guest)
-
 }

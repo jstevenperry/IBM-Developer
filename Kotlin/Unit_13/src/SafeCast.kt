@@ -27,7 +27,8 @@ fun main(args: Array<String>) {
     // Run this several times. Since the MysteryBox produces good
     // data most of the time, we need to run this a few times
     // before getting bad data...
-    for (dummy in 1..10) {
+    for (iteration in 1..100) {
+        println("********** Iteration# $iteration **********")
         //
         // Perform safe cast
         val person: Person? = mysteryBox.mysteryObject() as? Person
@@ -38,11 +39,15 @@ fun main(args: Array<String>) {
         } else {
             //
             // Value was safe-cast to null
-            println("Expecting Person object, but got some other type instead.")
+            println("Safe-cast Person: Expecting Person object, but got some other type instead (possibly null).")
         }
         //
         // Perform unsafe cast
-        val unsafePerson: Person = mysteryBox.mysteryObject() as Person
-        println("UNSAFE CAST Person: $unsafePerson (got lucky this time)")
+        val unsafePerson: Person? = mysteryBox.mysteryObject() as Person?
+        if (unsafePerson != null) {
+            println("UNSAFE-CAST Person: $unsafePerson")
+        } else {
+            println("UNSAFE-CAST Person: Expecting Person object, but got null instead.")
+        }
     }
 }

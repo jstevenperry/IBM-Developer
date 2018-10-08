@@ -18,6 +18,8 @@ package com.makotogo.learn.kotlin.javainterop;
 
 import com.makotogo.learn.kotlin.model.Employee;
 import com.makotogo.learn.kotlin.model.Guest;
+import com.makotogo.learn.kotlin.model.Person;
+import com.makotogo.learn.kotlin.model.Worker;
 
 /**
  * Represents a third-party system with which sometimes you're required
@@ -27,7 +29,7 @@ import com.makotogo.learn.kotlin.model.Guest;
 public class MysteryBox {
 
     /**
-     * Use the Kotlin ObjectGenerator to return an Employee object
+     * Use the Kotlin ObjectGenerator to create and return an Employee object
      *
      * @return - an Employee object
      */
@@ -36,16 +38,39 @@ public class MysteryBox {
     }
 
     /**
-     * Use the Kotlin ObjectGenerator to return a Guest object
+     * Use the Kotlin ObjectGenerator to create and return a Guest object
      *
-     * @return Guest - a Guest object
+     * @return - a Guest object
      */
     public Guest fetchGuest() {
         return ObjectGeneratorKt.createGuest();
     }
 
     /**
-     * Use the Kotlin ObjectGenerator to return a Person object.
+     * Use the Kotlin ObjectGenerator to create and return a Worker object
+     *
+     * @return - a Worker object
+     */
+    public Worker fetchWorker() {
+        return ObjectGeneratorKt.createWorker();
+    }
+
+    /**
+     * Use the Kotlin ObjectGenerator to create and return a Person object
+     *
+     * @return - a Person object
+     */
+    public Person getchPerson() {
+        return ObjectGeneratorKt.createPerson();
+    }
+
+    /**
+     * Use the Kotlin ObjectGenerator to return an object. Ostensibly a
+     * Person object, but not always.
+     *
+     * ~10% of the time null will be returned.
+     *
+     * Why? It's a mystery.
      *
      * @return - a Person object (as Object)
      */
@@ -62,12 +87,18 @@ public class MysteryBox {
             ret = ObjectGeneratorKt.createGuest();
         } else if (30 <= randomInt && randomInt < 60) {
             ret = ObjectGeneratorKt.createEmployee();
-        } else if (60 <= randomInt && randomInt < 90) {
+        } else if (60 <= randomInt && randomInt < 80) {
             ret = ObjectGeneratorKt.createWorker();
-        } else if (randomInt > 90) {
-            //
-            // ~10% of the time return a Float
-            ret = ObjectGeneratorKt.createFloat(0);
+        } else if (80 <= randomInt && randomInt < 90) {
+            ret = null;
+        } else if (randomInt >= 90) {
+            if (randomInt < 95) {
+                // If between 90 and 94, return a Char
+                ret = ObjectGeneratorKt.createChar();
+            } else {
+                // Return a Float
+                ret = ObjectGeneratorKt.createFloat(0);
+            }
         }
         //
         // Return the object

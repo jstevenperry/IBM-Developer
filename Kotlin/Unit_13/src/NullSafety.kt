@@ -21,44 +21,42 @@ import com.makotogo.learn.kotlin.model.Employee
 
 fun main(args: Array<String>) {
     //
-    // ArrayList of Employees
-    val employees = ArrayList<Employee>()
-    //
     // Get a few Employees
     for (index in 1..100) {
-        employees.add(mysteryBox.fetchNewHire())
-    }
-
-    for (index in 0 until employees.size) {
-        val employee = employees[index]
         //
-        //
-        // Capitalize the chosen and print it out,
-        // along with the Employee string representation
-
-        // TODO: Break these out into separate functions
-        //
-        // Demonstrate null-safe operator
-        println("(?) Employee: ${employee.title?.toUpperCase()}: $employee")
-
+        // Get a new hire (Employee)
+        val employee: Employee? = mysteryBox.fetchNewHire()
         //
         // The default attribute value (if null)
         val titleDefault = "ASSOCIATE"
 
         //
-        // Manual null check
-        if (employee.title == null) {
-            println("(if) Employee: $titleDefault: $employee")
+        // Demo:
+        // Capitalize the Employee's title and print it out,
+        // along with the Employee string representation
+
+        //
+        // Manual null checks
+        if (employee != null) {
+            if (employee.title == null) {
+                println("(if) Employee: $titleDefault: $employee")
+            } else {
+                println("(else) Employee: ${employee.title.toUpperCase()}: $employee")
+            }
         } else {
-            println("(else) Employee: ${employee.title.toUpperCase()}: $employee")
+            println("(if) Employee: null: null")
         }
 
         //
+        // Demonstrate null-safe operator
+        println("(?) Employee: ${employee?.title?.toUpperCase()}: $employee")
+
+        //
         // Demonstrate Elvis operator
-        println("(?:) Employee: ${employee.title?.toUpperCase() ?: titleDefault}: $employee")
+        println("(?:) Employee: ${employee?.title?.toUpperCase() ?: titleDefault}: $employee")
 
         //
         // Demonstrate double-bang-operator - last resort
-        println("(!!) Employee: ${employee.title!!.toUpperCase()}: $employee")
+        println("(!!) Employee: ${employee?.title!!.toUpperCase()}: $employee")
     }
 }

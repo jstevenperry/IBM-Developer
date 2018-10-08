@@ -36,9 +36,16 @@ import java.util.Random
  *
  * I've left the class written in Kotlin for two reasons:
  * 1. I'm somewhat lazy - I've tested this code extensively and I know it
- * works. If I translated it to Java I'd be forced to retest.
+ * works. If I translated it to Java I'd be forced to retest (that's just
+ * how I roll).
  *
  * 2. This serves as a demonstrate of Java to Kotlin interop
+ *
+ * 3. This is a Kotlin course, so most of the code *should be* in Kotlin
+ *
+ * 4. That is three reasons.
+ *
+ * 5. I apparently cannot count.
  */
 
 /**
@@ -85,6 +92,14 @@ private fun generateRandomNumber(): Float {
 }
 
 /**
+ * This function has roughly a 1/10 chance of returning true
+ */
+private fun tenPercentChance(): Boolean {
+    val randomInt = generateRandomInt(upperBoundExclusive = 100)
+    return (randomInt % 10 == 0)
+}
+
+/**
  * A few (weird) family names. Not from around here.
  * As in anywhere on (this) Earth.
  */
@@ -111,14 +126,18 @@ private val FAMILY_NAME = arrayOf(
         "Wragdhen",
         "Xntlh",
         "Yagnag",
-        "Zhangth",
-        null)
+        "Zhangth")
 
 /**
  * Generate a random last name using the FAMILY_NAME array
  * along with a random index into the array.
+ *
+ * There is ~10% chance null will be returned instead.
  */
 internal fun generateRandomFamilyName(): String? {
+    if (tenPercentChance()) {
+        return null
+    }
     return FAMILY_NAME[generateRandomInt(FAMILY_NAME.size)]
 }
 
@@ -151,21 +170,30 @@ private val GIVEN_NAME = arrayOf(
         "Wrog",
         "Xlott",
         "Yogrl",
-        "Zelx",
-        null)
+        "Zelx")
 
 /**
  * Generate a random first name using the GIVEN_NAME array
  * along with a random index into the array.
+ *
+ * There is ~10% chance null will be returned instead.
  */
 internal fun generateRandomGivenName(): String? {
+    if (tenPercentChance()) {
+        return null
+    }
     return GIVEN_NAME[generateRandomInt(GIVEN_NAME.size)]
 }
 
 /**
  * Generate a random date of birth
+ *
+ * There is ~10% chance null will be returned instead.
  */
-internal fun generateRandomYearMonthDayTriple(): Triple<Int, Int, Int> {
+internal fun generateRandomYearMonthDayTriple(): Triple<Int, Int, Int>? {
+    if (tenPercentChance()) {
+        return null
+    }
     val year = generateRandomYear(earliestYear = 1950, latestYear = 2000)
     val month = generateRandomMonth()
     val day = generateRandomDayOfMonth(year, month)
@@ -228,28 +256,25 @@ private val TITLE_SUFFIX = arrayOf("ist", "er", "onator", "erator", "o")
  * Generate and return a random (and probably silly) title
  */
 internal fun generateRandomTitle(employeeId: Int?): String? {
-    val ret: String?
+    if (tenPercentChance()) {
+        return null
+    }
     val baseTitle = GIVEN_NAME[generateRandomInt(GIVEN_NAME.size)] +
             TITLE_SUFFIX[generateRandomInt(TITLE_SUFFIX.size)]
     when (employeeId) {
         in 0..2000 -> {
-            ret = "Chief $baseTitle"
+            return "Chief $baseTitle"
         }
         in 2001..30000 -> {
-            ret = "Sr. $baseTitle"
+            return "Sr. $baseTitle"
         }
         in 30001..50000 -> {
-            ret = "Assoc. $baseTitle"
-        }
-        in 50001..59999 -> {
-            // 10% of the time the title is null
-            ret = null
+            return "Assoc. $baseTitle"
         }
         else -> {
-            ret = "Jr. $baseTitle"
+            return "Jr. $baseTitle"
         }
     }
-    return ret
 }
 
 /**
@@ -260,8 +285,12 @@ private val PURPOSE = arrayOf("Maintenance", "Package Delivery", "Consulting", "
 /**
  * Generate a random purpose. Occasionally returns null to simulate the
  * real world (sigh).
+ * There is ~10% chance null will be returned instead.
  */
 internal fun generateRandomPurpose(): String? {
+    if (tenPercentChance()) {
+        return null
+    }
     return PURPOSE[generateRandomInt(PURPOSE.size)]
 }
 
@@ -269,11 +298,13 @@ internal fun generateRandomPurpose(): String? {
  * Generate random (fake) tax ID number of the form
  * 000-00-0000.
  *
- * Occasionally returns null to simulate the real world.
+ * There is ~10% chance null will be returned instead.
  */
-internal fun generateRandomTaxIdNumber(): String {
-
-
+internal fun generateRandomTaxIdNumber(): String? {
+    if (tenPercentChance()) {
+        return null
+    }
+    //
     // Simple but (more important) readable
     val part1 = "000"
     val part2 = "00" + generateRandomInt(99).toString()
@@ -283,37 +314,71 @@ internal fun generateRandomTaxIdNumber(): String {
 }
 
 /**
- * Create a Person object using randomly generated data.
+ * Create and return a [Worker] object filled with
+ * random data.
+ * There is ~10% chance null will be returned instead.
  */
-fun createPerson(): Person {
-    return Person(generateRandomFamilyName(), generateRandomGivenName(), generateRandomYearMonthDayTriple().toLocalDate())
-}
-
-fun createWorker(): Worker {
-    return Worker(generateRandomFamilyName(),
-            generateRandomGivenName(),
-            generateRandomYearMonthDayTriple().toLocalDate(),
-            generateRandomTaxIdNumber())
-}
-
-fun createGuest(): Guest {
-    return Guest(
+fun createPerson(): Person? {
+    if (tenPercentChance()) {
+        return null
+    }
+    return Person(
             generateRandomFamilyName(),
             generateRandomGivenName(),
-            generateRandomYearMonthDayTriple().toLocalDate(),
-            generateRandomTaxIdNumber(),
-            generateRandomPurpose()
+            generateRandomYearMonthDayTriple()?.toLocalDate()
     )
 }
 
 /**
- * Create a new [Employee], fill it with random data,
- * and return it.
+ * Create and return a [Worker] object filled with
+ * random data.
+ * There is ~10% chance null will be returned instead.
  */
-fun createEmployee(): Employee {
+fun createWorker(): Worker? {
+    if (tenPercentChance()) {
+        return null
+    }
+    return Worker(
+            familyName = generateRandomFamilyName(),
+            givenName = generateRandomGivenName(),
+            dateOfBirth = generateRandomYearMonthDayTriple()?.toLocalDate(),
+            taxIdNumber = generateRandomTaxIdNumber())
+}
+
+/**
+ * Create and return a [Guest] object.
+ * There is ~10% chance null will be returned instead.
+ */
+fun createGuest(): Guest? {
+    if (tenPercentChance()) {
+        return null
+    }
+    return Guest(
+            familyName = generateRandomFamilyName(),
+            givenName = generateRandomGivenName(),
+            dateOfBirth = generateRandomYearMonthDayTriple()?.toLocalDate(),
+            taxIdNumber = generateRandomTaxIdNumber(),
+            purpose = generateRandomPurpose()
+    )
+}
+
+/**
+ * Create and return a new [Employee] object.
+ * There is ~10% chance null will be returned instead.
+ */
+fun createEmployee(): Employee? {
+    //
+    // ~10% of the time, this function will return null
+    if (tenPercentChance()) {
+        //
+        // Looks like this is one of those times...
+        return null
+    }
+    //
+    // Go ahead and build out the Employee
     val familyName = generateRandomFamilyName()
     val givenName = generateRandomGivenName()
-    val dateOfBirth = generateRandomYearMonthDayTriple().toLocalDate()
+    val dateOfBirth = generateRandomYearMonthDayTriple()?.toLocalDate()
     val employeeId = generateRandomEmployeeId()
     val title = generateRandomTitle(employeeId = employeeId)
     val taxIdNumber = generateRandomTaxIdNumber()
