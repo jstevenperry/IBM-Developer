@@ -17,37 +17,66 @@
 package com.makotogo.learn.kotlin
 
 import com.makotogo.learn.kotlin.controller.mysteryBox
+import com.makotogo.learn.kotlin.javainterop.createGuest
+import com.makotogo.learn.kotlin.javainterop.createPerson
+import com.makotogo.learn.kotlin.javainterop.createWorker
+import com.makotogo.learn.kotlin.javainterop.generateRandomInt
 import com.makotogo.learn.kotlin.model.Person
+
+/**
+ * Returns a random object from the mysteryArray.
+ */
+fun mysteryObject(): Any? {
+    val mysteryArray = arrayOf(
+            null,
+            23,
+            createGuest(),
+            42L,
+            "Hello?",
+            '>',
+            createPerson(),
+            1.0f,
+            Double.NaN,
+            true,
+            createWorker())
+    return mysteryArray[generateRandomInt(mysteryArray.size)]
+}
+
+fun mysteryBoxObject() {
+    println("********** mysteryBoxObject() **********")
+    //
+    // Get an object from the mystery box
+    val mysteryObject = mysteryBox.mysteryObject()
+    //
+    // Safe cast - gives null if the type is wrong at runtime
+    val safePerson: Person? = mysteryObject as? Person
+    println("Safe-cast Person: $safePerson")
+    //
+    // Unsafe cast - gives ClassCastException if the type is wrong at runtime
+    val unsafePerson: Person? = mysteryObject as Person?
+    println("UNSAFE-CAST Person: $unsafePerson")
+}
+
+fun localMysteryObject() {
+    println("********** localMysteryObject() **********")
+    //
+    // Let's try this again with the mysteryObject function
+    val mysteryBoxObject = mysteryObject()
+    //
+    // Safe cast
+    println("Safe-cast Person: ${(mysteryBoxObject as? Person)}")
+    //
+    // Unsafe cast
+    println("UNSAFE-CAST Person: ${mysteryBoxObject as Person?}")
+}
 
 /**
  * The ubiquitous main function. We meet again.
  */
 fun main(args: Array<String>) {
-    //
-    // Run this several times. Since the MysteryBox produces good
-    // data most of the time, we need to run this a few times
-    // before getting bad data...
-    for (iteration in 1..100) {
-        println("********** Iteration# $iteration **********")
-        //
-        // Perform safe cast
-        val person: Person? = mysteryBox.mysteryObject() as? Person
-        //
-        // Now process unless it is null (thanks, safe cast!)
-        if (person != null) {
-            println("Safe-cast Person: $person")
-        } else {
-            //
-            // Value was safe-cast to null
-            println("Safe-cast Person: Expecting Person object, but got some other type instead (possibly null).")
-        }
-        //
-        // Perform unsafe cast
-        val unsafePerson: Person? = mysteryBox.mysteryObject() as Person?
-        if (unsafePerson != null) {
-            println("UNSAFE-CAST Person: $unsafePerson")
-        } else {
-            println("UNSAFE-CAST Person: Expecting Person object, but got null instead.")
-        }
+    for (iteration in 1..10) {
+        println("********** iteration # $iteration **********")
+        mysteryBoxObject()
+        localMysteryObject()
     }
 }

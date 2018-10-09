@@ -51,7 +51,7 @@ import java.util.Random
 /**
  * Java pseudo-random number generator
  */
-private val rng = Random(System.currentTimeMillis())
+private var rng = Random(System.currentTimeMillis())
 
 /**
  * Generate a random floating point number between zero
@@ -88,6 +88,9 @@ internal fun generateRandomNumber(upperBoundExclusive: Int): Float {
  * and one (exclusive)
  */
 private fun generateRandomNumber(): Float {
+    //
+    // Refresh the Pseudo random number generator
+    rng = Random()
     return rng.nextFloat()
 }
 
@@ -261,18 +264,18 @@ internal fun generateRandomTitle(employeeId: Int?): String? {
     }
     val baseTitle = GIVEN_NAME[generateRandomInt(GIVEN_NAME.size)] +
             TITLE_SUFFIX[generateRandomInt(TITLE_SUFFIX.size)]
-    when (employeeId) {
+    return when (employeeId) {
         in 0..2000 -> {
-            return "Chief $baseTitle"
+            "Chief $baseTitle"
         }
         in 2001..30000 -> {
-            return "Sr. $baseTitle"
+            "Sr. $baseTitle"
         }
         in 30001..50000 -> {
-            return "Assoc. $baseTitle"
+            "Assoc. $baseTitle"
         }
         else -> {
-            return "Jr. $baseTitle"
+            "Jr. $baseTitle"
         }
     }
 }

@@ -24,7 +24,7 @@ import com.makotogo.learn.kotlin.model.Worker
 /**
  * Perform a security check
  */
-class SecurityCheck() {
+class SecurityCheck {
 
     /**
      * Returns true if the specified [purpose] is one that

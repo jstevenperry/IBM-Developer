@@ -63,7 +63,7 @@ class Validator {
         //
         // If there were any validation errors, throw an exception
         if (validationErrors.size > 0) {
-            throw ValidationException("Validation errors: ${validationErrors.toString()}")
+            throw ValidationException("Validation errors: $validationErrors")
         }
 
         //

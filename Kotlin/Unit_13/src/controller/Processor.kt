@@ -57,7 +57,7 @@ fun throwAccessException(message: String): Nothing {
  * Attempt to admit them. If that goes well, then
  * print a message, otherwise handle the exception.
  */
-fun process(person: Person) {
+fun process(person: Person): Boolean {
     println("Processing Person => $person")
     when (person) {
         is Guest -> process(person)
@@ -75,6 +75,7 @@ fun process(person: Person) {
             }
         }
     }
+    return true
 }
 
 /**
@@ -82,7 +83,7 @@ fun process(person: Person) {
  * Attempt to admit them. If that goes well, then
  * print a message, otherwise handle the exception.
  */
-fun process(employee: Employee) {
+fun process(employee: Employee): Boolean {
     println("Processing Employee => $employee")
     try {
         validator.validate(employee)
@@ -93,6 +94,7 @@ fun process(employee: Employee) {
         println(message)
         throw ProcessorException(message, e)
     }
+    return true
 }
 
 /**
@@ -100,7 +102,7 @@ fun process(employee: Employee) {
  * Attempt to admit them. If that goes well, then
  * print a message, otherwise handle the exception.
  */
-fun process(guest: Guest) {
+fun process(guest: Guest): Boolean {
     println("Processing Guest => $guest")
     try {
         validator.validate(guest)
@@ -111,4 +113,5 @@ fun process(guest: Guest) {
         println(message)
         throw ProcessorException(message, e)
     }
+    return true
 }

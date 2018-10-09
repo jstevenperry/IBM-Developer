@@ -26,6 +26,7 @@ import com.makotogo.learn.kotlin.model.Worker;
  * to interact. You can't control what it does, and you can't choose
  * another system (a common situation in corporate IT dev).
  */
+@SuppressWarnings({"UnusedReturnValue", "ConstantConditions"})
 public class MysteryBox {
 
     /**
@@ -34,7 +35,16 @@ public class MysteryBox {
      * @return - an Employee object
      */
     public Employee fetchNewHire() {
-        return ObjectGeneratorKt.createEmployee();
+
+        Employee ret = ObjectGeneratorKt.createEmployee();
+        System.out.println("Created Employee: " +
+                "FamilyName=" + ret.getFamilyName() +
+                "GivenName=" + ret.getGivenName() +
+                "DateOfBirth=" + ret.getDateOfBirth() +
+                "TaxIdNumber=" + ret.getTaxIdNumber() +
+                "EmployeeId=" + ret.getEmployeeId()
+        );
+        return ret;
     }
 
     /**
@@ -42,8 +52,16 @@ public class MysteryBox {
      *
      * @return - a Guest object
      */
-    public Guest fetchGuest() {
-        return ObjectGeneratorKt.createGuest();
+    private Guest fetchGuest() {
+        Guest ret = ObjectGeneratorKt.createGuest();
+        System.out.println("Created Guest: " +
+                "FamilyName=" + ret.getFamilyName() +
+                "GivenName=" + ret.getGivenName() +
+                "DateOfBirth=" + ret.getDateOfBirth() +
+                "TaxIdNumber=" + ret.getTaxIdNumber() +
+                "Purpose=" + ret.getPurpose()
+        );
+        return ret;
     }
 
     /**
@@ -51,8 +69,15 @@ public class MysteryBox {
      *
      * @return - a Worker object
      */
-    public Worker fetchWorker() {
-        return ObjectGeneratorKt.createWorker();
+    private Worker fetchWorker() {
+        Worker ret = ObjectGeneratorKt.createWorker();
+        System.out.println("Created Worker: " +
+                "FamilyName=" + ret.getFamilyName() +
+                "GivenName=" + ret.getGivenName() +
+                "DateOfBirth=" + ret.getDateOfBirth() +
+                "TaxIdNumber=" + ret.getTaxIdNumber()
+        );
+        return ret;
     }
 
     /**
@@ -60,8 +85,14 @@ public class MysteryBox {
      *
      * @return - a Person object
      */
-    public Person getchPerson() {
-        return ObjectGeneratorKt.createPerson();
+    private Person fetchPerson() {
+        Person ret = ObjectGeneratorKt.createPerson();
+        System.out.println("Created Person: " +
+                "FamilyName=" + ret.getFamilyName() +
+                "GivenName=" + ret.getGivenName() +
+                "DateOfBirth=" + ret.getDateOfBirth()
+        );
+        return ret;
     }
 
     /**
@@ -77,18 +108,18 @@ public class MysteryBox {
     public Object mysteryObject() {
         //
         // Default return value: Person object
-        Object ret = ObjectGeneratorKt.createPerson();
+        Object ret = fetchPerson();
         //
         // Generate a random int between 0 and 9 (inclusive0
         int randomInt = ObjectGeneratorKt.generateRandomInt(100);
         //
         // Depending on the value of randomInt, return a different object
         if (10 <= randomInt && randomInt < 30) {
-            ret = ObjectGeneratorKt.createGuest();
+            ret = fetchGuest();
         } else if (30 <= randomInt && randomInt < 60) {
-            ret = ObjectGeneratorKt.createEmployee();
+            ret = fetchNewHire();
         } else if (60 <= randomInt && randomInt < 80) {
-            ret = ObjectGeneratorKt.createWorker();
+            ret = fetchWorker();
         } else if (80 <= randomInt && randomInt < 90) {
             ret = null;
         } else if (randomInt >= 90) {

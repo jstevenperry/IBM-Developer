@@ -26,7 +26,7 @@ import java.util.ArrayList
 /**
  * Demonstrate File I/O in Kotlin
  */
-class KotlinFileIo {
+class SimpleFileReader {
     /**
      * Read the specified input file whose name is [fileName]
      * and return its contents as a List<String>.
@@ -63,7 +63,7 @@ class KotlinFileIo {
 fun goodReadDemo() {
     //
     // Instantiate the class that does the I/O
-    val kotlinFileIo = KotlinFileIo()
+    val kotlinFileIo = SimpleFileReader()
     //
     // Read the file
     val lines = kotlinFileIo.readFile(fileName = "loremIpsum5p.txt")
@@ -79,7 +79,7 @@ fun goodReadDemo() {
 fun badReadDemo() {
     //
     // Instantiate the class that does the I/O
-    val kotlinFileIo = KotlinFileIo()
+    val kotlinFileIo = SimpleFileReader()
     //
     // Read the file
     kotlinFileIo.readFile(fileName = "FILE_DOES_NOT_EXIST.TXT")
