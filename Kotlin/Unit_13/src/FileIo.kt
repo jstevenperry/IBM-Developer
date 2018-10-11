@@ -86,6 +86,9 @@ fun badReadDemo() {
 }
 
 fun main(args: Array<String>) {
+    println("********** goodReadDemo() **********")
+    goodReadDemo()
+
     println("********** badReadDemo() **********")
     try {
         badReadDemo()
@@ -94,6 +97,4 @@ fun main(args: Array<String>) {
         println(message)
         throw RuntimeException(message, e)
     }
-    println("********** goodReadDemo() **********")
-    goodReadDemo()
 }

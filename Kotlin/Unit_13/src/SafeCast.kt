@@ -53,7 +53,7 @@ fun mysteryBoxObject() {
     println("Safe-cast Person: $safePerson")
     //
     // Unsafe cast - gives ClassCastException if the type is wrong at runtime
-    val unsafePerson: Person? = mysteryObject as Person?
+    val unsafePerson: Person = mysteryObject as Person
     println("UNSAFE-CAST Person: $unsafePerson")
 }
 

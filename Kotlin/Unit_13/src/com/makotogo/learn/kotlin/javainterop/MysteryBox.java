@@ -37,13 +37,18 @@ public class MysteryBox {
     public Employee fetchNewHire() {
 
         Employee ret = ObjectGeneratorKt.createEmployee();
-        System.out.println("Created Employee: " +
-                "FamilyName=" + ret.getFamilyName() +
-                "GivenName=" + ret.getGivenName() +
-                "DateOfBirth=" + ret.getDateOfBirth() +
-                "TaxIdNumber=" + ret.getTaxIdNumber() +
-                "EmployeeId=" + ret.getEmployeeId()
-        );
+        if (ret != null) {
+            System.out.println("Created Employee: " +
+                    "FamilyName=" + ret.getFamilyName() + "," +
+                    "GivenName=" + ret.getGivenName() + "," +
+                    "DateOfBirth=" + ret.getDateOfBirth() + "," +
+                    "TaxIdNumber=" + ret.getTaxIdNumber() + "," +
+                    "EmployeeId=" + ret.getEmployeeId() + "," +
+                    "Title=" + ret.getTitle()
+            );
+        } else {
+            System.out.println("Created Employee: null");
+        }
         return ret;
     }
 
@@ -54,13 +59,17 @@ public class MysteryBox {
      */
     private Guest fetchGuest() {
         Guest ret = ObjectGeneratorKt.createGuest();
-        System.out.println("Created Guest: " +
-                "FamilyName=" + ret.getFamilyName() +
-                "GivenName=" + ret.getGivenName() +
-                "DateOfBirth=" + ret.getDateOfBirth() +
-                "TaxIdNumber=" + ret.getTaxIdNumber() +
-                "Purpose=" + ret.getPurpose()
-        );
+        if (ret != null) {
+            System.out.println("Created Guest: " +
+                    "FamilyName=" + ret.getFamilyName() + "," +
+                    "GivenName=" + ret.getGivenName() + "," +
+                    "DateOfBirth=" + ret.getDateOfBirth() + "," +
+                    "TaxIdNumber=" + ret.getTaxIdNumber() + "," +
+                    "Purpose=" + ret.getPurpose()
+            );
+        } else {
+            System.out.println("Created Guest: null");
+        }
         return ret;
     }
 
@@ -71,12 +80,16 @@ public class MysteryBox {
      */
     private Worker fetchWorker() {
         Worker ret = ObjectGeneratorKt.createWorker();
-        System.out.println("Created Worker: " +
-                "FamilyName=" + ret.getFamilyName() +
-                "GivenName=" + ret.getGivenName() +
-                "DateOfBirth=" + ret.getDateOfBirth() +
-                "TaxIdNumber=" + ret.getTaxIdNumber()
-        );
+        if (ret != null) {
+            System.out.println("Created Worker: " +
+                    "FamilyName=" + ret.getFamilyName() + "," +
+                    "GivenName=" + ret.getGivenName() + "," +
+                    "DateOfBirth=" + ret.getDateOfBirth() + "," +
+                    "TaxIdNumber=" + ret.getTaxIdNumber()
+            );
+        } else {
+            System.out.println("Created Worker: null");
+        }
         return ret;
     }
 
@@ -87,11 +100,15 @@ public class MysteryBox {
      */
     private Person fetchPerson() {
         Person ret = ObjectGeneratorKt.createPerson();
-        System.out.println("Created Person: " +
-                "FamilyName=" + ret.getFamilyName() +
-                "GivenName=" + ret.getGivenName() +
-                "DateOfBirth=" + ret.getDateOfBirth()
-        );
+        if (ret != null) {
+            System.out.println("Created Person: " +
+                    "FamilyName=" + ret.getFamilyName() + "," +
+                    "GivenName=" + ret.getGivenName() + "," +
+                    "DateOfBirth=" + ret.getDateOfBirth()
+            );
+        } else {
+            System.out.println("Created Person: null");
+        }
         return ret;
     }
 

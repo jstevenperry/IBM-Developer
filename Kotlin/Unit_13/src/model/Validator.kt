@@ -16,10 +16,7 @@
 
 package com.makotogo.learn.kotlin.model
 
-import com.makotogo.learn.kotlin.javainterop.createWorker
-
 class Validator {
-
     /**
      * Validates the specified [person] object from
      * the ground up.
@@ -29,20 +26,11 @@ class Validator {
         //
         // The things that are wrong with the Person
         val validationErrors = ArrayList<String>()
-
-        //
-        // First things first, is the reference null?
-        if (person == null) {
-            throw IllegalArgumentException("Person reference cannot be null")
-        }
-
         //
         // Check the various Person subclasses. Use smart casts.
-
         //
         // Person checks
         validatePerson(person, validationErrors)
-
         //
         // Worker checks
         if (person is Worker) {
@@ -53,22 +41,57 @@ class Validator {
         if (person is Guest) {
             validateGuest(person, validationErrors)
         }
-
         //
         // Employee checks
         if (person is Employee) {
             validateEmployee(person, validationErrors)
         }
-
         //
         // If there were any validation errors, throw an exception
         if (validationErrors.size > 0) {
             throw ValidationException("Validation errors: $validationErrors")
         }
-
         //
         // Made it this far, object is valid
         return true
+    }
+
+    /**
+     * Perform Person-specific validations
+     */
+    private fun validatePerson(person: Person?, validationErrors: ArrayList<String>) {
+        //
+        // First things first, is the reference null?
+        if (person == null) {
+            throw IllegalArgumentException("Person reference cannot be null")
+        }
+        if (person.familyName == null) {
+            validationErrors.add("Family name is null")
+        }
+        if (person.givenName == null) {
+            validationErrors.add("Given name is null")
+        }
+        if (person.dateOfBirth == null) {
+            validationErrors.add("Date of birth is null")
+        }
+    }
+
+    /**
+     * Perform Worker-specific validations
+     */
+    private fun validateWorker(person: Worker, validationErrors: ArrayList<String>) {
+        if (person.taxIdNumber == null) {
+            validationErrors.add("TaxID is null")
+        }
+    }
+
+    /**
+     * Perform Guest-specific validations
+     */
+    private fun validateGuest(person: Guest, validationErrors: ArrayList<String>) {
+        if (person.purpose == null) {
+            validationErrors.add("Purpose is null")
+        }
     }
 
     /**
@@ -83,49 +106,4 @@ class Validator {
         }
     }
 
-    /**
-     * Perform Guest-specific validations
-     */
-    private fun validateGuest(person: Guest, validationErrors: ArrayList<String>) {
-        if (person.purpose == null) {
-            validationErrors.add("Purpose is null")
-        }
-    }
-
-    /**
-     * Perform Worker-specific validations
-     */
-    private fun validateWorker(person: Worker, validationErrors: ArrayList<String>) {
-        if (person.taxIdNumber == null) {
-            validationErrors.add("TaxID is null")
-        }
-    }
-
-    /**
-     * Perform Person-specific validations
-     */
-    private fun validatePerson(person: Person, validationErrors: ArrayList<String>) {
-        if (person.familyName == null) {
-            validationErrors.add("Family name is null")
-        }
-        if (person.givenName == null) {
-            validationErrors.add("Given name is null")
-        }
-        if (person.dateOfBirth == null) {
-            validationErrors.add("Date of birth is null")
-        }
-    }
-}
-
-/**
- * The ubiquitous main function. We meet again.
- */
-fun main(args: Array<String>) {
-    //
-    // Instantiate Validator
-    val validator = Validator()
-    //
-    // Worker - rando
-    val worker = createWorker()
-    validator.validate(worker)
 }

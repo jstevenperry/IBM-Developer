@@ -62,11 +62,6 @@ fun handleValidationExceptionDemo() {
         //
         // Looks like the object is valid
         println("Valid person: $person")
-        //
-        // Process the Person
-        if (person is Person) {
-            process(person)
-        }
     } catch (e: ValidationException) {
         //
         // Something is wrong with that object
@@ -113,7 +108,7 @@ fun handleAllAppExceptionsDemo() {
 fun main(args: Array<String>) {
     //
     // Let all exceptions percolate up to the runtime
-    noExceptionHandlingDemo()
+    // noExceptionHandlingDemo()
     //
     // Handle only ValidationException
     handleValidationExceptionDemo()
