@@ -45,7 +45,7 @@ fun demoIn(intArray: IntArray) {
 }
 
 fun demoInWithStep(stringArray: Array<String>, stepSize: Int) {
-    println("********** Ranges.demoInWithStep($string, $stepSize) **********")
+    println("********** Ranges.demoInWithStep($stringArray, $stepSize) **********")
     val maxIndex = stringArray.size - 1
     val stringAccum = StringBuilder()
     for (index in 0..maxIndex step stepSize) {
