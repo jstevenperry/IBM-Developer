@@ -22,6 +22,9 @@
 // An array of Int
 internal val intArray: IntArray = intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
+// An Array<Int>
+internal val arrayOfInt: Array<Int> = arrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
 // Empty array of Int
 internal val emptyIntArray = intArrayOf()
 
@@ -37,6 +40,7 @@ internal val emptyStringArray: Array<String> = emptyArray()
 fun main(args: Array<String>) {
     // Calls toString() on the object (spoiler alert: not very interesting)
     println("intArray = $intArray")
+    println("arrayOfInt = $arrayOfInt")
     println("emptyIntArray = $emptyIntArray")
 
     println("stringArray = $stringArray")
