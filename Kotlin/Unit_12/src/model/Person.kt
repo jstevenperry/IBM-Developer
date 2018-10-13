@@ -41,8 +41,8 @@ open class Person(
     // Private property
     private var fullName: String = "$familyName $givenName"
     //
-    // Private property - when the class was instantiated
-    private var whenInstantiated: LocalDateTime? = null
+    // Private property - when the class was instantiated - initialized later
+    private lateinit var whenInstantiated: LocalDateTime
     //
     // Private property - configured - write custom getter/setter
     protected var configured: Boolean = false
