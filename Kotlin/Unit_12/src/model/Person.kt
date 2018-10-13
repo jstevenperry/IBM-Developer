@@ -81,6 +81,13 @@ open class Person(
     }
 
     /**
+     * You can have more than one init block (if needed)
+     */
+//    init {
+//        println("*** Person 2nd Init Block start... ***")
+//    }
+
+    /**
      * Override toString() - because the default one is sub-optimal
      */
     override fun toString(): String {
