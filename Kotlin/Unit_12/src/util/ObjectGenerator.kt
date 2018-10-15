@@ -80,7 +80,7 @@ private val FAMILY_NAME = arrayOf(
         "Engan",
         "Fan",
         "Grale",
-        "Hor",
+        "Horv",
         "Ix",
         "Jaxl",
         "Kath",
