@@ -26,15 +26,21 @@ import java.time.LocalDateTime
  * Abstract class - represents a Human
  */
 abstract class Human {
+
     /**
-     * Abstract function
+     * Abstract function - configure() the Human
      */
     protected abstract fun configure()
 
     /**
-     * Abstract property
+     * Abstract property - makes Human identifiable
      */
-    protected abstract val whenCreated: LocalDateTime
+    protected abstract val identity: String
+
+    /**
+     * Abstract property - when Human was born
+     */
+    protected abstract val dateOfBirth: LocalDate
 
 }
 
@@ -42,19 +48,19 @@ abstract class Human {
  * Person class - subclass of Human
  */
 open class Person(
-        open val familyName: String,
-        open val givenName: String,
-        open val dateOfBirth: LocalDate) :Human() {
+        private val familyName: String,
+        private val givenName: String,
+        override val dateOfBirth: LocalDate) : Human() {
 
     /**
-     * Abstract property implementation
+     * Private property - lateinit
      */
-    override lateinit var whenCreated: LocalDateTime
+    private lateinit var whenCreated: LocalDateTime
 
     /**
      * Open property definition - can be overridden by subclass
      */
-    open val identity: String = "$givenName $familyName"
+    override val identity: String = "$givenName $familyName"
 
     /**
      * Initializer block
@@ -68,7 +74,7 @@ open class Person(
     /**
      * Abstract function implementation
      */
-    override fun configure() {
+    final override fun configure() {
         whenCreated = LocalDateTime.now()
     }
 
@@ -89,7 +95,6 @@ class Worker(familyName: String,
              val taxIdNumber: String) : Person(familyName, givenName, dateOfBirth) {
     /**
      * Override identity property from parent class
-     *
      * Use taxIdNumber property (filter out dashes)
      */
     override val identity = taxIdNumber.filter { charAt -> charAt != '-' }
