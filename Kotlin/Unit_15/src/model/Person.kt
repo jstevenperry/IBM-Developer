@@ -44,25 +44,20 @@ interface Identifiable {
     /**
      * Function - identify the object
      */
-    fun identify(): String
+    fun identify(): String {
+        return "Identity: $identity"
+    }
 }
 
 /**
  * Interface - marks an object as Human
  */
-interface Human : Configurable, Identifiable {
+interface Human : Configurable {
     /**
      * Property - when the Human was born
      */
     val dateOfBirth: LocalDate
 
-    /**
-     * Function from superinterface with default implementation:
-     * Print the identity and DOB.
-     */
-    override fun identify(): String {
-        return "Human: $identity, dateOfBirth=$dateOfBirth"
-    }
 }
 
 /**
@@ -71,7 +66,7 @@ interface Human : Configurable, Identifiable {
 open class Person(
         private val familyName: String,
         private val givenName: String,
-        override val dateOfBirth: LocalDate) : Human {
+        override val dateOfBirth: LocalDate) : Human, Identifiable {
 
     /**
      * Private property - lateinit
