@@ -28,11 +28,6 @@ import java.time.LocalDateTime
 abstract class Human {
 
     /**
-     * Abstract function - configure() the Human
-     */
-    protected abstract fun configure()
-
-    /**
      * Abstract property - makes Human identifiable
      */
     protected abstract val identity: String
@@ -40,8 +35,19 @@ abstract class Human {
     /**
      * Abstract property - when Human was born
      */
-    protected abstract val dateOfBirth: LocalDate
+    abstract val dateOfBirth: LocalDate
 
+    /**
+     * Abstract function - configure() the Human
+     */
+    protected abstract fun configure()
+
+    /**
+     * Function - identify the object
+     */
+    open fun identify(): String {
+        return "Identity: $identity"
+    }
 }
 
 /**
@@ -55,12 +61,17 @@ open class Person(
     /**
      * Private property - lateinit
      */
-    private lateinit var whenCreated: LocalDateTime
+    lateinit var whenCreated: LocalDateTime
 
     /**
      * Open property definition - can be overridden by subclass
      */
     override val identity: String = "$givenName $familyName"
+
+    /**
+     * Open property - subclasses can override
+     */
+    open val fullName: String = "$givenName $familyName"
 
     /**
      * Initializer block
@@ -74,7 +85,7 @@ open class Person(
     /**
      * Abstract function implementation
      */
-    final override fun configure() {
+    override fun configure() {
         whenCreated = LocalDateTime.now()
     }
 
@@ -82,22 +93,37 @@ open class Person(
      * toString() override
      */
     override fun toString(): String {
-        return "Person(identity=$identity, whenCreated=$whenCreated, familyName=$familyName, givenName=$givenName, dateOfBirth=$dateOfBirth)"
+        return "Person(identity=$identity, whenCreated=$whenCreated, fullName=$fullName, familyName=$familyName, givenName=$givenName, dateOfBirth=$dateOfBirth)"
     }
 }
 
 /**
  * Worker - subclass of Person
  */
-class Worker(familyName: String,
-             givenName: String,
-             dateOfBirth: LocalDate,
-             val taxIdNumber: String) : Person(familyName, givenName, dateOfBirth) {
+open class Worker(familyName: String,
+                  givenName: String,
+                  dateOfBirth: LocalDate,
+                  val taxIdNumber: String) : Person(familyName, givenName, dateOfBirth) {
     /**
      * Override identity property from parent class
      * Use taxIdNumber property (filter out dashes)
      */
     override val identity = taxIdNumber.filter { charAt -> charAt != '-' }
+
+    /**
+     * Override function from abstract base class Human
+     * to return the string representation
+     */
+    override fun identify(): String {
+        return toString()
+    }
+
+    /**
+     * Override the
+     */
+    final override fun configure() {
+        super.configure()
+    }
 
     /**
      * toString() override
@@ -110,7 +136,7 @@ class Worker(familyName: String,
 /**
  * The ubiquitous main function - we meet again.
  */
-fun main(args:Array<String>) {
+fun main(args: Array<String>) {
     //
     // Create a Human. Oh, wait, you can't instantiate an abstract class
     // val human = Human()
