@@ -32,7 +32,7 @@ abstract class Human {
     abstract fun configure()
 
     open fun identify(): String {
-        return ("Human Identity: $identity")
+        return "Human Identity: $identity"
     }
 }
 
@@ -73,10 +73,9 @@ class Worker(familyName: String,
     }
 }
 
+
 fun main(args: Array<String>) {
     // Human()
-
-    // Person()
 
     val familyName = generateRandomFamilyName()
     val givenName = generateRandomGivenName()
