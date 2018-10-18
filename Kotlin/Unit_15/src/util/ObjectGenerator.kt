@@ -131,16 +131,6 @@ private val FAMILY_NAME = arrayOf(
         "Zhangth")
 
 /**
- * Generate a random last name using the FAMILY_NAME array
- * along with a random index into the array.
- *
- * There is ~10% chance null will be returned instead.
- */
-internal fun generateRandomFamilyName(): String {
-    return FAMILY_NAME[generateRandomInt(FAMILY_NAME.size)]
-}
-
-/**
  * A few (weird) given names. Frankly, I'd give 'em back.
  */
 private val GIVEN_NAME = arrayOf(
@@ -172,10 +162,16 @@ private val GIVEN_NAME = arrayOf(
         "Zelx")
 
 /**
+ * Generate a random last name using the FAMILY_NAME array
+ * along with a random index into the array.
+ */
+internal fun generateRandomFamilyName(): String {
+    return FAMILY_NAME[generateRandomInt(FAMILY_NAME.size)]
+}
+
+/**
  * Generate a random first name using the GIVEN_NAME array
  * along with a random index into the array.
- *
- * There is ~10% chance null will be returned instead.
  */
 internal fun generateRandomGivenName(): String {
     return GIVEN_NAME[generateRandomInt(GIVEN_NAME.size)]
