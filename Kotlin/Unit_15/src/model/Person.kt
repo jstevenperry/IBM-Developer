@@ -52,8 +52,9 @@ interface Identifiable {
 
 /**
  * Interface - marks an object as Human
+ * Also Identifiable and Configurable
  */
-interface Human : Configurable, Identifiable {
+interface Human : Identifiable {
     /**
      * Property - when the Human was born
      */
@@ -62,8 +63,9 @@ interface Human : Configurable, Identifiable {
 
 /**
  * Interface - an entity with a name
+ * Also Configurable
  */
-interface Nameable {
+interface Nameable : Configurable, Identifiable {
     /**
      * Property - the family name
      */
@@ -85,12 +87,12 @@ open class Person(
     /**
      * Private property - lateinit
      */
-    lateinit var whenCreated: LocalDateTime
+    private lateinit var whenCreated: LocalDateTime
 
     /**
      * Override identity property
      */
-    override val identity = "$givenName $familyName"
+    override lateinit var identity: String
 
     /**
      * Initializer block
@@ -105,6 +107,11 @@ open class Person(
      * Abstract function implementation
      */
     final override fun configure() {
+        //
+        // Init identity property
+        identity = "$givenName $familyName"
+        //
+        // Init whenCreated property
         whenCreated = LocalDateTime.now()
     }
 
@@ -128,7 +135,7 @@ class Worker(familyName: String,
      *
      * Use taxIdNumber property (filter out dashes)
      */
-    override val identity = taxIdNumber.filter { charAt -> charAt != '-' }
+    override var identity = taxIdNumber.filter { charAt -> charAt != '-' }
 
     /**
      * toString() override
