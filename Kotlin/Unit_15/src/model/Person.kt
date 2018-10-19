@@ -40,6 +40,7 @@ interface Identifiable {
      * Property - identity for the object
      */
     val identity: String
+        get() = "UNKNOWN"
 
     /**
      * Function - identify the object
@@ -52,31 +53,44 @@ interface Identifiable {
 /**
  * Interface - marks an object as Human
  */
-interface Human : Configurable {
+interface Human : Configurable, Identifiable {
     /**
      * Property - when the Human was born
      */
     val dateOfBirth: LocalDate
+}
 
+/**
+ * Interface - an entity with a name
+ */
+interface Nameable {
+    /**
+     * Property - the family name
+     */
+    val familyName: String
+    /**
+     * Property - the given name
+     */
+    val givenName: String
 }
 
 /**
  * Person class - subclass of Human
  */
 open class Person(
-        private val familyName: String,
-        private val givenName: String,
-        override val dateOfBirth: LocalDate) : Human, Identifiable {
+        final override val familyName: String,
+        final override val givenName: String,
+        final override val dateOfBirth: LocalDate) : Human, Nameable {
 
     /**
      * Private property - lateinit
      */
-    private lateinit var whenCreated: LocalDateTime
+    lateinit var whenCreated: LocalDateTime
 
     /**
-     * Open property definition - can be overridden by subclass
+     * Override identity property
      */
-    override val identity: String = "$givenName $familyName"
+    override val identity = "$givenName $familyName"
 
     /**
      * Initializer block
@@ -117,14 +131,6 @@ class Worker(familyName: String,
     override val identity = taxIdNumber.filter { charAt -> charAt != '-' }
 
     /**
-     * Override function from interface.
-     * Print the string representation.
-     */
-    override fun identify(): String {
-        return toString()
-    }
-
-    /**
      * toString() override
      */
     override fun toString(): String {
@@ -143,11 +149,12 @@ fun main(args: Array<String>) {
 
     //
     // Create a Person. Print it out to see what's up.
+
     val person = createPerson()
-    println("Person object: $person")
+    println("Person(${person.identify()}): $person")
 
     //
     // Create a Worker. Print it out to see what's up.
     val worker = createWorker()
-    println("Worker object: $worker")
+    println("Worker(${worker.identify()}): $worker")
 }
