@@ -23,6 +23,11 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 /**
+ * Interface - a simple marker interface
+ */
+interface Marked
+
+/**
  * Interface - for objects that are configurable
  */
 interface Configurable {
@@ -129,7 +134,7 @@ open class Person(
 class Worker(familyName: String,
              givenName: String,
              dateOfBirth: LocalDate,
-             val taxIdNumber: String) : Person(familyName, givenName, dateOfBirth) {
+             val taxIdNumber: String) : Person(familyName, givenName, dateOfBirth), Marked {
     /**
      * Override identity property from parent class
      *
