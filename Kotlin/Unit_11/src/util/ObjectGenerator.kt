@@ -27,14 +27,6 @@ import java.util.Random
 private val rng = Random(System.currentTimeMillis())
 
 /**
- * Generate a random floating point number between zero
- * and 1000, and return it.
- *
- * Make sure the denominator is never zero
- */
-fun createFloat(index: Int) = (generateRandomNumber(upperBoundExclusive = index) + index)
-
-/**
  * Generate and return a random Char from one of the printable ASCII characters
  * (that is, 33 - 126)
  */
@@ -49,16 +41,8 @@ internal fun generateRandomInt(upperBoundExclusive: Int): Int {
 }
 
 /**
- * Generate a random floating point number between zero and 1.0f (exclusive)
- * and return it to the caller.
- */
-internal fun generateRandomNumber(upperBoundExclusive: Int): Float {
-    return (generateRandomNumber() * upperBoundExclusive.toFloat())
-}
-
-/**
  * Generate and return a random number between zero (inclusive)
- * and [upperBoundExclusive] (exclusive)
+ * and 1.0f (exclusive)
  */
 private fun generateRandomNumber(): Float {
     return rng.nextFloat()
@@ -141,7 +125,7 @@ private fun generateRandomGivenName(): String {
 }
 
 /**
- * Generate a random [employeeId] from 0 - 99999
+ * Generate a random employeeId from 0 - 99999
  */
 private fun generateRandomEmployeeId() = generateRandomInt(99999)
 
@@ -151,24 +135,24 @@ private fun generateRandomEmployeeId() = generateRandomInt(99999)
 private val TITLE_SUFFIX = arrayOf("ist", "er", "onator", "erator", "o")
 
 /**
- * Generate and return a random (and probably silly) [title]
+ * Generate and return a random (and probably silly) title
  */
 private fun generateRandomTitle(employeeId: Int?): String {
-    var ret = ""
+    val ret: String
     val baseTitle = GIVEN_NAME[generateRandomInt(GIVEN_NAME.size)] +
             TITLE_SUFFIX[generateRandomInt(TITLE_SUFFIX.size)]
-    when (employeeId) {
+    ret = when (employeeId) {
         in 0..2000 -> {
-            ret = "Chief $baseTitle"
+            "Chief $baseTitle"
         }
         in 2001..30000 -> {
-            ret = "Sr. $baseTitle"
+            "Sr. $baseTitle"
         }
         in 30001..70000 -> {
-            ret = "Assoc. $baseTitle"
+            "Assoc. $baseTitle"
         }
         else -> {
-            ret = "Jr. $baseTitle"
+            "Jr. $baseTitle"
         }
     }
     return ret
