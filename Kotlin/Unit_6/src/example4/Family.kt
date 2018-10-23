@@ -31,13 +31,13 @@ open class Parent(val name: String) {
     protected val protectedString = "$name.protectedString"
 
     protected fun disclosePrivate() {
-        println("${privateClass.name}")
+        println(privateClass.name)
     }
 }
 
 private class Child(name: String) : Parent(name) {
     fun disclose() {
-        println("$protectedString")
+        println(protectedString)
         disclosePrivate()
     }
 }
