@@ -53,6 +53,14 @@ class InnerClassesOuter {
                 println("InnerClassesOuter.Inner.InnerInner.publicProperty = $publicProperty")
                 println("InnerClassesOuter.Inner.InnerInner.protectedProperty = $protectedProperty")
                 println("InnerClassesOuter.Inner.InnerInner.privateProperty = $privateProperty")
+                println("\tInnerClassesOuter.Inner data:")
+                println("\tInnerClassesOuter.Inner.publicProperty = ${this@Inner.publicProperty}")
+                println("\tInnerClassesOuter.Inner.protectedProperty = ${this@Inner.protectedProperty}")
+                println("\tInnerClassesOuter.Inner.privateProperty = ${this@Inner.privateProperty}")
+                println("\t\tInnerClassesOuter data:")
+                println("\t\tInnerClassesOuter.Inner.publicProperty = ${this@InnerClassesOuter.publicProperty}")
+                println("\t\tInnerClassesOuter.Inner.protectedProperty = ${this@InnerClassesOuter.protectedProperty}")
+                println("\t\tInnerClassesOuter.Inner.privateProperty = ${this@InnerClassesOuter.privateProperty}")
             }
         }
 
@@ -61,6 +69,10 @@ class InnerClassesOuter {
             println("InnerClassesOuter.Inner.publicProperty = $publicProperty")
             println("InnerClassesOuter.Inner.protectedProperty = $protectedProperty")
             println("InnerClassesOuter.Inner.privateProperty = $privateProperty")
+            println("\tInnerClassesOuter data:")
+            println("\tInnerClassesOuter.Inner.publicProperty = ${this@InnerClassesOuter.publicProperty}")
+            println("\tInnerClassesOuter.Inner.protectedProperty = ${this@InnerClassesOuter.protectedProperty}")
+            println("\tInnerClassesOuter.Inner.privateProperty = ${this@InnerClassesOuter.privateProperty}")
         }
     }
 
