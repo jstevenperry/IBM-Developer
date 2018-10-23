@@ -53,33 +53,11 @@ import java.util.Random
 private var rng = Random(System.currentTimeMillis())
 
 /**
- * Generate a random floating point number between zero
- * and 1000, and return it.
- *
- * Make sure the denominator is never zero
- */
-fun createFloat(index: Int) = (generateRandomNumber(upperBoundExclusive = index) + index)
-
-/**
- * Generate and return a random Char from one of the printable ASCII characters
- * (that is, 33 - 126)
- */
-fun createChar() = (generateRandomInt(upperBoundExclusive = (127 - 33)) + 33).toChar()
-
-/**
  * Generate a random integer between zero and the [upperBoundExclusive]
  * and return it to the caller.
  */
 internal fun generateRandomInt(upperBoundExclusive: Int): Int {
     return (generateRandomNumber() * upperBoundExclusive).toInt()
-}
-
-/**
- * Generate a random floating point number between zero and 1.0f (exclusive)
- * and return it to the caller.
- */
-internal fun generateRandomNumber(upperBoundExclusive: Int): Float {
-    return (generateRandomNumber() * upperBoundExclusive.toFloat())
 }
 
 /**
@@ -91,14 +69,6 @@ private fun generateRandomNumber(): Float {
     // Refresh the Pseudo random number generator
     rng = Random()
     return rng.nextFloat()
-}
-
-/**
- * This function has roughly a 1/10 chance of returning true
- */
-private fun tenPercentChance(): Boolean {
-    val randomInt = generateRandomInt(upperBoundExclusive = 100)
-    return (randomInt % 10 == 0)
 }
 
 /**
@@ -234,54 +204,6 @@ private fun generateRandomDayOfMonth(year: Int, month: Int): Int {
     // Get the last day of the month for the year/month pair
     val maxDayOfMonth = YearMonth.of(year, month).atEndOfMonth().dayOfMonth
     return (generateRandomInt(upperBoundExclusive = maxDayOfMonth) + 1)
-}
-
-/**
- * Generate a random employeeId from 0 - 99999
- */
-internal fun generateRandomEmployeeId() = generateRandomInt(99999)
-
-/**
- * Some random title suffixes
- */
-private val TITLE_SUFFIX = arrayOf("ist", "er", "onator", "erator", "o")
-
-/**
- * Generate and return a random (and probably silly) title
- */
-internal fun generateRandomTitle(employeeId: Int?): String? {
-    val baseTitle = GIVEN_NAME[generateRandomInt(GIVEN_NAME.size)] +
-            TITLE_SUFFIX[generateRandomInt(TITLE_SUFFIX.size)]
-    return when (employeeId) {
-        in 0..2000 -> {
-            "Chief $baseTitle"
-        }
-        in 2001..30000 -> {
-            "Sr. $baseTitle"
-        }
-        in 30001..50000 -> {
-            "Assoc. $baseTitle"
-        }
-        else -> {
-            "Jr. $baseTitle"
-        }
-    }
-}
-
-/**
- * Some random purposes
- */
-private val PURPOSE = arrayOf("Maintenance", "Package Delivery", "Consulting", "Family Member", "Other", "Lost", null)
-
-/**
- * Generate a random purpose. Occasionally returns null to simulate the
- * real world (sigh).
- */
-internal fun generateRandomPurpose(): String? {
-    if (tenPercentChance()) {
-        return null
-    }
-    return PURPOSE[generateRandomInt(PURPOSE.size)]
 }
 
 /**
