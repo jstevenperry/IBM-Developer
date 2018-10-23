@@ -48,7 +48,7 @@ val now = {
 }
 
 /**
- * Lambda expression to generate a [LocalDate] for the specified [year], [month], [day]
+ * Lambda expression to generate a [LocalDate] for the specified year, month, day
  */
 val localDateFactory: (year: Int, month: Int, day: Int) -> LocalDate = { year, month, day ->
     LocalDate.of(year, month, day)

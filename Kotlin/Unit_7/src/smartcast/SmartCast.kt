@@ -17,9 +17,9 @@
 
 package com.makotogo.learn.kotlin.smartcast
 
-import com.makotogo.learn.kotlin.model.Person
-import com.makotogo.learn.kotlin.model.Guest
 import com.makotogo.learn.kotlin.model.Employee
+import com.makotogo.learn.kotlin.model.Guest
+import com.makotogo.learn.kotlin.model.Person
 
 fun formatName(person: Person) = "${person.familyName}, ${person.givenName}"
 
@@ -29,7 +29,7 @@ private fun purposeGrantsEntry(purpose: String) : Boolean {
 }
 
 fun admitEntrance(something: Any) : Boolean {
-    var ret: Boolean = false
+    var ret = false
     if (something is Employee) {
         ret = true
         println("Employee access granted for ${something.title}: ${formatName(something)}.")

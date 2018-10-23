@@ -41,7 +41,7 @@ fun widen() {
 
 fun narrow() {
     // Narrowing conversions truncate
-    val double: Double = 1.2345E100
+    val double = 1.2345E100
     println("Double value is $double")
 
     val float: Float = double.toFloat()
