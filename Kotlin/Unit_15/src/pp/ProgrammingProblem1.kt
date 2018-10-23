@@ -26,14 +26,12 @@ import com.makotogo.learn.kotlin.util.createPerson
 import com.makotogo.learn.kotlin.util.createWorker
 
 /**
- * TODO: Make this a programming exercise
- *
  * Process the specified object:
  *
  * Compute the interface(s) it supports, and return a List of those
  * interfaces
  */
-fun process(objectToProcess: Any?): List<Any> {
+fun process(objectToProcess: Any?): List<String> {
     val ret = ArrayList<String>()
     //
     // Marked?
@@ -64,10 +62,7 @@ fun process(objectToProcess: Any?): List<Any> {
 }
 
 
-/**
- * TODO: Programming exercise
- */
-fun programmingProblem1() {
+fun main(args: Array<String>) {
     //
     // Create Worker object
     val worker = createWorker()
@@ -86,8 +81,4 @@ fun programmingProblem1() {
     //
     // Print out the supported interfaces
     println("Person: interfaces implemented by this object: $interfacesImplemented")
-}
-
-fun main(args: Array<String>) {
-    programmingProblem1()
 }
