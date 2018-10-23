@@ -29,7 +29,7 @@ private fun purposeGrantsEntry(purpose: String) : Boolean {
 }
 
 fun admitEntrance(person: Person) : Boolean {
-    var ret: Boolean = false
+    var ret = false
     if (person is Employee) {
         ret = true
         println("Employee access granted for ${person.title}: ${formatName(person)}.")
