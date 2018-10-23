@@ -17,10 +17,7 @@
 
 package com.makotogo.learn.kotlin.util
 
-import com.makotogo.learn.kotlin.model.Employee
 import com.makotogo.learn.kotlin.model.Guest
-import com.makotogo.learn.kotlin.model.Person
-import com.makotogo.learn.kotlin.model.Worker
 import java.time.LocalDate
 import java.time.YearMonth
 import java.util.Random
@@ -31,33 +28,11 @@ import java.util.Random
 private val rng = Random(System.currentTimeMillis())
 
 /**
- * Generate a random floating point number between zero
- * and 1000, and return it.
- *
- * Make sure the denominator is never zero
- */
-fun createFloat(index: Int) = (generateRandomNumber(upperBoundExclusive = index) + index)
-
-/**
- * Generate and return a random Char from one of the printable ASCII characters
- * (that is, 33 - 126)
- */
-fun createChar() = (generateRandomInt(upperBoundExclusive = (127 - 33)) + 33).toChar()
-
-/**
  * Generate a random integer between zero and the [upperBoundExclusive]
  * and return it to the caller.
  */
 internal fun generateRandomInt(upperBoundExclusive: Int): Int {
     return (generateRandomNumber() * upperBoundExclusive).toInt()
-}
-
-/**
- * Generate a random floating point number between zero and 1.0f (exclusive)
- * and return it to the caller.
- */
-internal fun generateRandomNumber(upperBoundExclusive: Int): Float {
-    return (generateRandomNumber() * upperBoundExclusive.toFloat())
 }
 
 /**
@@ -213,18 +188,19 @@ internal fun generateRandomTitle(employeeId: Int?): String {
     val ret: String
     val baseTitle = GIVEN_NAME[generateRandomInt(GIVEN_NAME.size)] +
             TITLE_SUFFIX[generateRandomInt(TITLE_SUFFIX.size)]
-    when (employeeId) {
+
+    ret = when (employeeId) {
         in 0..2000 -> {
-            ret = "Chief $baseTitle"
+            "Chief $baseTitle"
         }
         in 2001..30000 -> {
-            ret = "Sr. $baseTitle"
+            "Sr. $baseTitle"
         }
         in 30001..70000 -> {
-            ret = "Assoc. $baseTitle"
+            "Assoc. $baseTitle"
         }
         else -> {
-            ret = "Jr. $baseTitle"
+            "Jr. $baseTitle"
         }
     }
     return ret
@@ -256,20 +232,6 @@ internal fun generateRandomTaxIdNumber(): String {
     return "$part1-${part2.substring(part2.length - 2)}-${part3.substring(part3.length - 4)}"
 }
 
-/**
- * Create a Person object using randomly generated data.
- */
-fun createPerson(): Person {
-    return Person(generateRandomFamilyName(), generateRandomGivenName(), generateRandomYearMonthDayTriple().toLocalDate())
-}
-
-fun createWorker(): Worker {
-    return Worker(generateRandomFamilyName(),
-            generateRandomGivenName(),
-            generateRandomYearMonthDayTriple().toLocalDate(),
-            generateRandomTaxIdNumber())
-}
-
 fun createGuest(): Guest {
     return Guest(
             generateRandomFamilyName(),
@@ -278,26 +240,6 @@ fun createGuest(): Guest {
             generateRandomTaxIdNumber(),
             generateRandomPurpose()
     )
-}
-
-/**
- * Create a new [Employee], fill it with random data,
- * and return it.
- */
-fun createEmployee(): Employee {
-    val familyName = generateRandomFamilyName()
-    val givenName = generateRandomGivenName()
-    val dateOfBirth = generateRandomYearMonthDayTriple().toLocalDate()
-    val employeeId = generateRandomEmployeeId()
-    val title = generateRandomTitle(employeeId = employeeId)
-    val taxIdNumber = generateRandomTaxIdNumber()
-
-    return Employee(familyName = familyName,
-            givenName = givenName,
-            dateOfBirth = dateOfBirth,
-            employeeId = employeeId,
-            title = title,
-            taxIdNumber = taxIdNumber)
 }
 
 // JUnit test - if you want to run this test, make sure to add JUnit
