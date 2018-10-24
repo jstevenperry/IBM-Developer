@@ -21,23 +21,12 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 /**
- * Interface - marks an object as Human
- * Also Identifiable and Configurable
- */
-interface Human {
-    /**
-     * Property - when the Human was born
-     */
-    val dateOfBirth: LocalDate
-}
-
-/**
  * Person class - subclass of Human
  */
 open class Person(
-        private val familyName: String,
-        private val givenName: String,
-        override val dateOfBirth: LocalDate) : Human {
+        val familyName: String,
+        val givenName: String,
+        val dateOfBirth: LocalDate) {
 
     /**
      * Private property - lateinit
@@ -72,12 +61,12 @@ open class Worker(familyName: String,
 /**
  * Worker - subclass of Person
  */
-class Employee(familyName: String,
-               givenName: String,
-               dateOfBirth: LocalDate,
-               taxIdNumber: String,
-               val employeeId: Int,
-               val title: String) : Worker(familyName, givenName, dateOfBirth, taxIdNumber) {
+open class Employee(familyName: String,
+                    givenName: String,
+                    dateOfBirth: LocalDate,
+                    taxIdNumber: String,
+                    val employeeId: Int,
+                    val title: String) : Worker(familyName, givenName, dateOfBirth, taxIdNumber) {
     /**
      * toString() override
      */

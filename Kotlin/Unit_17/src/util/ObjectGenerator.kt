@@ -254,6 +254,19 @@ internal fun generateRandomTaxIdNumber(): String {
 }
 
 /**
+ * Some random purposes
+ */
+private val PURPOSE = arrayOf("Maintenance", "Package Delivery", "Consulting", "Family Member", "Other", "Lost")
+
+/**
+ * Generate a random purpose. Occasionally returns null to simulate the
+ * real world (sigh).
+ */
+internal fun generateRandomPurpose(): String {
+    return PURPOSE[generateRandomInt(PURPOSE.size)]
+}
+
+/**
  * Create and return a [Worker] object filled with
  * random data.
  */
@@ -277,6 +290,10 @@ fun createWorker(): Worker {
             taxIdNumber = generateRandomTaxIdNumber())
 }
 
+/**
+ * Create and return an [Employee] object filled
+ * with random data
+ */
 fun createEmployee(): Employee {
     val employeeId = generateRandomEmployeeId()
     return Employee(
