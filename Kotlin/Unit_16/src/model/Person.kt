@@ -41,7 +41,7 @@ interface Identifiable {
  * Interface - marks an object as Human
  * Also Identifiable and Configurable
  */
-interface Human : Identifiable {
+interface Human {
     /**
      * Property - when the Human was born
      */
@@ -54,7 +54,7 @@ interface Human : Identifiable {
 abstract class Person(
         val familyName: String,
         val givenName: String,
-        final override val dateOfBirth: LocalDate) : Human {
+        final override val dateOfBirth: LocalDate) : Human, Identifiable {
 
     /**
      * Abstract property

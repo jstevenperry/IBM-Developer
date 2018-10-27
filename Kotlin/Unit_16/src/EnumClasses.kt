@@ -33,7 +33,7 @@ class Worker(familyName: String,
              givenName: String,
              dateOfBirth: LocalDate,
              val taxIdNumber: String,
-             val purpose: PURPOSE) : Person(familyName, givenName, dateOfBirth) {
+             val purpose: Purpose) : Person(familyName, givenName, dateOfBirth) {
     /**
      * Override property identity
      */
@@ -53,37 +53,64 @@ class Worker(familyName: String,
 
 }
 
-/**
- * Create and return a [Worker] object filled with
- * random data.
- */
-fun createWorker(): Worker {
-    return Worker(
-            familyName = generateRandomFamilyName(),
-            givenName = generateRandomGivenName(),
-            dateOfBirth = generateRandomDateOfBirth(),
-            taxIdNumber = generateRandomTaxIdNumber(),
-            purpose = generateRandomPurpose())
-}
+// BAD IDEA
+/*
+const val MAINTENANCE = "MAINTENANCE"
+const val PACKAGE_DELIVERY = "PACKAGE_DELIVERY"
+const val CONSULTING = "CONSULTING"
+const val FAMILY_MEMBER = "FAMILY_MEMBER"
+const val OTHER = "OTHER"
 
-/**
- * Some random purposes
- */
-enum class PURPOSE {
+val PURPOSE: Array<String> = arrayOf(
+        MAINTENANCE,
+        PACKAGE_DELIVERY,
+        CONSULTING,
+        FAMILY_MEMBER,
+        OTHER
+)
+*/
+
+// YET ANOTHER BAD IDEA
+/*
+const val MAINTENANCE = 100
+const val PACKAGE_DELIVERY = 200
+const val CONSULTING = 300
+const val FAMILY_MEMBER = 400
+const val OTHER = 500
+
+val PURPOSE = intArrayOf(
+        MAINTENANCE,
+        PACKAGE_DELIVERY,
+        CONSULTING,
+        FAMILY_MEMBER,
+        OTHER
+)
+*/
+
+// This is it!
+enum class Purpose {
     MAINTENANCE,
     PACKAGE_DELIVERY,
     CONSULTING,
     FAMILY_MEMBER,
     OTHER,
-    LOST
 }
 
 /**
- * Generate a random purpose. Occasionally returns null to simulate the
- * real world (sigh).
+ * Create and return a [Worker] object filled with
+ * random data.
  */
-internal fun generateRandomPurpose(): PURPOSE {
-    val purposes = PURPOSE.values()
-    return purposes[generateRandomInt(purposes.size)]
+fun createWorker(): Worker {
+    //
+    // Pick a PURPOSE at random
+    val purposes = Purpose.values()
+    val purpose = purposes[generateRandomInt(purposes.size)]
+    //
+    // Return a new Worker object
+    return Worker(
+            familyName = generateRandomFamilyName(),
+            givenName = generateRandomGivenName(),
+            dateOfBirth = generateRandomDateOfBirth(),
+            taxIdNumber = generateRandomTaxIdNumber(),
+            purpose = purpose)
 }
-
