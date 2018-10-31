@@ -29,7 +29,7 @@ open class Person(
         val dateOfBirth: LocalDate) {
 
     /**
-     * Private property - lateinit
+     * Private property
      */
     private val whenCreated: LocalDateTime = LocalDateTime.now()
 
@@ -40,6 +40,13 @@ open class Person(
         return "Person(familyName='$familyName', givenName='$givenName', dateOfBirth=$dateOfBirth, whenCreated=$whenCreated)"
     }
 }
+
+/**
+ * Guest - subclass of Person
+ */
+class Guest(familyName: String,
+            givenName: String,
+            dateOfBirth: LocalDate) : Person(familyName, givenName, dateOfBirth)
 
 /**
  * Worker - subclass of Person

@@ -18,6 +18,7 @@
 package com.makotogo.learn.kotlin.util
 
 import com.makotogo.learn.kotlin.model.Employee
+import com.makotogo.learn.kotlin.model.Guest
 import com.makotogo.learn.kotlin.model.Person
 import com.makotogo.learn.kotlin.model.Worker
 import java.time.LocalDate
@@ -276,6 +277,17 @@ fun createPerson(): Person {
             generateRandomGivenName(),
             generateRandomDateOfBirth()
     )
+}
+
+/**
+ * Create and return a [Guest] object filled with
+ * random data.
+ */
+fun createGuest(): Guest {
+    return Guest(
+            generateRandomFamilyName(),
+            generateRandomGivenName(),
+            generateRandomDateOfBirth())
 }
 
 /**

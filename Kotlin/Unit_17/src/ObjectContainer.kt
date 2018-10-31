@@ -16,10 +16,57 @@
 
 package com.makotogo.learn.kotlin
 
-import com.makotogo.learn.kotlin.model.Person
 import com.makotogo.learn.kotlin.util.createEmployee
 import com.makotogo.learn.kotlin.util.createPerson
 import com.makotogo.learn.kotlin.util.createWorker
+
+/**
+ * A specific class - a container of Long objects
+ */
+class LongObjectContainer {
+
+    private val backingStore = ArrayList<Long>()
+
+    fun add(item: Long) {
+        backingStore.add(item)
+    }
+
+    fun clear() {
+        backingStore.clear()
+    }
+
+    operator fun get(index: Int): Long {
+        return backingStore[index]
+    }
+
+    operator fun set(index: Int, obj: Long) {
+        backingStore[index] = obj
+    }
+
+    fun size() = backingStore.size
+
+    fun print() {
+        for (item in backingStore) {
+            println(item)
+        }
+    }
+}
+
+fun demoLongObjectContainer() {
+    println("********** demoLongObjectContainer() **********")
+    val objectContainer = LongObjectContainer()
+
+    objectContainer.add(10L)
+    objectContainer.add(238L)
+    objectContainer.add(5280L)
+
+    println("LongObjectContainer contains: ${objectContainer.size()} items.")
+
+    objectContainer.print()
+
+    objectContainer.clear()
+}
+
 
 /**
  * A container of objects.
@@ -79,23 +126,36 @@ class ObjectContainer<T> {
 }
 
 /**
- * Extension function - addAll
+ * Generic function - declare an ObjectContainer of type T
+ * and add objects to it using the supplied object factory.
  *
- * Demonstrates a generic function.
+ * Create another container, then add objects from the first
+ * container to it using the addAll() function.
  *
- * Adds all of the items in the specified ObjectContainer<out T>
- * to the receiver.
- *
- * Items in the ObjectContainer<out T> parameter are guaranteed to be
- * of type T or a subclass of T.
+ * Then print out the second container's contents.
  */
-fun <T> ObjectContainer<T>.addAll(other: ObjectContainer<out T>) {
+fun <T> demoGenericObjectContainer(objectFactory: () -> T) {
+    println("********** demoGenericObjectContainer() **********")
     //
-    // Zip through the "other" container and add all of
-    // its items to "this" container
-    for (index in 0 until other.size()) {
-        this.add(other[index])
-    }
+    // Create a container of T
+    val container: ObjectContainer<T> = ObjectContainer() // This will work
+    //
+    // Add a few objects using the specified factory
+    container.add(objectFactory())
+    container.add(objectFactory())
+    container.add(objectFactory())
+    //
+    // Now create another container of T
+    val otherContainer = ObjectContainer<T>() // This works too
+    //
+    // Add the humans to the otherContainer
+    //otherContainer.addAll(container)
+    //
+    // Print out the new collection
+    otherContainer.print()
+
+    container.clear()
+    otherContainer.clear()
 }
 
 /**
@@ -105,23 +165,15 @@ fun <T> ObjectContainer<T>.addAll(other: ObjectContainer<out T>) {
  */
 fun main(args: Array<String>) {
     //
-    // Create a container of Persons (that is, People)
-    val humans: ObjectContainer<Person> = ObjectContainer() // This will work
+    // Demo the specific IntObjectContainer class
+    demoLongObjectContainer()
     //
-    // Create People of various types
-    // Person
-    humans.add(createPerson())
-    // Worker
-    humans.add(createWorker())
-    // Employee
-    humans.add(createEmployee())
+    // Demo the generic ObjectContainer<T> class using Person
+    demoGenericObjectContainer { createPerson() }
     //
-    // Now create another container of People
-    val otherHumans = ObjectContainer<Person>() // This works too
+    // Demo the generic ObjectContainer<T> class using Worker
+    demoGenericObjectContainer { createWorker() }
     //
-    // Add the humans to the otherHumans
-    otherHumans.addAll(humans)
-    //
-    // Print out the new collection
-    otherHumans.print()
+    // Demo the generic ObjectContainer<T> class using Employee
+    demoGenericObjectContainer { createEmployee() }
 }
