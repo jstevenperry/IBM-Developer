@@ -149,7 +149,7 @@ fun <T> demoGenericObjectContainer(objectFactory: () -> T) {
     val otherContainer = ObjectContainer<T>() // This works too
     //
     // Add the humans to the otherContainer
-    //otherContainer.addAll(container)
+    otherContainer.addAll(container)
     //
     // Print out the new collection
     otherContainer.print()
