@@ -61,24 +61,26 @@ fun process(objectToProcess: Any?): List<String> {
     return ret
 }
 
-
+/**
+ * The ubiquitous main() function. Even in the solutions, there you are!
+ */
 fun main(args: Array<String>) {
-    //
-    // Create Worker object
-    val worker = createWorker()
-    //
-    // Process the object into a list of its interfaces
-    var interfacesImplemented = process(worker as Any?)
-    //
-    // Print out the supported interfaces
-    println("Worker: interfaces implemented by this object: $interfacesImplemented")
     //
     // Create Person object
     val person = createPerson()
     //
     // Process the object into a list of its interfaces
-    interfacesImplemented = process(person as Any?)
+    var interfacesImplemented = process(person as Any?)
     //
     // Print out the supported interfaces
     println("Person: interfaces implemented by this object: $interfacesImplemented")
+    //
+    // Create Worker object
+    val worker = createWorker()
+    //
+    // Process the object into a list of its interfaces
+    interfacesImplemented = process(worker as Any?)
+    //
+    // Print out the supported interfaces
+    println("Worker: interfaces implemented by this object: $interfacesImplemented")
 }
