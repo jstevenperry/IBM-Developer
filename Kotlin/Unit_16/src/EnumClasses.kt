@@ -114,3 +114,11 @@ fun createWorker(): Worker {
             taxIdNumber = generateRandomTaxIdNumber(),
             purpose = purpose)
 }
+
+fun main(args: Array<String>) {
+    //
+    // Create a few Worker objects and print them to the console
+    for (index in 1..10) {
+        println("Worker: ${createWorker()}")
+    }
+}

@@ -63,7 +63,7 @@ fun main(args: Array<String>) {
     outer.demo()
     //
     // Create a Nested object through a static reference to
-    // the InnerClassesOuter class and invoke the demo() function
-    val inner = Outer.Nested()
-    inner.demo()
+    // the Outer class and invoke the demo() function
+    val nested = Outer.Nested()
+    nested.demo()
 }

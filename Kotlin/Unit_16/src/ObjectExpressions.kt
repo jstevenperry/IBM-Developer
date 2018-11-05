@@ -58,8 +58,8 @@ fun createIdentifiableHuman(): Human {
  * Create and return an [Identifiable] object.
  * It is also [Human].
  */
-fun createIdentifiable(): Identifiable {
-    return createIdentifiableHuman() as Identifiable
+fun createIdentifiable(): Identifiable? {
+    return createIdentifiableHuman() as? Identifiable
 }
 
 /**
