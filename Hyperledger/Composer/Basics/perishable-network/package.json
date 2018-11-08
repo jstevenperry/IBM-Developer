@@ -56,7 +56,9 @@
       "dist",
       "node_modules",
       "out",
-      ".git"
+      ".git",
+      "markdown-license.txt",
+      ".DS_Store"
     ],
     "file_type_method": "EXCLUDE",
     "file_types": [
@@ -72,7 +74,7 @@
         }
       },
       "md": {
-        "file": "../../markdown-license.txt"
+        "file": "./markdown-license.txt"
       }
     }
   }
