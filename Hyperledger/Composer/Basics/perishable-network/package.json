@@ -45,7 +45,9 @@
     "mkdirp": "^0.5.1",
     "mocha": "^3.2.0",
     "moment": "^2.17.1",
-    "sinon": "2.3.8"
+    "sinon": "2.3.8",
+    "cryptiles": ">=4.1.2",
+    "growl": ">=1.10.0"
   },
   "license-check-and-add-config": {
     "folder": ".",
