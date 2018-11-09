@@ -1,0 +1,254 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * A business network for shipping perishable goods
+ * The cargo is temperature controlled and contracts
+ * can be negociated based on the temperature
+ * readings received for the cargo
+ */
+
+namespace org.acme.shipping.perishable
+
+/**
+ * The type of perishable product being shipped
+ */
+enum ProductType {
+  o BANANAS
+  o APPLES
+  o PEARS
+  o PEACHES
+  o COFFEE
+}
+
+/**
+ * The status of a shipment
+ */
+enum ShipmentStatus {
+  o CREATED
+  o IN_TRANSIT
+  o ARRIVED
+}
+
+/** 
+ * Directions of the compass 
+ */ 
+enum CompassDirection { 
+  o N 
+  o S 
+  o E 
+  o W 
+}
+
+/**
+ * An abstract transaction that is related to a Shipment
+ */
+abstract transaction ShipmentTransaction {
+  --> Shipment shipment
+}
+
+/**
+ * An temperature reading for a shipment. E.g. received from a
+ * device within a temperature controlled shipping container
+ */
+transaction TemperatureReading extends ShipmentTransaction {
+  o Double centigrade
+}
+
+/** 
+ * A GPS reading for a shipment. E.g. received from a device 
+ * within a shipping container 
+ */ 
+transaction GpsReading extends ShipmentTransaction { 
+  o String readingTime 
+  o String readingDate 
+  o String latitude 
+  o CompassDirection latitudeDir 
+  o String longitude 
+  o CompassDirection longitudeDir 
+}
+
+/**
+ * A notification that a shipment has been received by the
+ * importer and that funds should be transferred from the importer
+ * to the grower to pay for the shipment.
+ */
+transaction ShipmentReceived extends ShipmentTransaction {
+  o DateTime receivedDateTime optional
+}
+
+/**
+ * A Shipment has been packed and is ready for pickup
+ */
+transaction ShipmentPacked extends ShipmentTransaction {
+}
+
+/**
+ * A Shipment has been picked up
+ */
+transaction ShipmentPickup extends ShipmentTransaction {
+}
+
+/**
+ * A Shipment has been loaded for transport
+ */
+transaction ShipmentLoaded extends ShipmentTransaction {
+}
+
+/**
+ * A shipment being tracked as an asset on the ledger
+ */
+asset Shipment identified by shipmentId {
+  o String shipmentId
+  o ProductType type
+  o ShipmentStatus status
+  o Long unitCount
+  o TemperatureReading[] temperatureReadings optional
+  o GpsReading[] gpsReadings optional
+  --> Contract contract
+  o ShipmentPacked shipmentPacked optional 
+  o ShipmentPickup shipmentPickup optional 
+  o ShipmentLoaded shipmentLoaded optional 
+  o ShipmentReceived shipmentReceived optional
+}
+
+/**
+ * Defines a contract between a Grower and an Importer to ship using
+ * a Shipper, paying a set unit price. The unit price is multiplied by
+ * a penality factor proportional to the deviation from the min and max
+ * negociated temperatures for the shipment.
+ */
+asset Contract identified by contractId {
+  o String contractId
+  --> Grower grower
+  --> Shipper shipper
+  --> Importer importer
+  o DateTime arrivalDateTime
+  o Double unitPrice
+  o Double minTemperature
+  o Double maxTemperature
+  o Double minPenaltyFactor
+  o Double maxPenaltyFactor
+}
+
+/**
+ * A concept for a simple street address
+ */
+concept Address {
+  o String city optional
+  o String country
+  o String street optional
+  o String zip optional
+}
+
+/**
+ * An abstract participant type in this business network
+ */
+abstract participant Business identified by email {
+  o String email
+  o Address address
+  o Double accountBalance
+}
+
+/**
+ * A Grower is a type of participant in the network
+ */
+participant Grower extends Business {
+}
+
+/**
+ * A Shipper is a type of participant in the network
+ */
+participant Shipper extends Business {
+}
+
+/**
+ * An Importer is a type of participant in the network
+ */
+participant Importer extends Business {
+}
+
+/**
+ * An IoTDevice is any device that is part of the network
+ */
+abstract participant IoTDevice identified by deviceId {
+  o String deviceId
+}
+
+/**
+ * An IoT temperature sensor
+ */
+participant TemperatureSensor extends IoTDevice {
+}
+
+/**
+ * An IoT GPS Sensor
+ */
+participant GpsSensor extends IoTDevice {
+}
+
+/**
+ * An event - when the temperature goes outside the agreed-upon boundaries
+ */
+event TemperatureThresholdEvent {
+  o String message
+  o Double temperature
+  --> Shipment shipment
+}
+ 
+/**
+ * An event - when the ship arrives at the port
+ */
+event ShipmentInPortEvent {
+  o String message
+  --> Shipment shipment
+}
+
+/**
+ * Event - when the shipment has been packed and is ready for pickup
+ */
+event ShipmentPackedEvent {
+  o String message
+  --> Shipment shipment
+}
+
+/**
+ * Event - when the shipment has been picked up and is ready for loading
+ */
+event ShipmentPickupEvent {
+  o String message
+  --> Shipment shipment
+}
+
+/**
+ * Event - when the shipment has been loaded onto the cargo ship
+ */
+event ShipmentLoadedEvent {
+  o String message
+  --> Shipment shipment
+}
+
+/**
+ * Event - when the shipment is received
+ */
+event ShipmentReceivedEvent {
+  o String message
+  --> Shipment shipment
+}
+
+/**
+ * JUST FOR INITIALIZING A DEMO
+ */
+transaction SetupDemo {
+}

@@ -1,0 +1,150 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+ /**
+ * System and Network Admin access rules
+ */
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+/**
+ * Rules for Participant registry access
+ */
+rule Grower_R_Grower {
+    description: "Grant Growers access to Grower resources"
+    participant: "org.acme.shipping.perishable.Grower"
+    operation: READ
+    resource: "org.acme.shipping.perishable.Grower"
+    action: ALLOW
+}
+
+rule Shipper_R_Shipper {
+    description: "Grant Shippers access to Shipper resources"
+    participant: "org.acme.shipping.perishable.Shipper"
+    operation: READ
+    resource: "org.acme.shipping.perishable.Shipper"
+    action: ALLOW
+}
+
+rule Importer_RU_Importer {
+    description: "Grant Importers access to Importer resources"
+    participant: "org.acme.shipping.perishable.Importer"
+    operation: READ,UPDATE
+    resource: "org.acme.shipping.perishable.Importer"
+    action: ALLOW
+}
+
+rule Importer_RU_Grower {
+    description: "Grant Importers access to Grower participant"
+    participant: "org.acme.shipping.perishable.Importer"
+    operation: READ,UPDATE
+    resource: "org.acme.shipping.perishable.Grower"
+    action: ALLOW
+}
+
+/**
+ * Rules for Asset registry access
+ */
+rule ALL_RU_Shipment {
+    description: "Grant All Participants in org.acme.shipping.perishable namespace READ/UPDATE access to Shipment assets"
+    participant: "org.acme.shipping.perishable.*"
+    operation: READ,UPDATE
+    resource: "org.acme.shipping.perishable.Shipment"
+    action: ALLOW
+}
+
+rule ALL_RU_Contract {
+    description: "Grant All Participants in org.acme.shipping.perishable namespace READ/UPDATE access to Contract assets"
+    participant: "org.acme.shipping.perishable.*"
+    operation: READ,UPDATE
+    resource: "org.acme.shipping.perishable.Contract"
+    action: ALLOW
+}
+
+/**
+ * Rules for Transaction invocations
+ */
+rule Grower_C_ShipmentPacked {
+    description: "Grant Growers access to invoke ShipmentPacked transaction"
+    participant: "org.acme.shipping.perishable.Grower"
+    operation: CREATE
+    resource: "org.acme.shipping.perishable.ShipmentPacked"
+    action: ALLOW
+}
+
+rule Shipper_C_ShipmentPickup {
+    description: "Grant Shippers access to invoke ShipmentPickup transaction"
+    participant: "org.acme.shipping.perishable.Shipper"
+    operation: CREATE
+    resource: "org.acme.shipping.perishable.ShipmentPickup"
+    action: ALLOW
+}
+
+rule Shipper_C_ShipmentLoaded {
+    description: "Grant Shippers access to invoke ShipmentLoaded transaction"
+    participant: "org.acme.shipping.perishable.Shipper"
+    operation: CREATE
+    resource: "org.acme.shipping.perishable.ShipmentLoaded"
+    action: ALLOW
+}
+
+rule GpsSensor_C_GpsReading {
+    description: "Grant IoT GPS Sensor devices full access to the appropriate transactions"
+    participant: "org.acme.shipping.perishable.GpsSensor"
+    operation: CREATE
+    resource: "org.acme.shipping.perishable.GpsReading"
+    action: ALLOW
+}
+
+rule TemperatureSensor_C_TemperatureReading {
+    description: "Grant IoT Temperature Sensor devices full access to the appropriate transactions"
+    participant: "org.acme.shipping.perishable.TemperatureSensor"
+    operation: CREATE
+    resource: "org.acme.shipping.perishable.TemperatureReading"
+    action: ALLOW
+}
+
+rule Importer_C_ShipmentReceived {
+    description: "Grant Importers access to invoke the ShipmentReceived transaction"
+    participant: "org.acme.shipping.perishable.Importer"
+    operation: CREATE
+    resource: "org.acme.shipping.perishable.ShipmentReceived"
+    action: ALLOW
+}
+
+/**
+ * Make sure all resources are locked down by default.
+ * If permissions need to be granted to certain resources, that should happen
+ * above this rule. Anything not explicitly specified gets locked down.
+ */
+rule Default {
+    description: "Deny all participants access to all resources"
+    participant: "ANY"
+    operation: ALL
+    resource: "org.acme.shipping.perishable.*"
+    action: DENY
+}
