@@ -2,13 +2,13 @@
   "engines": {
     "composer": "^0.20.0"
   },
-  "name": "perishable-network",
+  "name": "iot-perishable-network",
   "version": "0.2.6",
-  "description": "Shipping Perishable Goods Business Network",
+  "description": "IoT Shipping Perishable Goods Business Network",
   "networkImage": "https://hyperledger.github.io/composer-sample-networks/packages/perishable-network/networkimage.svg",
   "networkImageanimated": "https://hyperledger.github.io/composer-sample-networks/packages/perishable-network/networkimageanimated.svg",
   "scripts": {
-    "prepublish": "mkdirp ./dist && composer archive create  --sourceType dir --sourceName . -a ./dist/perishable-network.bna",
+    "prepublish": "mkdirp ./dist && composer archive create  --sourceType dir --sourceName . -a ./dist/iot-perishable-network.bna",
     "pretest": "npm run lint",
     "lint": "eslint .",
     "postlint": "npm run licchk",
