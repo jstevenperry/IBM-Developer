@@ -61,3 +61,6 @@ dist
 
 node_modules
 composer-logs
+
+# ID cards
+*.card

@@ -63,12 +63,12 @@
       ".git",
       "markdown-license.txt",
       ".DS_Store",
-      "features",
-      "networkadmin.card"
+      "features"
     ],
     "file_type_method": "EXCLUDE",
     "file_types": [
-      ".yml"
+      ".yml",
+      ".card"
     ],
     "insert_license": false,
     "license_formats": {
