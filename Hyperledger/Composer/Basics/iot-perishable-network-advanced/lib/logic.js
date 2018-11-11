@@ -127,7 +127,7 @@ async function temperatureReading(temperatureReading) {  // eslint-disable-line 
         temperatureEvent.shipment = shipment;
         temperatureEvent.temperature = temperatureReading.centigrade;
         temperatureEvent.message = 'Temperature threshold violated! Emitting TemperatureEvent for shipment: ' + shipment.$identifier;
-        //console.log(temperatureEvent.message);
+        console.log(temperatureEvent.message);
         emit(temperatureEvent);
     }
 
@@ -162,7 +162,7 @@ async function gpsReading(gpsReading) {  // eslint-disable-line no-unused-vars
         shipmentInPortEvent.shipment = shipment;
         var message = 'Shipment has reached the destination port of ' + PORT_OF_NEW_YORK;
         shipmentInPortEvent.message = message;
-        //console.log(message);
+        console.log(message);
         emit(shipmentInPortEvent);
     }
 
