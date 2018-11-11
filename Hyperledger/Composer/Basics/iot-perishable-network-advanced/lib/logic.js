@@ -83,7 +83,7 @@ async function receiveShipment(shipmentReceived) {  // eslint-disable-line no-un
     var factory = getFactory();
     var shipmentReceivedEvent = factory.newEvent(NS, 'ShipmentReceivedEvent');
     var message = 'Shipment ' + shipment.$identifier + ' received';
-    //console.log(message);
+    console.log(message);
     shipmentReceivedEvent.message = message;
     shipmentReceivedEvent.shipment = shipment;
     emit(shipmentReceivedEvent);
