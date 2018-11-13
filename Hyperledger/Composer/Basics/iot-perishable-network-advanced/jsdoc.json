@@ -17,7 +17,7 @@
       "dateFormat": "ddd MMM Do YYYY",
       "outputSourceFiles": true,
       "outputSourcePath": true,
-      "systemName": "Perishable Goods Network",
+      "systemName": "IoT Perishable Goods Network",
       "footer": "",
       "copyright": "Released under the Apache License v2.0",
       "navType": "vertical",
