@@ -49,3 +49,9 @@ concept Price {
   o CurrencyCode currency
   o Double amount
 }
+
+/**
+  Load (populate) the registries with data. This is, after all,
+  a sample application.
+ */
+transaction LoadRegistries {}

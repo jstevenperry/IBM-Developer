@@ -25,7 +25,7 @@ const NSParticipant = NSBase + '.participant';
 /**
  * Load the Asset and Participant registries with data
  *
- * @param {com.makotogo.learn.composer.securegoods.transaction.LoadRegistries} tx - the transaction object
+ * @param {com.makotogo.learn.composer.securegoods.common.LoadRegistries} tx - the transaction object
  * @transaction
  */
 async function loadRegistries(tx) {

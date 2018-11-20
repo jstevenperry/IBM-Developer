@@ -67,7 +67,25 @@ Feature: BuyerSecurity
                     "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                     "currency": "USD", "amount": "100" 
                 },
-                "status": "PLACED"
+                "status": "SHIPPED"
+            },
+            {
+                "$class": "com.makotogo.learn.composer.securegoods.asset.Order",
+                "id": "ORD003",
+                "item": "WIDGET003",
+                "quantity": "10",
+                "unitCost": {
+                    "$class": "com.makotogo.learn.composer.securegoods.common.Price",
+                    "currency": "USD", "amount": "1.5" 
+                },
+                "buyer": "BUY001",
+                "seller": "SELL001",
+                "shipper": "SHIP001",
+                "shippingCost": {
+                    "$class": "com.makotogo.learn.composer.securegoods.common.Price",
+                    "currency": "USD", "amount": "100" 
+                },
+                "status": "SHIPPED"
             }
         ]
         """
@@ -183,7 +201,7 @@ Feature: BuyerSecurity
                     "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                     "currency": "USD", "amount": "100" 
                 },
-                "status": "PLACED"
+                "status": "SHIPPED"
             }
         """
 
@@ -210,4 +228,45 @@ Feature: BuyerSecurity
                 "status": "PLACED"
             }
         """
+        Then I should get an error matching /does not have .* access to resource/
+
+    Scenario: Buyer 1 can invoke the ReceiveShipment transaction
+        When I use the identity BUY001
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.asset.ReceiveOrder
+            | order |
+            | ORD003 |
+        Then I should have the following assets
+        """
+            {
+                "$class": "com.makotogo.learn.composer.securegoods.asset.Order",
+                "id": "ORD003",
+                "item": "WIDGET003",
+                "quantity": "10",
+                "unitCost": {
+                    "$class": "com.makotogo.learn.composer.securegoods.common.Price",
+                    "currency": "USD", "amount": "1.5" 
+                },
+                "buyer": "BUY001",
+                "seller": "SELL001",
+                "shipper": "SHIP001",
+                "shippingCost": {
+                    "$class": "com.makotogo.learn.composer.securegoods.common.Price",
+                    "currency": "USD", "amount": "100" 
+                },
+                "status": "RECEIVED"
+            }
+        """
+
+    Scenario: Buyer 2 cannot invoke the ReceiveShipment transaction for Buyer 1's order
+        When I use the identity BUY002
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.asset.ReceiveOrder
+            | order |
+            | ORD003  |
+        Then I should get an error matching /does not have .* access to resource/
+
+    Scenario: Buyer 1 cannot invoke the ReceiveShipment transaction for Buyer 2's order
+        When I use the identity BUY001
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.asset.ReceiveOrder
+            | order  |
+            | ORD002 |
         Then I should get an error matching /does not have .* access to resource/

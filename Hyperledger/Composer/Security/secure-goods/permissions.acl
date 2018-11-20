@@ -35,6 +35,24 @@ rule Buyer_R_Order {
 }
 
 // Buyer can invoke the ReceiveOrder transaction
+rule Buyer_C_ReceiveOrder {
+  description: "Grant Buyer CREATE (invoke) access to ReceiveTransaction for their own orders"
+  participant: "com.makotogo.learn.composer.securegoods.participant.Buyer"
+  operation: CREATE
+  resource: "com.makotogo.learn.composer.securegoods.asset.ReceiveOrder"
+  action: ALLOW
+}
+
+// UPDATE order - Buyer has UPDATE access to order only when invoking ReceiveOrder transaction
+rule Buyer_U_Order_ReceiveOrder {
+  description: "Buyer can only update their own orders on ReceiveOrder"
+  participant(buyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
+  operation: UPDATE
+  resource(order): "com.makotogo.learn.composer.securegoods.asset.Order"
+  transaction(tx): "com.makotogo.learn.composer.securegoods.asset.ReceiveOrder"
+  condition: (buyer.id == order.buyer.id)
+  action: ALLOW
+}
 
 //*********
 // Seller rules
