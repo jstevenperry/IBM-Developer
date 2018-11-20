@@ -31,7 +31,7 @@ abstract asset AbstractAsset identified by id {
  * An item that is bought or sold in the network
  */
 asset Item extends AbstractAsset {
-  o String code
+  o String sku
   o String description
 }
 

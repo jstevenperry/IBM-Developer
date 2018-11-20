@@ -44,14 +44,15 @@ async function loadParticipantRegistries() {
     //
     // Create sellers
     await createSellers();
-
     //
     // Create Buyers
     await createBuyers();
-
     //
     // Create Shippers
     await createShippers();
+    //
+    // Create Auditors
+    await createAuditors();
 }
 
 /**
@@ -136,6 +137,25 @@ async function createShippers() {
 }
 
 /**
+ * Create Auditors and add them to the Participant registry
+ */
+async function createAuditors() {
+    //
+    // Get a reference to the Auditors in the participant registry
+    const auditorRegistry = await getParticipantRegistry(NSParticipant + '.Auditor');
+    //
+    // Create new Auditor instances
+    let auditors = [];
+    const factory = getFactory();
+    let auditor = factory.newResource(NSParticipant, 'Auditor', 'AUD001');
+    auditor.name = 'AuditsRUs';
+    auditors.push(auditor);
+    //
+    // Add the new Auditor instances to the registry
+    await auditorRegistry.addAll(auditors);
+}
+
+/**
  * Create Items and add them to the Asset registry
  */
 async function createItems() {
@@ -146,6 +166,13 @@ async function createItems() {
     // Create new Item instanes
     let items = [];
     const factory = getFactory();
-    let item = factory.newResource(NSAsset, 'Item', 'WIDGET001');
-    item.description = 'Widget number 1';
+    for (let aa = 1; aa <= 5; aa++) {
+        let item = factory.newResource(NSAsset, 'Item', 'WIDGET00' + aa);
+        item.sku = 'W00' + aa;
+        item.description = 'Widget number ' + aa;
+        items.push(item);
+    }
+    //
+    // Add the new Item instances to the registry
+    await itemRegistry.addAll(items);
 }

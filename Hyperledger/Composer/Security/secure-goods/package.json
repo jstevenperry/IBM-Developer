@@ -9,11 +9,12 @@
     "clean": "rm -Rf node_modules dist out",
     "licchk": "license-check-and-add",
     "lint": "eslint .",
+    "postinstall": "npm run lint",
     "postlint": "npm run licchk",
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/secure-goods.bna",
     "pretest": "npm run lint",
     "reinstall": "npm run clean && npm install",
-    "test": "nyc mocha -t 0 test/*.js && cucumber-js"
+    "test": "cucumber-js"
   },
   "keywords": [
     "composer",
@@ -23,23 +24,21 @@
   "email": "jstevenperry@makotogo.com",
   "license": "Apache-2.0",
   "devDependencies": {
-    "chai": "^3.5.0",
     "composer-admin": "^0.20",
     "composer-cli": "^0.20",
     "composer-client": "^0.20",
     "composer-common": "^0.20",
     "composer-connector-embedded": "^0.20",
+    "composer-cucumber-steps": "^0.20",
     "cryptiles": ">=4.1.2",
+    "cucumber": "^2.2.0",
     "eslint": "^3.6.1",
     "growl": ">=1.10.2",
     "istanbul": "^0.4.5",
     "jsdoc": "^3.5.5",
     "license-check-and-add": "~2.3.0",
     "mkdirp": "^0.5.1",
-    "mocha": "^5.2.0",
-    "moment": "^2.17.1",
-    "nyc": "^13.1.0",
-    "sinon": "2.3.8"
+    "moment": "^2.17.1"
   },
   "license-check-and-add-config": {
     "folder": ".",

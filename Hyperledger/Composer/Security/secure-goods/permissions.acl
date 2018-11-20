@@ -11,14 +11,78 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+//*********
+// Buyer rules
 
-// Manufacturer rules
+// ALL Buyer - Buyer has READ,UPDATE access to their own participant record only
+rule Buyer_RU_Buyer {
+  description: "Grant Buyer READ,UPDATE access to their own record"
+  participant(thisBuyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
+  operation: READ,UPDATE
+  resource(otherBuyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
+  condition: (thisBuyer.id == otherBuyer.id)
+  action: ALLOW
+}
 
-// Wholesaler rules
+// READ Order - Buyer has READ access to their own order records
+rule Buyer_R_Order {
+  description: "Grant Buyer READ access to their own orders"
+  participant(buyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
+  operation: READ
+  resource(order): "com.makotogo.learn.composer.securegoods.asset.Order"
+  condition: (buyer.id == order.buyer.id)
+  action: ALLOW
+}
 
-// Retailer rules
+// Buyer can invoke the ReceiveOrder transaction
 
+//*********
+// Seller rules
+
+// Seller has READ,UPDATE access to their own participant record only
+
+// Seller has READ access to their own order records
+
+// Seller can invoke the CreateOrder transaction
+
+//*********
 // Shipper rules
+
+// Shipper has READ,UPDATE access to their own record only
+
+// Shipper has READ access to their own order records
+
+// Shipper can invoke the ShipOrder transaction
+
+//*********
+// Auditor rules
+
+// Auditor has READ access to all participants
+
+// Auditor has READ access to all assets
+
+//*********
+// Blanket Participant rules
+
+// All participants have READ access to Item
+rule AnyParticipant_R_Item {
+  description: "Any Participant gets READ access to Item"
+  participant: "com.makotogo.learn.composer.securegoods.participant.*"
+  operation: READ
+  resource: "com.makotogo.learn.composer.securegoods.asset.Item"
+  action: ALLOW
+}
+
+//*********
+// System rules
+// THIS RULE IS REQUIRED FOR ANY PARTICIPANT TO ACCESS THE NETWORK!!!
+rule SystemParticipant {
+  description:  "System Participant ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
 
 //
 // NetworkAdmin rules
