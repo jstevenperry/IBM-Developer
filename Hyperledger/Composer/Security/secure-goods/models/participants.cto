@@ -1,0 +1,52 @@
+/** You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace com.makotogo.learn.composer.securegoods.participant
+
+/**
+  A participant in the secure goods business network
+ */
+abstract participant SecureParticipant identified by id {
+  o String id
+  o String name
+}
+
+/**
+  A participant in the network who buys Items
+ */
+participant Buyer extends SecureParticipant {
+
+}
+
+/**
+  A participant in the network who sells Items
+ */
+participant Seller extends SecureParticipant {
+
+}
+
+/**
+  A participant in the network who ships Items
+  from Seller to Buyer
+ */
+participant Shipper extends SecureParticipant {
+
+}
+
+/**
+  A participant in the network who performs
+  audits to make sure that any external rules
+  and regulations outside of smart contracts
+  are being followed
+ */
+participant Auditor extends SecureParticipant {
+
+}

@@ -1,0 +1,54 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace com.makotogo.learn.composer.securegoods.asset
+
+import com.makotogo.learn.composer.securegoods.common.OrderStatus
+import com.makotogo.learn.composer.securegoods.common.Price
+import com.makotogo.learn.composer.securegoods.participant.Buyer
+import com.makotogo.learn.composer.securegoods.participant.Seller
+import com.makotogo.learn.composer.securegoods.participant.Shipper
+
+/**
+ * The base definition for all assets in the model
+ */
+abstract asset AbstractAsset identified by id {
+  o String id
+}
+
+/**
+ * An item that is bought or sold in the network
+ */
+asset Item extends AbstractAsset {
+  o String code
+  o String description
+}
+
+/**
+ * An order that is placed between two participants
+ * in the network
+ */
+asset Order extends AbstractAsset {
+  --> Item item
+  o Double quantity
+  o Price unitCost
+
+  --> Buyer buyer
+  --> Seller seller
+
+  --> Shipper shipper
+  o Price shippingCost
+
+  o OrderStatus status
+}
