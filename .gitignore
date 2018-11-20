@@ -18,3 +18,6 @@
 
 # VSCode
 **/.vscode
+
+# Composer networks
+**/*.bna
