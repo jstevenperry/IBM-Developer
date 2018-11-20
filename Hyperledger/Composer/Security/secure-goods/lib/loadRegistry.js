@@ -12,45 +12,70 @@
  * limitations under the License.
  */
 
+'use strict';
+
 // Ignore the specified global functions (or the code won't lint)
 /* global getParticipantRegistry getAssetRegistry getFactory emit */
 
 // Namespaces
-const NSBase = "com.makotogo.learn.composer.securegoods";
-const NSAsset = NSBase + ".asset";
-const NSParticipant = NSBase + ".participant";
+const NSBase = 'com.makotogo.learn.composer.securegoods';
+const NSAsset = NSBase + '.asset';
+const NSParticipant = NSBase + '.participant';
 
 /**
  * Load the Asset and Participant registries with data
- * 
+ *
  * @param {com.makotogo.learn.composer.securegoods.transaction.LoadRegistries} tx - the transaction object
  * @transaction
  */
-async function loadRegistry(tx) {
+async function loadRegistries(tx) {
+    //
+    // Participants
+    await loadParticipantRegistries();
+    //
+    // Assets
+    await loadAssetRegistries();
+}
+
+/**
+ * Load the Participant registries
+ */
+async function loadParticipantRegistries() {
     //
     // Create sellers
-    createSellers();
+    await createSellers();
 
     //
     // Create Buyers
-    createBuyers();
+    await createBuyers();
 
     //
     // Create Shippers
-    createShippers();
+    await createShippers();
+}
+
+/**
+ * Load the Asset registries
+ */
+async function loadAssetRegistries() {
+    //
+    // Items
+    await createItems();
+    //
+    // Orders
+    // await createOrders();
 }
 
 /**
  * Create Sellers and add them to the Participant registry
  */
 async function createSellers() {
-    console.log('createSellers(): HELLO from ' + NSParticipant);
     //
     // Get a reference to the Sellers in the participant registry
     const sellerRegistry = await getParticipantRegistry(NSParticipant + '.Seller');
     //
     // Create new Seller instances
-    let sellers = []
+    let sellers = [];
     const factory = getFactory();
     let seller = factory.newResource(NSParticipant, 'Seller', 'SELL001');
     seller.name = 'Selljestic';
@@ -68,13 +93,12 @@ async function createSellers() {
  * Create Buyers and add them to the Participant registry
  */
 async function createBuyers() {
-    console.log('createBuyers(): HELLO from ' + NSParticipant);
     //
     // Get a reference to the Buyers in the participant registry
     const buyerRegistry = await getParticipantRegistry(NSParticipant + '.Buyer');
     //
     // Create new Buyer instances
-    let buyers = []
+    let buyers = [];
     const factory = getFactory();
     let buyer = factory.newResource(NSParticipant, 'Buyer', 'BUY001');
     buyer.name = 'Buytastic';
@@ -92,13 +116,12 @@ async function createBuyers() {
  * Create Shippers and add them to the Participant registry
  */
 async function createShippers() {
-    console.log('createShippers(): HELLO from ' + NSParticipant);
     //
     // Get a reference to the Shippers in the participant registry
     const shipperRegistry = await getParticipantRegistry(NSParticipant + '.Shipper');
     //
     // Create new Buyer instances
-    let shippers = []
+    let shippers = [];
     const factory = getFactory();
     let shipper = factory.newResource(NSParticipant, 'Shipper', 'SHIP001');
     shipper.name = 'Shipmagic';
@@ -110,4 +133,19 @@ async function createShippers() {
     //
     // Add the new Buyer instances to the registry
     await shipperRegistry.addAll(shippers);
+}
+
+/**
+ * Create Items and add them to the Asset registry
+ */
+async function createItems() {
+    //
+    // Get a reference to the Items in the participant registry
+    const itemRegistry = await getAssetRegistry(NSAsset + '.Item');
+    //
+    // Create new Item instanes
+    let items = [];
+    const factory = getFactory();
+    let item = factory.newResource(NSAsset, 'Item', 'WIDGET001');
+    item.description = 'Widget number 1';
 }
