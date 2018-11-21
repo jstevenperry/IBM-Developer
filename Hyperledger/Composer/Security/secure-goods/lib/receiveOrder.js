@@ -26,7 +26,7 @@ async function receiveOrder(transaction) {
     const NSBase = 'com.makotogo.learn.composer.securegoods';
     const NSAsset = NSBase + '.asset';
 
-    console.log('Receive shipment for orderId: ' + transaction.order.id);
+    console.log('Receive order for orderId: ' + transaction.order.id);
     const order = transaction.order;
 
     const assetRegistry = await getAssetRegistry(NSAsset + '.Order');
