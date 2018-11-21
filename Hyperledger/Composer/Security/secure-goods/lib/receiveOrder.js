@@ -23,14 +23,22 @@
  * @transaction
  */
 async function receiveOrder(transaction) {
-    const NSBase = 'com.makotogo.learn.composer.securegoods';
-    const NSAsset = NSBase + '.asset';
+    const NSAsset = 'com.makotogo.learn.composer.securegoods.asset';
+    const NSEvent = 'com.makotogo.learn.composer.securegoods.event';
 
     console.log('Receive order for orderId: ' + transaction.order.id);
     const order = transaction.order;
 
+    // Update the order status
     const assetRegistry = await getAssetRegistry(NSAsset + '.Order');
-
     order.status = 'RECEIVED';
     await assetRegistry.update(order);
+
+    // Emit OrderReceived event
+    let message = 'Order ' + order.id + ' received.';
+    const factory = getFactory();
+    const event = factory.newEvent(NSEvent, 'OrderReceived');
+    event.message = message;
+    event.order = order;
+    emit(event);
 }
