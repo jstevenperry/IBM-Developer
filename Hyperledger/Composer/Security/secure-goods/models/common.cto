@@ -51,7 +51,7 @@ concept Price {
 }
 
 /**
-  Load (populate) the registries with data. This is, after all,
-  a sample application.
+  Load (populate) the registries with data. 
+  This is, after all, a sample application.
  */
 transaction LoadRegistries {}

@@ -28,6 +28,13 @@ abstract asset AbstractAsset identified by id {
 }
 
 /**
+  An event common to all events related to an Order
+ */
+abstract event OrderEvent {
+  o String message
+}
+
+/**
  * An item that is bought or sold in the network
  */
 asset Item extends AbstractAsset {
@@ -59,7 +66,7 @@ asset Order extends AbstractAsset {
   and the OrderPlaced event is emitted with details.
  */
 transaction PlaceOrder {
-  o Item item
+  --> Item item
   o Double quantity
   o Price unitCost
 
@@ -67,7 +74,14 @@ transaction PlaceOrder {
   --> Seller seller
   --> Shipper shipper
 
-  o Price unitShippingCost
+  o Price shippingCost
+}
+
+/**
+  This event is emitted when an Order is placed.
+ */
+event OrderPlaced  extends OrderEvent {
+  --> Order order
 }
 
 /**
@@ -77,6 +91,20 @@ transaction ShipOrder {
   --> Order order
 }
 
+/**
+  This event is emitted when an Order is shipped.
+ */
+event OrderShipped extends OrderEvent {
+  --> Order order
+}
+
 transaction ReceiveOrder {
+  --> Order order
+}
+
+/**
+  This event is emitted when an Order is received.
+ */
+event OrderReceived extends OrderEvent {
   --> Order order
 }

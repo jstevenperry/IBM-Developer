@@ -19,24 +19,24 @@
 
 /**
  * Receive the order having the specified orderId
- * @param {com.makotogo.learn.composer.securegoods.asset.ReceiveOrder} transaction
+ * @param {com.makotogo.learn.composer.securegoods.asset.ShipOrder} transaction
  * @transaction
  */
-async function receiveOrder(transaction) {
+async function shipOrder(transaction) {
     const NSAsset = 'com.makotogo.learn.composer.securegoods.asset';
 
     const order = transaction.order;
 
     // Update the order status
     const assetRegistry = await getAssetRegistry(NSAsset + '.Order');
-    order.status = 'RECEIVED';
-    console.log('Receiving order for orderId: ' + transaction.order.id);
+    order.status = 'SHIPPED';
+    console.log('Shipping order for orderId: ' + transaction.order.id);
     await assetRegistry.update(order);
 
     // Emit OrderReceived event
-    let message = 'Order ' + order.id + ' received.';
+    let message = 'Order ' + order.id + ' shipped.';
     const factory = getFactory();
-    const event = factory.newEvent(NSAsset, 'OrderReceived');
+    const event = factory.newEvent(NSAsset, 'OrderShipped');
     event.message = message;
     event.order = order;
     emit(event);

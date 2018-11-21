@@ -12,17 +12,17 @@
 # limitations under the License.
 #
 
-Feature: BuyerSecurity
+Feature: SellerSecurity
 
     Background:
         Given I have deployed the business network definition ..
         And I have added the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
             | id   | name |
             | BUY001 | Buyer1 |
-            | BUY002 | Buyer2 |
         And I have added the following participants of type com.makotogo.learn.composer.securegoods.participant.Seller
             | id   | name |
             | SELL001 | Seller1 |
+            | SELL002 | Seller2 |
         And I have added the following participants of type com.makotogo.learn.composer.securegoods.participant.Shipper
             | id   | name |
             | SHIP001 | Shipper1 |
@@ -48,57 +48,57 @@ Feature: BuyerSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
             },
-            "status": "SHIPPED"
+            "status": "PLACED"
         }
         """
-        And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Buyer#BUY001 with the identity BUYER001
-        And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Buyer#BUY002 with the identity BUYER002
+        And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Seller#SELL001 with the identity SELLER001
+        And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Seller#SELL002 with the identity SELLER002
 
-    Scenario: Buyer 1 can read its own Buyer record
-        When I use the identity BUYER001
-        Then I should have the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
+    Scenario: Seller 1 can read its own Seller record
+        When I use the identity SELLER001
+        Then I should have the following participants of type com.makotogo.learn.composer.securegoods.participant.Seller
             | id   | name |
-            | BUY001 | Buyer1 |
+            | SELL001 | Seller1 |
 
-    Scenario: Buyer 1 can update its own Buyer record
-        When I use the identity BUYER001
-        And I update the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
+    Scenario: Seller 1 can update its own Seller record
+        When I use the identity SELLER001
+        And I update the following participants of type com.makotogo.learn.composer.securegoods.participant.Seller
             | id   | name |
-            | BUY001 | Buyer1-UPDATED |
-        Then I should have the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
+            | SELL001 | Seller1-UPDATED |
+        Then I should have the following participants of type com.makotogo.learn.composer.securegoods.participant.Seller
             | id   | name |
-            | BUY001 | Buyer1-UPDATED |
+            | SELL001 | Seller1-UPDATED |
 
-    Scenario: Buyer 2 cannot update Buyer 1's record
-        When I use the identity BUYER002
-        And I update the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
+    Scenario: Seller 2 cannot update Seller 1's record
+        When I use the identity SELLER002
+        And I update the following participants of type com.makotogo.learn.composer.securegoods.participant.Seller
             | id   | name |
-            | BUY001 | Buyer1-UPDATED |
+            | SELL001 | Seller1-UPDATED |
         Then I should get an error matching /does not have .* access to resource/
 
-    Scenario: Buyer 1 can read all Items
-        When I use the identity BUYER001
+    Scenario: Seller 1 can read all Items
+        When I use the identity SELLER001
         Then I should have the following assets of type com.makotogo.learn.composer.securegoods.asset.Item
             | id | sku | description |
             | WIDGET001 | W001 | Widget number 1 |
             | WIDGET002 | W002 | Widget number 2 |
 
-    Scenario: Buyer cannot access Seller's Participant Record
-        When I use the identity BUYER001
-        And I attempt to read the following participants of type com.makotogo.learn.composer.securegoods.participant.Seller
+    Scenario: Seller cannot access Buyer's Participant Record
+        When I use the identity SELLER001
+        And I attempt to read the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
             | id   | name |
-            | SELL001 | Seller1 |
+            | BUY001 | Buyer1 |
         Then I should get an error matching /does not have .* access to resource/
 
-    Scenario: Buyer cannot access Shipper's Participant Record
-        When I use the identity BUYER001
+    Scenario: Seller cannot access Shipper's Participant Record
+        When I use the identity SELLER001
         And I attempt to read the following participants of type com.makotogo.learn.composer.securegoods.participant.Shipper
             | id   | name |
             | SHIP001 | Shipper1 |
         Then I should get an error matching /does not have .* access to resource/
 
-    Scenario: Buyer 1 can access their own Order
-        When I use the identity BUYER001
+    Scenario: Seller 1 can access their own Order
+        When I use the identity SELLER001
         Then I should have the following assets
         """
         {
@@ -117,12 +117,12 @@ Feature: BuyerSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
             },
-            "status": "SHIPPED"
+            "status": "PLACED"
         }
         """
 
-    Scenario: Buyer 2 cannot access Buyer 1's Orders
-        When I use the identity BUYER002
+    Scenario: Seller 2 cannot access Seller 1's Orders
+        When I use the identity SELLER002
         And I attempt to read the following assets
         """
         {
@@ -141,21 +141,37 @@ Feature: BuyerSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
             },
-            "status": "SHIPPED"
+            "status": "PLACED"
         }
         """
         Then I should get an error matching /does not have .* access to resource/
 
-    Scenario: Buyer 1 can invoke the ReceiveOrder transaction
-        When I use the identity BUYER001
-        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.asset.ReceiveOrder
-            | order |
-            | ORD0000001 |
+    Scenario: Seller 1 can invoke the PlaceOrder transaction
+        When I use the identity SELLER001
+        And I submit the following transaction
+        """
+        { 
+            "$class": "com.makotogo.learn.composer.securegoods.asset.PlaceOrder",
+            "item": "WIDGET001",
+            "quantity": "1000",
+            "unitCost": {
+                "$class": "com.makotogo.learn.composer.securegoods.common.Price",
+                "currency": "USD", "amount": "1.5" 
+            },
+            "buyer": "BUY001",
+            "seller": "SELL001",
+            "shipper": "SHIP001",
+            "shippingCost": {
+                "$class": "com.makotogo.learn.composer.securegoods.common.Price",
+                "currency": "USD", "amount": "100" 
+            }
+        }
+        """
         Then I should have the following assets
         """
         {
             "$class": "com.makotogo.learn.composer.securegoods.asset.Order",
-            "id": "ORD0000001",
+            "id": "ORD0000100",
             "item": "WIDGET001",
             "quantity": "1000",
             "unitCost": {
@@ -169,21 +185,37 @@ Feature: BuyerSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
             },
-            "status": "RECEIVED"
+            "status": "PLACED"
         }
         """
         And I should have received the following event
         """
         {
-            "$class": "com.makotogo.learn.composer.securegoods.asset.OrderReceived",
-            "message": "Order ORD0000001 received.",
-            "order": "ORD0000001"
+            "$class": "com.makotogo.learn.composer.securegoods.asset.OrderPlaced",
+            "message": "Order ORD0000100 placed.",
+            "order": "ORD0000100"
         }
         """
 
-    Scenario: Buyer 2 cannot invoke the ReceiveShipment transaction for Buyer 1's order
-        When I use the identity BUYER002
-        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.asset.ReceiveOrder
-            | order |
-            | ORD0000001  |
+    Scenario: Seller 2 cannot invoke the PlaceOrder transaction for Seller 1's order
+        When I use the identity SELLER002
+        And I submit the following transaction
+        """
+        { 
+            "$class": "com.makotogo.learn.composer.securegoods.asset.PlaceOrder",
+            "item": "WIDGET001",
+            "quantity": "1000",
+            "unitCost": {
+                "$class": "com.makotogo.learn.composer.securegoods.common.Price",
+                "currency": "USD", "amount": "1.5" 
+            },
+            "buyer": "BUY001",
+            "seller": "SELL001",
+            "shipper": "SHIP001",
+            "shippingCost": {
+                "$class": "com.makotogo.learn.composer.securegoods.common.Price",
+                "currency": "USD", "amount": "100" 
+            }
+        }
+        """
         Then I should get an error matching /does not have .* access to resource/

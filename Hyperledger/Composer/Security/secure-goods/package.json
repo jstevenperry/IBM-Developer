@@ -52,7 +52,6 @@
       ".git",
       "markdown-license.txt",
       ".DS_Store",
-      "features",
       "LICENSE",
       "README.md"
     ],
@@ -68,6 +67,11 @@
         "append": " */",
         "eachLine": {
           "prepend": " * "
+        }
+      },
+      "feature": {
+        "eachLine": {
+          "prepend": "# "
         }
       }
     }
