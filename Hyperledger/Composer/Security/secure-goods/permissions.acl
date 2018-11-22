@@ -146,9 +146,51 @@ rule Shipper_C_Order_ShipOrder {
 //*********
 // Auditor rules
 
-// Auditor has READ access to all participants
+// Auditor has READ, UPDATE access to their own record
+rule Auditor_RU_Auditor {
+  description: "Grant Auditor READ,UPDATE access to their own record"
+  participant(thisAuditor): "com.makotogo.learn.composer.securegoods.participant.Auditor"
+  operation: READ,UPDATE
+  resource(otherAuditor): "com.makotogo.learn.composer.securegoods.participant.Auditor"
+  condition: (thisAuditor.id == otherAuditor.id)
+  action: ALLOW
+}
 
-// Auditor has READ access to all assets
+// Auditor has READ access to Buyers
+rule Auditor_R_Buyer {
+  description: "Grant Auditor READ access to Buyer participant record"
+  participant: "com.makotogo.learn.composer.securegoods.participant.Auditor"
+  operation: READ
+  resource: "com.makotogo.learn.composer.securegoods.participant.Buyer"
+  action: ALLOW
+}
+
+// Auditor has READ access to Sellers
+rule Auditor_R_Seller {
+  description: "Grant Auditor READ access to Seller participant record"
+  participant: "com.makotogo.learn.composer.securegoods.participant.Auditor"
+  operation: READ
+  resource: "com.makotogo.learn.composer.securegoods.participant.Seller"
+  action: ALLOW
+}
+
+// Auditor has READ access to Shippers
+rule Auditor_R_Shipper {
+  description: "Grant Auditor READ access to Shipper participant record"
+  participant: "com.makotogo.learn.composer.securegoods.participant.Auditor"
+  operation: READ
+  resource: "com.makotogo.learn.composer.securegoods.participant.Shipper"
+  action: ALLOW
+}
+
+// Auditor has READ access to all Orders
+rule Auditor_R_Order {
+  description: "Grant Auditor READ access to all Orders"
+  participant: "com.makotogo.learn.composer.securegoods.participant.Auditor"
+  operation: READ
+  resource: "com.makotogo.learn.composer.securegoods.asset.Order"
+  action: ALLOW
+}
 
 //*********
 // Blanket Participant rules
