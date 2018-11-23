@@ -57,12 +57,6 @@ Feature: AuditorSecurity
         And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Auditor#AUD001 with the identity AUDITOR001
         And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Auditor#AUD002 with the identity AUDITOR002
 
-    Scenario: Auditor 1 can read its own Auditor record
-        When I use the identity AUDITOR001
-        Then I should have the following participants of type com.makotogo.learn.composer.securegoods.participant.Auditor
-            | id   | name |
-            | AUD001 | Auditor1 |
-
     Scenario: Auditor 1 can update its own Auditor record
         When I use the identity AUDITOR001
         And I update the following participants of type com.makotogo.learn.composer.securegoods.participant.Auditor

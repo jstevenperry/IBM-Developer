@@ -54,12 +54,6 @@ Feature: SellerSecurity
         And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Seller#SELL001 with the identity SELLER001
         And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Seller#SELL002 with the identity SELLER002
 
-    Scenario: Seller 1 can read its own Seller record
-        When I use the identity SELLER001
-        Then I should have the following participants of type com.makotogo.learn.composer.securegoods.participant.Seller
-            | id   | name |
-            | SELL001 | Seller1 |
-
     Scenario: Seller 1 can update its own Seller record
         When I use the identity SELLER001
         And I update the following participants of type com.makotogo.learn.composer.securegoods.participant.Seller

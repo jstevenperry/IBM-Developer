@@ -54,12 +54,6 @@ Feature: ShipperSecurity
         And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Shipper#SHIP001 with the identity SHIPPER001
         And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Shipper#SHIP002 with the identity SHIPPER002
 
-    Scenario: Shipper 1 can read its own Shipper record
-        When I use the identity SHIPPER001
-        Then I should have the following participants of type com.makotogo.learn.composer.securegoods.participant.Shipper
-            | id   | name |
-            | SHIP001 | Shipper1 |
-
     Scenario: Shipper 1 can update its own Shipper record
         When I use the identity SHIPPER001
         And I update the following participants of type com.makotogo.learn.composer.securegoods.participant.Shipper

@@ -54,12 +54,6 @@ Feature: BuyerSecurity
         And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Buyer#BUY001 with the identity BUYER001
         And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Buyer#BUY002 with the identity BUYER002
 
-    Scenario: Buyer 1 can read its own Buyer record
-        When I use the identity BUYER001
-        Then I should have the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
-            | id   | name |
-            | BUY001 | Buyer1 |
-
     Scenario: Buyer 1 can update its own Buyer record
         When I use the identity BUYER001
         And I update the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
