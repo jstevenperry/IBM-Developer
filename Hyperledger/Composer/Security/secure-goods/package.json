@@ -12,7 +12,7 @@
     "postinstall": "npm run lint",
     "postlint": "npm run licchk",
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/secure-goods.bna",
-    "pretest": "npm run lint",
+    "pretest": "npm install && npm run lint",
     "reinstall": "npm run clean && npm install",
     "test": "cucumber-js"
   },
