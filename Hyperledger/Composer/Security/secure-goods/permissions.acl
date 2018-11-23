@@ -78,23 +78,23 @@ rule Seller_R_Order {
   action: ALLOW
 }
 
-// Seller can invoke the PlaceOrder transaction
-rule Seller_C_PlaceOrder {
-  description: "Grant Seller CREATE (invoke) access to PlaceOrder for their own orders"
+// Seller can invoke the CreateOrder transaction
+rule Seller_C_CreateOrder {
+  description: "Grant Seller CREATE (invoke) access to CreateOrder for their own orders"
   participant(seller): "com.makotogo.learn.composer.securegoods.participant.Seller"
   operation: CREATE
-  resource(tx): "com.makotogo.learn.composer.securegoods.asset.PlaceOrder"
+  resource(tx): "com.makotogo.learn.composer.securegoods.asset.CreateOrder"
   condition: (seller.id == tx.seller.id)
   action: ALLOW
 }
 
-// Seller has CREATE access to order only when invoking PlaceOrder transaction
-rule Seller_C_Order_PlaceOrder {
-  description: "Seller can only create their own orders on PlaceOrder"
+// Seller has CREATE access to order only when invoking CreateOrder transaction
+rule Seller_C_Order_CreateOrder {
+  description: "Seller can only create their own orders on CreateOrder"
   participant(seller): "com.makotogo.learn.composer.securegoods.participant.Seller"
   operation: CREATE
   resource(order): "com.makotogo.learn.composer.securegoods.asset.Order"
-  transaction(tx): "com.makotogo.learn.composer.securegoods.asset.PlaceOrder"
+  transaction(tx): "com.makotogo.learn.composer.securegoods.asset.CreateOrder"
   condition: (seller.id == tx.seller.id && seller.id == order.seller.id)
   action: ALLOW
 }
@@ -123,8 +123,8 @@ rule Shipper_R_Order {
 }
 
 // Shipper can invoke the ShipOrder transaction
-rule Shipper_C_PlaceOrder {
-  description: "Grant Shipper CREATE (invoke) access to PlaceOrder for their own orders"
+rule Shipper_C_CreateOrder {
+  description: "Grant Shipper CREATE (invoke) access to ShipOrder for their own orders"
   participant(shipper): "com.makotogo.learn.composer.securegoods.participant.Shipper"
   operation: CREATE
   resource(tx): "com.makotogo.learn.composer.securegoods.asset.ShipOrder"

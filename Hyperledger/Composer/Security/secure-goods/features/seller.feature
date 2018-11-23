@@ -48,7 +48,7 @@ Feature: SellerSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
             },
-            "status": "PLACED"
+            "status": "CREATED"
         }
         """
         And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Seller#SELL001 with the identity SELLER001
@@ -117,7 +117,7 @@ Feature: SellerSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
             },
-            "status": "PLACED"
+            "status": "CREATED"
         }
         """
 
@@ -141,17 +141,17 @@ Feature: SellerSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
             },
-            "status": "PLACED"
+            "status": "CREATED"
         }
         """
         Then I should get an error matching /does not have .* access to resource/
 
-    Scenario: Seller 1 can invoke the PlaceOrder transaction
+    Scenario: Seller 1 can invoke the CreateOrder transaction
         When I use the identity SELLER001
         And I submit the following transaction
         """
         { 
-            "$class": "com.makotogo.learn.composer.securegoods.asset.PlaceOrder",
+            "$class": "com.makotogo.learn.composer.securegoods.asset.CreateOrder",
             "item": "WIDGET001",
             "quantity": "1000",
             "unitCost": {
@@ -185,24 +185,24 @@ Feature: SellerSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
             },
-            "status": "PLACED"
+            "status": "CREATED"
         }
         """
         And I should have received the following event
         """
         {
-            "$class": "com.makotogo.learn.composer.securegoods.asset.OrderPlaced",
-            "message": "Order ORD0000100 placed.",
+            "$class": "com.makotogo.learn.composer.securegoods.asset.OrderCreated",
+            "message": "Order ORD0000100 created.",
             "order": "ORD0000100"
         }
         """
 
-    Scenario: Seller 2 cannot invoke the PlaceOrder transaction for Seller 1's order
+    Scenario: Seller 2 cannot invoke the CreateOrder transaction for Seller 1's order
         When I use the identity SELLER002
         And I submit the following transaction
         """
         { 
-            "$class": "com.makotogo.learn.composer.securegoods.asset.PlaceOrder",
+            "$class": "com.makotogo.learn.composer.securegoods.asset.CreateOrder",
             "item": "WIDGET001",
             "quantity": "1000",
             "unitCost": {

@@ -48,7 +48,7 @@ Feature: ShipperSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
             },
-            "status": "PLACED"
+            "status": "CREATED"
         }
         """
         And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Shipper#SHIP001 with the identity SHIPPER001
@@ -117,7 +117,7 @@ Feature: ShipperSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
             },
-            "status": "PLACED"
+            "status": "CREATED"
         }
         """
 
@@ -141,7 +141,7 @@ Feature: ShipperSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
             },
-            "status": "PLACED"
+            "status": "CREATED"
         }
         """
         Then I should get an error matching /does not have .* access to resource/

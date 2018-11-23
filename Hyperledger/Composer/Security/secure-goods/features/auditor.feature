@@ -128,12 +128,12 @@ Feature: AuditorSecurity
         }
         """
 
-    Scenario: Auditor cannot invoke the PlaceOrder transaction
+    Scenario: Auditor cannot invoke the CreateOrder transaction
         When I use the identity AUDITOR001
         And I submit the following transaction
         """
         { 
-            "$class": "com.makotogo.learn.composer.securegoods.asset.PlaceOrder",
+            "$class": "com.makotogo.learn.composer.securegoods.asset.CreateOrder",
             "item": "WIDGET001",
             "quantity": "1000",
             "unitCost": {

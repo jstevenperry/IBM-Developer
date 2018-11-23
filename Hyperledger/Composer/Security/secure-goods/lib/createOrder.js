@@ -33,11 +33,11 @@ function getNextId() {
 }
 
 /**
- * Place the specified order.
- * @param {com.makotogo.learn.composer.securegoods.asset.PlaceOrder} transaction
+ * Create the specified order.
+ * @param {com.makotogo.learn.composer.securegoods.asset.CreateOrder} transaction
  * @transaction
  */
-async function placeOrder(transaction) {
+async function createOrder(transaction) {
     const NSAsset = 'com.makotogo.learn.composer.securegoods.asset';
 
     //
@@ -53,16 +53,16 @@ async function placeOrder(transaction) {
     order.seller = transaction.seller;
     order.shipper = transaction.shipper;
     order.shippingCost = transaction.shippingCost;
-    order.status = 'PLACED';
+    order.status = 'CREATED';
 
     // Add the order asset to the Asset Registry
     const assetRegistry = await getAssetRegistry(NSAsset + '.Order');
     console.log('Placing order for item: ' + transaction.item.id);
     await assetRegistry.add(order);
 
-    // Emit OrderPlaced event
-    let message = 'Order ' + order.id + ' placed.';
-    const event = factory.newEvent(NSAsset, 'OrderPlaced');
+    // Emit OrderCreated event
+    let message = 'Order ' + order.id + ' created.';
+    const event = factory.newEvent(NSAsset, 'OrderCreated');
     event.message = message;
     event.order = order;
     emit(event);

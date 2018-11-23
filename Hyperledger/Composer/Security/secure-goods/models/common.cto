@@ -19,7 +19,7 @@
  */
  enum OrderStatus {
    o CANCELLED
-   o PLACED
+   o CREATED
    o SHIPPED
    o RECEIVED
  }
