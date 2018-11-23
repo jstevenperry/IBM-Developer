@@ -11,198 +11,66 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-//*********
-// Buyer rules
 
-// Buyer has READ,UPDATE access to their own participant record
-rule Buyer_RU_Buyer {
-  description: "Grant Buyer READ,UPDATE access to their own record"
-  participant(thisBuyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
-  operation: READ,UPDATE
-  resource(otherBuyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
-  condition: (thisBuyer.id == otherBuyer.id)
-  action: ALLOW
-}
-
-// Buyer has READ access to their own order records
-rule Buyer_R_Order {
-  description: "Grant Buyer READ access to their own orders"
-  participant(buyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
-  operation: READ
-  resource(order): "com.makotogo.learn.composer.securegoods.asset.Order"
-  condition: (buyer.id == order.buyer.id)
-  action: ALLOW
-}
-
-// Buyer can invoke the ReceiveOrder transaction
-rule Buyer_C_ReceiveOrder {
-  description: "Grant Buyer CREATE (invoke) access to ReceiveOrder for their own orders"
-  participant(buyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
-  operation: CREATE
-  resource(tx): "com.makotogo.learn.composer.securegoods.asset.ReceiveOrder"
-  condition: (buyer.id == tx.order.buyer.id)
-  action: ALLOW
-}
-
-// Buyer has UPDATE access to order only when invoking ReceiveOrder transaction
-rule Buyer_U_Order_ReceiveOrder {
-  description: "Buyer can only update their own orders on ReceiveOrder"
-  participant(buyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
-  operation: UPDATE
-  resource(order): "com.makotogo.learn.composer.securegoods.asset.Order"
-  transaction(tx): "com.makotogo.learn.composer.securegoods.asset.ReceiveOrder"
-  condition: (tx.order.buyer.id == buyer.id && buyer.id == order.buyer.id)
-  action: ALLOW
-}
-
-//*********
-// Seller rules
-
-// Seller has READ,UPDATE access to their own participant record
-rule Seller_RU_Seller {
-  description: "Grant Seller READ,UPDATE access to their own record"
-  participant(thisSeller): "com.makotogo.learn.composer.securegoods.participant.Seller"
-  operation: READ,UPDATE
-  resource(otherSeller): "com.makotogo.learn.composer.securegoods.participant.Seller"
-  condition: (thisSeller.id == otherSeller.id)
-  action: ALLOW
-}
-
-// Seller has READ access to their own order records
-rule Seller_R_Order {
-  description: "Grant Seller READ access to their own orders"
-  participant(seller): "com.makotogo.learn.composer.securegoods.participant.Seller"
-  operation: READ
-  resource(order): "com.makotogo.learn.composer.securegoods.asset.Order"
-  condition: (seller.id == order.seller.id)
-  action: ALLOW
-}
-
-// Seller can invoke the CreateOrder transaction
-rule Seller_C_CreateOrder {
-  description: "Grant Seller CREATE (invoke) access to CreateOrder for their own orders"
-  participant(seller): "com.makotogo.learn.composer.securegoods.participant.Seller"
-  operation: CREATE
-  resource(tx): "com.makotogo.learn.composer.securegoods.asset.CreateOrder"
-  condition: (seller.id == tx.seller.id)
-  action: ALLOW
-}
-
-// Seller has CREATE access to order only when invoking CreateOrder transaction
-rule Seller_C_Order_CreateOrder {
-  description: "Seller can only create their own orders on CreateOrder"
-  participant(seller): "com.makotogo.learn.composer.securegoods.participant.Seller"
-  operation: CREATE
-  resource(order): "com.makotogo.learn.composer.securegoods.asset.Order"
-  transaction(tx): "com.makotogo.learn.composer.securegoods.asset.CreateOrder"
-  condition: (seller.id == tx.seller.id && seller.id == order.seller.id)
-  action: ALLOW
-}
-
-//*********
-// Shipper rules
-
-// Shipper has READ,UPDATE access to their own record only
-rule Shipper_RU_Shipper {
-  description: "Grant Shipper READ,UPDATE access to their own record"
-  participant(thisShipper): "com.makotogo.learn.composer.securegoods.participant.Shipper"
-  operation: READ,UPDATE
-  resource(otherShipper): "com.makotogo.learn.composer.securegoods.participant.Shipper"
-  condition: (thisShipper.id == otherShipper.id)
-  action: ALLOW
-}
-
-// Shipper has READ access to their own order records
-rule Shipper_R_Order {
-  description: "Grant Shipper READ access to their own orders"
-  participant(shipper): "com.makotogo.learn.composer.securegoods.participant.Shipper"
-  operation: READ
-  resource(order): "com.makotogo.learn.composer.securegoods.asset.Order"
-  condition: (shipper.id == order.shipper.id)
-  action: ALLOW
-}
-
-// Shipper can invoke the ShipOrder transaction
-rule Shipper_C_CreateOrder {
-  description: "Grant Shipper CREATE (invoke) access to ShipOrder for their own orders"
-  participant(shipper): "com.makotogo.learn.composer.securegoods.participant.Shipper"
-  operation: CREATE
-  resource(tx): "com.makotogo.learn.composer.securegoods.asset.ShipOrder"
-  condition: (shipper.id == tx.order.shipper.id)
-  action: ALLOW
-}
-
-// Shipper has UPDATE access to order only when invoking ShipOrder transaction
-rule Shipper_C_Order_ShipOrder {
-  description: "Shipper can only create their own orders on ShipOrder"
-  participant(shipper): "com.makotogo.learn.composer.securegoods.participant.Shipper"
-  operation: UPDATE
-  resource(order): "com.makotogo.learn.composer.securegoods.asset.Order"
-  transaction(tx): "com.makotogo.learn.composer.securegoods.asset.ShipOrder"
-  condition: (shipper.id == tx.order.shipper.id && shipper.id == order.shipper.id)
-  action: ALLOW
-}
-
-//*********
-// Auditor rules
-
-// Auditor has READ, UPDATE access to their own record
-rule Auditor_RU_Auditor {
-  description: "Grant Auditor READ,UPDATE access to their own record"
-  participant(thisAuditor): "com.makotogo.learn.composer.securegoods.participant.Auditor"
-  operation: READ,UPDATE
-  resource(otherAuditor): "com.makotogo.learn.composer.securegoods.participant.Auditor"
-  condition: (thisAuditor.id == otherAuditor.id)
-  action: ALLOW
-}
-
-// Auditor has READ access to Buyers
-rule Auditor_R_Buyer {
-  description: "Grant Auditor READ access to Buyer participant record"
-  participant: "com.makotogo.learn.composer.securegoods.participant.Auditor"
-  operation: READ
-  resource: "com.makotogo.learn.composer.securegoods.participant.Buyer"
-  action: ALLOW
-}
-
-// Auditor has READ access to Sellers
-rule Auditor_R_Seller {
-  description: "Grant Auditor READ access to Seller participant record"
-  participant: "com.makotogo.learn.composer.securegoods.participant.Auditor"
-  operation: READ
-  resource: "com.makotogo.learn.composer.securegoods.participant.Seller"
-  action: ALLOW
-}
-
-// Auditor has READ access to Shippers
-rule Auditor_R_Shipper {
-  description: "Grant Auditor READ access to Shipper participant record"
-  participant: "com.makotogo.learn.composer.securegoods.participant.Auditor"
-  operation: READ
-  resource: "com.makotogo.learn.composer.securegoods.participant.Shipper"
-  action: ALLOW
-}
-
-// Auditor has READ access to all Orders
-rule Auditor_R_Order {
-  description: "Grant Auditor READ access to all Orders"
-  participant: "com.makotogo.learn.composer.securegoods.participant.Auditor"
-  operation: READ
-  resource: "com.makotogo.learn.composer.securegoods.asset.Order"
-  action: ALLOW
-}
 
 //*********
 // Blanket Participant rules
 
 // All participants have READ access to Item
-rule AnyParticipant_R_Item {
-  description: "Any Participant gets READ access to Item"
-  participant: "com.makotogo.learn.composer.securegoods.participant.*"
-  operation: READ
-  resource: "com.makotogo.learn.composer.securegoods.asset.Item"
-  action: ALLOW
-}
+// Uncomment this rule before adding anything else
+// rule AnyParticipant_R_Item {
+//   description: "Any Participant gets READ access to Item"
+//   participant: "com.makotogo.learn.composer.securegoods.participant.*"
+//   operation: READ
+//   resource: "com.makotogo.learn.composer.securegoods.asset.Item"
+//   action: ALLOW
+//}
+
+//*********
+// Buyer rules
+
+// Buyer has READ,UPDATE access to their own participant record
+
+// Buyer has READ access to their own order records
+
+// Buyer can invoke the ReceiveOrder transaction
+
+// Buyer has UPDATE access to order only when invoking ReceiveOrder transaction
+
+//*********
+// Seller rules
+
+// Seller has READ,UPDATE access to their own participant record
+
+// Seller has READ access to their own order records
+
+// Seller can invoke the CreateOrder transaction
+
+// Seller has CREATE access to order only when invoking CreateOrder transaction
+
+//*********
+// Shipper rules
+
+// Shipper has READ,UPDATE access to their own record only
+
+// Shipper has READ access to their own order records
+
+// Shipper can invoke the ShipOrder transaction
+
+// Shipper has UPDATE access to order only when invoking ShipOrder transaction
+
+//*********
+// Auditor rules
+
+// Auditor has READ, UPDATE access to their own record
+
+// Auditor has READ access to Buyers
+
+// Auditor has READ access to Sellers
+
+// Auditor has READ access to Shippers
+
+// Auditor has READ access to all Orders
 
 //*********
 // System rules
