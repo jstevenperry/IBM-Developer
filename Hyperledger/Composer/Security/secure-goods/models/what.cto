@@ -21,6 +21,13 @@ import com.makotogo.learn.composer.securegoods.participant.Seller
 import com.makotogo.learn.composer.securegoods.participant.Shipper
 
 /**
+  This file tells you what is involved in the business model:
+  - The assets
+  - The transactions
+  - The events
+ */
+
+/**
  * The base definition for all assets in the model
  */
 abstract asset AbstractAsset identified by id {

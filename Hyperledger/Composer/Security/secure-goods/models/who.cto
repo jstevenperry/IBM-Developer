@@ -15,6 +15,11 @@
 namespace com.makotogo.learn.composer.securegoods.participant
 
 /**
+  This file tells you who is involved in the business
+  network.
+ */
+
+/**
   A participant in the secure goods business network
  */
 abstract participant SecureParticipant identified by id {

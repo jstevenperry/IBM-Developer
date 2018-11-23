@@ -15,6 +15,10 @@
  namespace com.makotogo.learn.composer.securegoods.common
 
 /**
+  This file tells you the common elements of the business model.
+ */
+
+/**
   Indicates the status of an order
  */
  enum OrderStatus {
