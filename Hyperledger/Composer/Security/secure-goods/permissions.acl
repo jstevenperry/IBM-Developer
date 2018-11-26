@@ -53,19 +53,6 @@
 // Shipper can invoke the ShipOrder transaction
 
 //*********
-// Auditor rules
-
-// Auditor has READ, UPDATE access to their own record
-
-// Auditor has READ access to Buyers
-
-// Auditor has READ access to Sellers
-
-// Auditor has READ access to Shippers
-
-// Auditor has READ access to all Orders
-
-//*********
 // System rules
 // THIS RULE IS REQUIRED FOR ANY PARTICIPANT TO ACCESS THE NETWORK!!!
 rule SystemParticipant {
