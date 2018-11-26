@@ -182,14 +182,6 @@ Feature: SellerSecurity
             "status": "CREATED"
         }
         """
-        And I should have received the following event
-        """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.asset.OrderCreated",
-            "message": "Order ORD0000100 created.",
-            "order": "ORD0000100"
-        }
-        """
 
     Scenario: Seller 2 cannot invoke the CreateOrder transaction for Seller 1's order
         When I use the identity SELLER002

@@ -85,33 +85,12 @@ transaction CreateOrder {
 }
 
 /**
-  This event is emitted when an Order is created.
- */
-event OrderCreated  extends OrderEvent {
-  --> Order order
-}
-
-/**
   Ship the specified order
  */
 transaction ShipOrder {
   --> Order order
 }
 
-/**
-  This event is emitted when an Order is shipped.
- */
-event OrderShipped extends OrderEvent {
-  --> Order order
-}
-
 transaction ReceiveOrder {
-  --> Order order
-}
-
-/**
-  This event is emitted when an Order is received.
- */
-event OrderReceived extends OrderEvent {
   --> Order order
 }

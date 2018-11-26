@@ -59,11 +59,4 @@ async function createOrder(transaction) {
     const assetRegistry = await getAssetRegistry(NSAsset + '.Order');
     console.log('Placing order for item: ' + transaction.item.id);
     await assetRegistry.add(order);
-
-    // Emit OrderCreated event
-    let message = 'Order ' + order.id + ' created.';
-    const event = factory.newEvent(NSAsset, 'OrderCreated');
-    event.message = message;
-    event.order = order;
-    emit(event);
 }

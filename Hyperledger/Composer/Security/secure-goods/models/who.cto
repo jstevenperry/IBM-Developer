@@ -22,7 +22,7 @@ namespace com.makotogo.learn.composer.securegoods.participant
 /**
   A participant in the secure goods business network
  */
-abstract participant SecureParticipant identified by id {
+abstract participant AbstractParticipant identified by id {
   o String id
   o String name
 }
@@ -30,14 +30,14 @@ abstract participant SecureParticipant identified by id {
 /**
   A participant in the network who buys Items
  */
-participant Buyer extends SecureParticipant {
+participant Buyer extends AbstractParticipant {
 
 }
 
 /**
   A participant in the network who sells Items
  */
-participant Seller extends SecureParticipant {
+participant Seller extends AbstractParticipant {
 
 }
 
@@ -45,7 +45,7 @@ participant Seller extends SecureParticipant {
   A participant in the network who ships Items
   from Seller to Buyer
  */
-participant Shipper extends SecureParticipant {
+participant Shipper extends AbstractParticipant {
 
 }
 
@@ -55,6 +55,6 @@ participant Shipper extends SecureParticipant {
   and regulations outside of smart contracts
   are being followed
  */
-participant Auditor extends SecureParticipant {
+participant Auditor extends AbstractParticipant {
 
 }

@@ -166,14 +166,6 @@ Feature: ShipperSecurity
             "status": "SHIPPED"
         }
         """
-        And I should have received the following event
-        """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.asset.OrderShipped",
-            "message": "Order ORD0000001 shipped.",
-            "order": "ORD0000001"
-        }
-        """
 
     Scenario: Shipper 2 cannot invoke the ShipOrder transaction for Shipper 1's order
         When I use the identity SHIPPER002

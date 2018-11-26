@@ -32,12 +32,4 @@ async function receiveOrder(transaction) {
     order.status = 'RECEIVED';
     console.log('Receiving order for orderId: ' + transaction.order.id);
     await assetRegistry.update(order);
-
-    // Emit OrderReceived event
-    let message = 'Order ' + order.id + ' received.';
-    const factory = getFactory();
-    const event = factory.newEvent(NSAsset, 'OrderReceived');
-    event.message = message;
-    event.order = order;
-    emit(event);
 }

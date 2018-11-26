@@ -166,14 +166,6 @@ Feature: BuyerSecurity
             "status": "RECEIVED"
         }
         """
-        And I should have received the following event
-        """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.asset.OrderReceived",
-            "message": "Order ORD0000001 received.",
-            "order": "ORD0000001"
-        }
-        """
 
     Scenario: Buyer 2 cannot invoke the ReceiveShipment transaction for Buyer 1's order
         When I use the identity BUYER002

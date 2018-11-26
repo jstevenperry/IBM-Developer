@@ -32,12 +32,4 @@ async function shipOrder(transaction) {
     order.status = 'SHIPPED';
     console.log('Shipping order for orderId: ' + transaction.order.id);
     await assetRegistry.update(order);
-
-    // Emit OrderReceived event
-    let message = 'Order ' + order.id + ' shipped.';
-    const factory = getFactory();
-    const event = factory.newEvent(NSAsset, 'OrderShipped');
-    event.message = message;
-    event.order = order;
-    emit(event);
 }
