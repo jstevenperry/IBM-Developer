@@ -50,9 +50,6 @@ async function loadParticipantRegistries() {
     //
     // Create Shippers
     await createShippers();
-    //
-    // Create Auditors
-    await createAuditors();
 }
 
 /**
@@ -134,25 +131,6 @@ async function createShippers() {
     //
     // Add the new Buyer instances to the registry
     await shipperRegistry.addAll(shippers);
-}
-
-/**
- * Create Auditors and add them to the Participant registry
- */
-async function createAuditors() {
-    //
-    // Get a reference to the Auditors in the participant registry
-    const auditorRegistry = await getParticipantRegistry(NSParticipant + '.Auditor');
-    //
-    // Create new Auditor instances
-    let auditors = [];
-    const factory = getFactory();
-    let auditor = factory.newResource(NSParticipant, 'Auditor', 'AUD001');
-    auditor.name = 'AuditsRUs';
-    auditors.push(auditor);
-    //
-    // Add the new Auditor instances to the registry
-    await auditorRegistry.addAll(auditors);
 }
 
 /**

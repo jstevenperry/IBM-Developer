@@ -48,13 +48,3 @@ participant Seller extends AbstractParticipant {
 participant Shipper extends AbstractParticipant {
 
 }
-
-/**
-  A participant in the network who performs
-  audits to make sure that any external rules
-  and regulations outside of smart contracts
-  are being followed
- */
-participant Auditor extends AbstractParticipant {
-
-}

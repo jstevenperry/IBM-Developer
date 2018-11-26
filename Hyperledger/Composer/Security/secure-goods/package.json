@@ -14,7 +14,6 @@
     "pretest": "npm install && npm run lint",
     "reinstall": "npm run clean && npm install",
     "test": "cucumber-js",
-    "test-auditor": "npm run pretest && cucumber-js features/auditor.feature",
     "test-buyer": "npm run pretest && cucumber-js features/buyer.feature",
     "test-seller": "npm run pretest && cucumber-js features/seller.feature",
     "test-shipper": "npm run pretest && cucumber-js features/shipper.feature"
