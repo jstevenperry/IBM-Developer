@@ -22,9 +22,9 @@ namespace com.makotogo.learn.composer.securegoods.participant
 /**
   A participant in the secure goods business network
  */
-abstract participant AbstractParticipant identified by id {
-  o String id
-  o String name
+abstract participant AbstractParticipant identified by username {
+  o String username
+  o String fullName
 }
 
 /**

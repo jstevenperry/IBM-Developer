@@ -17,13 +17,13 @@ Feature: ShipperSecurity
     Background:
         Given I have deployed the business network definition ..
         And I have added the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
-            | id   | name |
+            | username   | fullName |
             | buy001 | Buyer1 |
         And I have added the following participants of type com.makotogo.learn.composer.securegoods.participant.Seller
-            | id   | name |
+            | username   | fullName |
             | sell001 | Seller1 |
         And I have added the following participants of type com.makotogo.learn.composer.securegoods.participant.Shipper
-            | id   | name |
+            | username   | fullName |
             | ship001 | Shipper1 |
             | ship002 | Shipper2 |
         And I have added the following assets of type com.makotogo.learn.composer.securegoods.asset.Item
@@ -57,16 +57,16 @@ Feature: ShipperSecurity
     Scenario: Shipper 1 can update its own Shipper record
         When I use the identity SHIPPER001
         And I update the following participants of type com.makotogo.learn.composer.securegoods.participant.Shipper
-            | id   | name |
+            | username   | fullName |
             | ship001 | Shipper1-UPDATED |
         Then I should have the following participants of type com.makotogo.learn.composer.securegoods.participant.Shipper
-            | id   | name |
+            | username   | fullName |
             | ship001 | Shipper1-UPDATED |
 
     Scenario: Shipper 2 cannot update Shipper 1's record
         When I use the identity SHIPPER002
         And I update the following participants of type com.makotogo.learn.composer.securegoods.participant.Shipper
-            | id   | name |
+            | username   | fullName |
             | ship001 | Shipper1-UPDATED |
         Then I should get an error matching /does not have .* access to resource/
 
@@ -80,14 +80,14 @@ Feature: ShipperSecurity
     Scenario: Shipper cannot access Buyer's Participant Record
         When I use the identity SHIPPER001
         And I attempt to read the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
-            | id   | name |
+            | username   | fullName |
             | buy001 | Buyer1 |
         Then I should get an error matching /does not have .* access to resource/
 
     Scenario: Shipper cannot access Seller's Participant Record
         When I use the identity SHIPPER001
         And I attempt to read the following participants of type com.makotogo.learn.composer.securegoods.participant.Seller
-            | id   | name |
+            | username   | fullName |
             | sell001 | Seller1 |
         Then I should get an error matching /does not have .* access to resource/
 

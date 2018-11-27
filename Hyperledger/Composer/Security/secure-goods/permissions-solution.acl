@@ -20,7 +20,7 @@ rule Buyer_RU_Buyer {
   participant(thisBuyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
   operation: READ,UPDATE
   resource(otherBuyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
-  condition: (thisBuyer.id == otherBuyer.id)
+  condition: (thisBuyer.username == otherBuyer.username)
   action: ALLOW
 }
 
@@ -30,7 +30,7 @@ rule Buyer_R_Order {
   participant(buyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
   operation: READ,UPDATE
   resource(order): "com.makotogo.learn.composer.securegoods.asset.Order"
-  condition: (buyer.id == order.buyer.id)
+  condition: (buyer.username == order.buyer.username)
   action: ALLOW
 }
 
@@ -40,7 +40,7 @@ rule Buyer_C_ReceiveOrder {
   participant(buyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
   operation: CREATE
   resource(tx): "com.makotogo.learn.composer.securegoods.asset.ReceiveOrder"
-  condition: (buyer.id == tx.order.buyer.id)
+  condition: (buyer.username == tx.order.buyer.username)
   action: ALLOW
 }
 
@@ -53,7 +53,7 @@ rule Seller_RU_Seller {
   participant(thisSeller): "com.makotogo.learn.composer.securegoods.participant.Seller"
   operation: READ,UPDATE
   resource(otherSeller): "com.makotogo.learn.composer.securegoods.participant.Seller"
-  condition: (thisSeller.id == otherSeller.id)
+  condition: (thisSeller.username == otherSeller.username)
   action: ALLOW
 }
 
@@ -63,7 +63,7 @@ rule Seller_R_Order {
   participant(seller): "com.makotogo.learn.composer.securegoods.participant.Seller"
   operation: CREATE,READ
   resource(order): "com.makotogo.learn.composer.securegoods.asset.Order"
-  condition: (seller.id == order.seller.id)
+  condition: (seller.username == order.seller.username)
   action: ALLOW
 }
 
@@ -73,7 +73,7 @@ rule Seller_C_CreateOrder {
   participant(seller): "com.makotogo.learn.composer.securegoods.participant.Seller"
   operation: CREATE
   resource(tx): "com.makotogo.learn.composer.securegoods.asset.CreateOrder"
-  condition: (seller.id == tx.seller.id)
+  condition: (seller.username == tx.seller.username)
   action: ALLOW
 }
 
@@ -87,7 +87,7 @@ rule Shipper_RU_Shipper {
   participant(thisShipper): "com.makotogo.learn.composer.securegoods.participant.Shipper"
   operation: READ,UPDATE
   resource(otherShipper): "com.makotogo.learn.composer.securegoods.participant.Shipper"
-  condition: (thisShipper.id == otherShipper.id)
+  condition: (thisShipper.username == otherShipper.username)
   action: ALLOW
 }
 
@@ -97,7 +97,7 @@ rule Shipper_R_Order {
   participant(shipper): "com.makotogo.learn.composer.securegoods.participant.Shipper"
   operation: READ,UPDATE
   resource(order): "com.makotogo.learn.composer.securegoods.asset.Order"
-  condition: (shipper.id == order.shipper.id)
+  condition: (shipper.username == order.shipper.username)
   action: ALLOW
 }
 
@@ -107,7 +107,7 @@ rule Shipper_C_CreateOrder {
   participant(shipper): "com.makotogo.learn.composer.securegoods.participant.Shipper"
   operation: CREATE
   resource(tx): "com.makotogo.learn.composer.securegoods.asset.ShipOrder"
-  condition: (shipper.id == tx.order.shipper.id)
+  condition: (shipper.username == tx.order.shipper.username)
   action: ALLOW
 }
 

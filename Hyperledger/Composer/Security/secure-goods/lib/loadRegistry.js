@@ -76,11 +76,11 @@ async function createSellers() {
     let sellers = [];
     const factory = getFactory();
     let seller = factory.newResource(NSParticipant, 'Seller', 'sell001');
-    seller.name = 'Beverly Seller';
+    seller.name = 'Srinivas Seller';
     sellers.push(seller);
     //
     seller = factory.newResource(NSParticipant, 'Seller', 'sell002');
-    seller.name = 'Srinivas Seller';
+    seller.name = 'Beverly Seller';
     sellers.push(seller);
     //
     // Add the new Seller instances to the registry
@@ -122,11 +122,11 @@ async function createShippers() {
     let shippers = [];
     const factory = getFactory();
     let shipper = factory.newResource(NSParticipant, 'Shipper', 'ship001');
-    shipper.name = 'Jim Shipper';
+    shipper.name = 'Nikolas Shipper';
     shippers.push(shipper);
     //
     shipper = factory.newResource(NSParticipant, 'Shipper', 'ship002');
-    shipper.name = 'Nikolas Sipper';
+    shipper.name = 'Jim Sipper';
     shippers.push(shipper);
     //
     // Add the new Buyer instances to the registry
