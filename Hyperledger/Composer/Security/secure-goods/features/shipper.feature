@@ -18,14 +18,14 @@ Feature: ShipperSecurity
         Given I have deployed the business network definition ..
         And I have added the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
             | id   | name |
-            | BUY001 | Buyer1 |
+            | buy001 | Buyer1 |
         And I have added the following participants of type com.makotogo.learn.composer.securegoods.participant.Seller
             | id   | name |
-            | SELL001 | Seller1 |
+            | sell001 | Seller1 |
         And I have added the following participants of type com.makotogo.learn.composer.securegoods.participant.Shipper
             | id   | name |
-            | SHIP001 | Shipper1 |
-            | SHIP002 | Shipper2 |
+            | ship001 | Shipper1 |
+            | ship002 | Shipper2 |
         And I have added the following assets of type com.makotogo.learn.composer.securegoods.asset.Item
             | id | sku | description |
             | WIDGET001 | W001 | Widget number 1 |
@@ -41,9 +41,9 @@ Feature: ShipperSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "1.5" 
             },
-            "buyer": "BUY001",
-            "seller": "SELL001",
-            "shipper": "SHIP001",
+            "buyer": "buy001",
+            "seller": "sell001",
+            "shipper": "ship001",
             "shippingCost": {
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
@@ -51,23 +51,23 @@ Feature: ShipperSecurity
             "status": "CREATED"
         }
         """
-        And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Shipper#SHIP001 with the identity SHIPPER001
-        And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Shipper#SHIP002 with the identity SHIPPER002
+        And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Shipper#ship001 with the identity SHIPPER001
+        And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Shipper#ship002 with the identity SHIPPER002
 
     Scenario: Shipper 1 can update its own Shipper record
         When I use the identity SHIPPER001
         And I update the following participants of type com.makotogo.learn.composer.securegoods.participant.Shipper
             | id   | name |
-            | SHIP001 | Shipper1-UPDATED |
+            | ship001 | Shipper1-UPDATED |
         Then I should have the following participants of type com.makotogo.learn.composer.securegoods.participant.Shipper
             | id   | name |
-            | SHIP001 | Shipper1-UPDATED |
+            | ship001 | Shipper1-UPDATED |
 
     Scenario: Shipper 2 cannot update Shipper 1's record
         When I use the identity SHIPPER002
         And I update the following participants of type com.makotogo.learn.composer.securegoods.participant.Shipper
             | id   | name |
-            | SHIP001 | Shipper1-UPDATED |
+            | ship001 | Shipper1-UPDATED |
         Then I should get an error matching /does not have .* access to resource/
 
     Scenario: Shipper 1 can read all Items
@@ -81,14 +81,14 @@ Feature: ShipperSecurity
         When I use the identity SHIPPER001
         And I attempt to read the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
             | id   | name |
-            | BUY001 | Buyer1 |
+            | buy001 | Buyer1 |
         Then I should get an error matching /does not have .* access to resource/
 
     Scenario: Shipper cannot access Seller's Participant Record
         When I use the identity SHIPPER001
         And I attempt to read the following participants of type com.makotogo.learn.composer.securegoods.participant.Seller
             | id   | name |
-            | SELL001 | Seller1 |
+            | sell001 | Seller1 |
         Then I should get an error matching /does not have .* access to resource/
 
     Scenario: Shipper 1 can access their own Order
@@ -104,9 +104,9 @@ Feature: ShipperSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "1.5" 
             },
-            "buyer": "BUY001",
-            "seller": "SELL001",
-            "shipper": "SHIP001",
+            "buyer": "buy001",
+            "seller": "sell001",
+            "shipper": "ship001",
             "shippingCost": {
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
@@ -128,9 +128,9 @@ Feature: ShipperSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "1.5" 
             },
-            "buyer": "BUY001",
-            "seller": "SELL001",
-            "shipper": "SHIP001",
+            "buyer": "buy001",
+            "seller": "sell001",
+            "shipper": "ship001",
             "shippingCost": {
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
@@ -156,9 +156,9 @@ Feature: ShipperSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "1.5" 
             },
-            "buyer": "BUY001",
-            "seller": "SELL001",
-            "shipper": "SHIP001",
+            "buyer": "buy001",
+            "seller": "sell001",
+            "shipper": "ship001",
             "shippingCost": {
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 

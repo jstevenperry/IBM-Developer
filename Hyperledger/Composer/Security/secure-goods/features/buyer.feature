@@ -18,14 +18,14 @@ Feature: BuyerSecurity
         Given I have deployed the business network definition ..
         And I have added the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
             | id   | name |
-            | BUY001 | Buyer1 |
-            | BUY002 | Buyer2 |
+            | buy001 | Buyer1 |
+            | buy002 | Buyer2 |
         And I have added the following participants of type com.makotogo.learn.composer.securegoods.participant.Seller
             | id   | name |
-            | SELL001 | Seller1 |
+            | sell001 | Seller1 |
         And I have added the following participants of type com.makotogo.learn.composer.securegoods.participant.Shipper
             | id   | name |
-            | SHIP001 | Shipper1 |
+            | ship001 | Shipper1 |
         And I have added the following assets of type com.makotogo.learn.composer.securegoods.asset.Item
             | id | sku | description |
             | WIDGET001 | W001 | Widget number 1 |
@@ -41,9 +41,9 @@ Feature: BuyerSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "1.5" 
             },
-            "buyer": "BUY001",
-            "seller": "SELL001",
-            "shipper": "SHIP001",
+            "buyer": "buy001",
+            "seller": "sell001",
+            "shipper": "ship001",
             "shippingCost": {
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
@@ -51,23 +51,23 @@ Feature: BuyerSecurity
             "status": "SHIPPED"
         }
         """
-        And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Buyer#BUY001 with the identity BUYER001
-        And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Buyer#BUY002 with the identity BUYER002
+        And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Buyer#buy001 with the identity BUYER001
+        And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Buyer#buy002 with the identity BUYER002
 
     Scenario: Buyer 1 can update its own Buyer record
         When I use the identity BUYER001
         And I update the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
             | id   | name |
-            | BUY001 | Buyer1-UPDATED |
+            | buy001 | Buyer1-UPDATED |
         Then I should have the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
             | id   | name |
-            | BUY001 | Buyer1-UPDATED |
+            | buy001 | Buyer1-UPDATED |
 
     Scenario: Buyer 2 cannot update Buyer 1's record
         When I use the identity BUYER002
         And I update the following participants of type com.makotogo.learn.composer.securegoods.participant.Buyer
             | id   | name |
-            | BUY001 | Buyer1-UPDATED |
+            | buy001 | Buyer1-UPDATED |
         Then I should get an error matching /does not have .* access to resource/
 
     Scenario: Buyer 1 can read all Items
@@ -81,14 +81,14 @@ Feature: BuyerSecurity
         When I use the identity BUYER001
         And I attempt to read the following participants of type com.makotogo.learn.composer.securegoods.participant.Seller
             | id   | name |
-            | SELL001 | Seller1 |
+            | sell001 | Seller1 |
         Then I should get an error matching /does not have .* access to resource/
 
     Scenario: Buyer cannot access Shipper's Participant Record
         When I use the identity BUYER001
         And I attempt to read the following participants of type com.makotogo.learn.composer.securegoods.participant.Shipper
             | id   | name |
-            | SHIP001 | Shipper1 |
+            | ship001 | Shipper1 |
         Then I should get an error matching /does not have .* access to resource/
 
     Scenario: Buyer 1 can access their own Order
@@ -104,9 +104,9 @@ Feature: BuyerSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "1.5" 
             },
-            "buyer": "BUY001",
-            "seller": "SELL001",
-            "shipper": "SHIP001",
+            "buyer": "buy001",
+            "seller": "sell001",
+            "shipper": "ship001",
             "shippingCost": {
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
@@ -128,9 +128,9 @@ Feature: BuyerSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "1.5" 
             },
-            "buyer": "BUY001",
-            "seller": "SELL001",
-            "shipper": "SHIP001",
+            "buyer": "buy001",
+            "seller": "sell001",
+            "shipper": "ship001",
             "shippingCost": {
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 
@@ -156,9 +156,9 @@ Feature: BuyerSecurity
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "1.5" 
             },
-            "buyer": "BUY001",
-            "seller": "SELL001",
-            "shipper": "SHIP001",
+            "buyer": "buy001",
+            "seller": "sell001",
+            "shipper": "ship001",
             "shippingCost": {
                 "$class": "com.makotogo.learn.composer.securegoods.common.Price",
                 "currency": "USD", "amount": "100" 

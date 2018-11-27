@@ -75,12 +75,12 @@ async function createSellers() {
     // Create new Seller instances
     let sellers = [];
     const factory = getFactory();
-    let seller = factory.newResource(NSParticipant, 'Seller', 'SELL001');
-    seller.name = 'Selljestic';
+    let seller = factory.newResource(NSParticipant, 'Seller', 'sell001');
+    seller.name = 'Beverly Seller';
     sellers.push(seller);
     //
-    seller = factory.newResource(NSParticipant, 'Seller', 'SELL002');
-    seller.name = 'Selltabulous';
+    seller = factory.newResource(NSParticipant, 'Seller', 'sell002');
+    seller.name = 'Srinivas Seller';
     sellers.push(seller);
     //
     // Add the new Seller instances to the registry
@@ -98,12 +98,12 @@ async function createBuyers() {
     // Create new Buyer instances
     let buyers = [];
     const factory = getFactory();
-    let buyer = factory.newResource(NSParticipant, 'Buyer', 'BUY001');
-    buyer.name = 'Buytastic';
+    let buyer = factory.newResource(NSParticipant, 'Buyer', 'buy001');
+    buyer.name = 'Martha Buyer';
     buyers.push(buyer);
     //
-    buyer = factory.newResource(NSParticipant, 'Buyer', 'BUY002');
-    buyer.name = 'Buycorp';
+    buyer = factory.newResource(NSParticipant, 'Buyer', 'buy002');
+    buyer.name = 'Miguel Buyer';
     buyers.push(buyer);
     //
     // Add the new Buyer instances to the registry
@@ -121,12 +121,12 @@ async function createShippers() {
     // Create new Buyer instances
     let shippers = [];
     const factory = getFactory();
-    let shipper = factory.newResource(NSParticipant, 'Shipper', 'SHIP001');
-    shipper.name = 'Shipmagic';
+    let shipper = factory.newResource(NSParticipant, 'Shipper', 'ship001');
+    shipper.name = 'Jim Shipper';
     shippers.push(shipper);
     //
-    shipper = factory.newResource(NSParticipant, 'Shipper', 'SHIP002');
-    shipper.name = 'Shipinc';
+    shipper = factory.newResource(NSParticipant, 'Shipper', 'ship002');
+    shipper.name = 'Nikolas Sipper';
     shippers.push(shipper);
     //
     // Add the new Buyer instances to the registry
