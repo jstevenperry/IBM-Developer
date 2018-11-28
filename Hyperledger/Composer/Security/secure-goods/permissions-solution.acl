@@ -11,6 +11,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+
+//*********
+// Blanket Participant rules
+
+// All participants have READ access to Item
+rule AnyParticipant_R_Item {
+  description: "Any Participant gets READ access to Item"
+  participant: "com.makotogo.learn.composer.securegoods.participant.*"
+  operation: READ
+  resource: "com.makotogo.learn.composer.securegoods.asset.Item"
+  action: ALLOW
+}
+
 //*********
 // Buyer rules
 
@@ -108,18 +122,6 @@ rule Shipper_C_CreateOrder {
   operation: CREATE
   resource(tx): "com.makotogo.learn.composer.securegoods.asset.ShipOrder"
   condition: (shipper.username == tx.order.shipper.username)
-  action: ALLOW
-}
-
-//*********
-// Blanket Participant rules
-
-// All participants have READ access to Item
-rule AnyParticipant_R_Item {
-  description: "Any Participant gets READ access to Item"
-  participant: "com.makotogo.learn.composer.securegoods.participant.*"
-  operation: READ
-  resource: "com.makotogo.learn.composer.securegoods.asset.Item"
   action: ALLOW
 }
 
