@@ -35,13 +35,6 @@ abstract asset AbstractAsset identified by id {
 }
 
 /**
-  An event common to all events related to an Order
- */
-abstract event OrderEvent {
-  o String message
-}
-
-/**
  * An item that is bought or sold in the network
  */
 asset Item extends AbstractAsset {
