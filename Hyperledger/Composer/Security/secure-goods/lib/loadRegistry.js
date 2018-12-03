@@ -141,7 +141,7 @@ async function createShippers() {
  */
 async function createItems() {
     //
-    // Get a reference to the Items in the participant registry
+    // Get a reference to the Items in the asset registry
     const itemRegistry = await getAssetRegistry(NSAsset + '.Item');
     //
     // Create new Item instances
@@ -163,7 +163,7 @@ async function createItems() {
  */
 async function createOrderSequence() {
     //
-    // Get a reference to OrderSequence in the participant registry
+    // Get a reference to OrderSequence in the asset registry
     const orderRegistry = await getAssetRegistry(NSAsset + '.OrderSequence');
     //
     // Create a new OrderSequence asset
