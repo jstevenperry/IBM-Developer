@@ -15,6 +15,7 @@
     "reinstall": "npm run clean && npm install",
     "test": "cucumber-js",
     "test-buyer": "npm run pretest && cucumber-js features/buyer.feature",
+    "test-querytx": "npm run pretest && cucumber-js features/querytx.feature",
     "test-seller": "npm run pretest && cucumber-js features/seller.feature",
     "test-shipper": "npm run pretest && cucumber-js features/shipper.feature"
   },
