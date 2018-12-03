@@ -1,0 +1,162 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+//*********
+// Blanket Participant rules
+
+// All participants have READ access to Item
+rule AnyParticipant_R_Item {
+  description: "Any Participant gets READ access to Item"
+  participant: "com.makotogo.learn.composer.securegoods.participant.*"
+  operation: READ
+  resource: "com.makotogo.learn.composer.securegoods.asset.Item"
+  action: ALLOW
+}
+
+//*********
+// Buyer rules
+
+// Buyer has READ,UPDATE access to their own participant record
+rule Buyer_RU_Buyer {
+  description: "Grant Buyer READ,UPDATE access to their own record"
+  participant(thisBuyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
+  operation: READ,UPDATE
+  resource(otherBuyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
+  condition: (thisBuyer.username == otherBuyer.username)
+  action: ALLOW
+}
+
+// Buyer has READ,UPDATE access to their own order records
+rule Buyer_R_Order {
+  description: "Grant Buyer READ,UPDATE access to their own orders"
+  participant(buyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
+  operation: READ,UPDATE
+  resource(order): "com.makotogo.learn.composer.securegoods.asset.Order"
+  condition: (buyer.username == order.buyer.username)
+  action: ALLOW
+}
+
+// Buyer can invoke the ReceiveOrder transaction
+rule Buyer_C_ReceiveOrder {
+  description: "Grant Buyer CREATE (invoke) access to ReceiveOrder for their own orders"
+  participant(buyer): "com.makotogo.learn.composer.securegoods.participant.Buyer"
+  operation: CREATE
+  resource(tx): "com.makotogo.learn.composer.securegoods.asset.ReceiveOrder"
+  condition: (buyer.username == tx.order.buyer.username)
+  action: ALLOW
+}
+
+//*********
+// Seller rules
+
+// Seller has READ,UPDATE access to their own participant record
+rule Seller_RU_Seller {
+  description: "Grant Seller READ,UPDATE access to their own record"
+  participant(thisSeller): "com.makotogo.learn.composer.securegoods.participant.Seller"
+  operation: READ,UPDATE
+  resource(otherSeller): "com.makotogo.learn.composer.securegoods.participant.Seller"
+  condition: (thisSeller.username == otherSeller.username)
+  action: ALLOW
+}
+
+// Seller has CREATE,READ access to their own order records
+rule Seller_R_Order {
+  description: "Grant Seller CREATE,READ access to their own orders"
+  participant(seller): "com.makotogo.learn.composer.securegoods.participant.Seller"
+  operation: CREATE,READ
+  resource(order): "com.makotogo.learn.composer.securegoods.asset.Order"
+  condition: (seller.username == order.seller.username)
+  action: ALLOW
+}
+
+// Seller can invoke the CreateOrder transaction
+rule Seller_C_CreateOrder {
+  description: "Grant Seller CREATE (invoke) access to CreateOrder for their own orders"
+  participant(seller): "com.makotogo.learn.composer.securegoods.participant.Seller"
+  operation: CREATE
+  resource(tx): "com.makotogo.learn.composer.securegoods.asset.CreateOrder"
+  condition: (seller.username == tx.seller.username)
+  action: ALLOW
+}
+
+// Seller can READ/UPDATE OrderSequence asset (used to create an Order)
+rule Seller_RU_OrderSequence {
+  description: "Grant Seller READ,UPDATE access to OrderSequence"
+  participant: "com.makotogo.learn.composer.securegoods.participant.Seller"
+  operation: READ,UPDATE
+  resource: "com.makotogo.learn.composer.securegoods.asset.OrderSequence"
+  action: ALLOW
+}
+
+//*********
+// Shipper rules
+
+// Shipper has READ,UPDATE access to their own record only
+rule Shipper_RU_Shipper {
+  description: "Grant Shipper READ,UPDATE access to their own record"
+  participant(thisShipper): "com.makotogo.learn.composer.securegoods.participant.Shipper"
+  operation: READ,UPDATE
+  resource(otherShipper): "com.makotogo.learn.composer.securegoods.participant.Shipper"
+  condition: (thisShipper.username == otherShipper.username)
+  action: ALLOW
+}
+
+// Shipper has READ,UPDATE access to their own order records
+rule Shipper_R_Order {
+  description: "Grant Shipper READ,UPDATE access to their own orders"
+  participant(shipper): "com.makotogo.learn.composer.securegoods.participant.Shipper"
+  operation: READ,UPDATE
+  resource(order): "com.makotogo.learn.composer.securegoods.asset.Order"
+  condition: (shipper.username == order.shipper.username)
+  action: ALLOW
+}
+
+// Shipper can invoke the ShipOrder transaction
+rule Shipper_C_CreateOrder {
+  description: "Grant Shipper CREATE (invoke) access to ShipOrder for their own orders"
+  participant(shipper): "com.makotogo.learn.composer.securegoods.participant.Shipper"
+  operation: CREATE
+  resource(tx): "com.makotogo.learn.composer.securegoods.asset.ShipOrder"
+  condition: (shipper.username == tx.order.shipper.username)
+  action: ALLOW
+}
+
+//*********
+// System rules
+// THIS RULE IS REQUIRED FOR ANY PARTICIPANT TO ACCESS THE NETWORK!!!
+rule SystemParticipant {
+  description:  "System Participant ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+//
+// NetworkAdmin rules
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
