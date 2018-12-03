@@ -25,6 +25,16 @@ rule AnyParticipant_R_Item {
   action: ALLOW
 }
 
+// All participants can invoke transaction:
+// com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer
+rule AnyParticipant_C_AllQueryTx {
+  description: "Any Participant gets CREATE access to querytx transactions"
+  participant: "com.makotogo.learn.composer.securegoods.participant.*"
+  operation: CREATE
+  resource: "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer"
+  action: ALLOW
+}
+
 //*********
 // Buyer rules
 
