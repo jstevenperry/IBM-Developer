@@ -18,17 +18,39 @@
 /* global getParticipantRegistry getAssetRegistry getFactory emit query */
 
 /**
- * Handle a transaction that returns an array of integers.
+ * Query the asset registry and return all Orders for the specified
+ * buyer.
  * @param {com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer} querytx - The query transaction.
  * @returns {Order[]} An array of Order records that matched the query
  * @transaction
  */
 async function findOrdersForBuyer(querytx) {
 
-    let results = await query('FindOrdersForBuyer', querytx.username);
+    console.log('Querying all Orders for buyer: ' + querytx.username);
+    let results = await query('FindOrdersForBuyer', { username: querytx.username });
+
+    console.log('Query returned: ' + results.length + ' items.');
 
     results.forEach(value => {
         console.log('Query found value: ' + value);
     });
 
+    return results;
+
+}
+
+/**
+ * Query the HistorianRegistry and return all records
+ * @param {com.makotogo.learn.composer.securegoods.querytx.FindAllHistory} querytx - the query transaction
+ * @returns {HistorianRecord[]} An array of all History records
+ * @transaction
+ */
+async function findAllHistory(querytx) {
+    let results = await query('FindAllHistory');
+
+    results.forEach(value => {
+        console.log('Historian Record: ' + value);
+    });
+
+    return results;
 }

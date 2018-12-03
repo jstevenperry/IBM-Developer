@@ -108,15 +108,23 @@ Feature: QuerySecurity
 
     Scenario: Buyer 1 can invoke the FindOrdersForBuyer transaction
         When I use the identity BUYER001
-        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer
-            | username |
-            | buy001   |
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
+            "username": "buy001"
+        }
+        """
 
     Scenario: Buyer 2 can invoke the FindOrdersForBuyer transaction
         When I use the identity BUYER002
-        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer
-            | username |
-            | buy001   |
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
+            "username": "buy001"
+        }
+        """
 
     Scenario: Seller 1 can invoke the FindOrdersForBuyer transaction
         When I use the identity SELLER001

@@ -1,7 +1,9 @@
 #! /bin/sh
 
+SOURCE_ROOT=..
+
 echo 'Install network...'
-composer network install --card PeerAdmin@hlfv1 --archiveFile dist/secure-goods.bna
+composer network install --card PeerAdmin@hlfv1 --archiveFile $SOURCE_ROOT/dist/secure-goods.bna
 echo 'Done.'
 echo 'Start network...'
 composer network start --networkName secure-goods --networkVersion 0.1.0 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file admin.card
