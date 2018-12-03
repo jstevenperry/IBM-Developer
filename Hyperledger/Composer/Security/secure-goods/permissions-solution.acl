@@ -91,6 +91,14 @@ rule Seller_C_CreateOrder {
   action: ALLOW
 }
 
+// Seller can READ/UPDATE OrderSequence asset (used to create an Order)
+rule Seller_RU_OrderSequence {
+  description: "Grant Seller READ,UPDATE access to OrderSequence"
+  participant: "com.makotogo.learn.composer.securegoods.participant.Seller"
+  operation: READ,UPDATE
+  resource: "com.makotogo.learn.composer.securegoods.asset.OrderSequence"
+  action: ALLOW
+}
 
 //*********
 // Shipper rules

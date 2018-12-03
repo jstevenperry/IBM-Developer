@@ -17,19 +17,12 @@
 // Ignore the specified global functions (or the code won't lint)
 /* global getParticipantRegistry getAssetRegistry getFactory emit */
 
-//
-// This would normally be in the DB somewhere
-var orderSequence = 100;
-
 /**
- * Function to imitate a sequence generator (normally part
- * of the implementation in, say, the relational DB)
+ * Pass the nextId and return the next order ID
  */
-function getNextId() {
+function getNextOrderId(nextId) {
     let padZeroes = '0000000';
-    let ret = 'ORD' + (padZeroes+orderSequence).slice(-padZeroes.length);
-    orderSequence++;
-    return ret;
+    return 'ORD' + (padZeroes+nextId).slice(-padZeroes.length);
 }
 
 /**
@@ -40,10 +33,16 @@ function getNextId() {
 async function createOrder(transaction) {
     const NSAsset = 'com.makotogo.learn.composer.securegoods.asset';
 
+    // Get the next Order id to use
+    const orderSequenceRegistry = await getAssetRegistry(NSAsset + '.OrderSequence');
+    let orderSequence = await orderSequenceRegistry.get('ORDER_SEQ');
+    let nextId = getNextOrderId(orderSequence.nextId);
+    orderSequence.nextId++; // Increment
+
     //
     // Create a new Order asset
     const factory = getFactory();
-    const order = factory.newResource(NSAsset, 'Order', getNextId());
+    const order = factory.newResource(NSAsset, 'Order', nextId);
     //
     // Populate it with the data from the transaction
     order.item = transaction.item;
@@ -56,7 +55,10 @@ async function createOrder(transaction) {
     order.status = 'CREATED';
 
     // Add the order asset to the Asset Registry
-    const assetRegistry = await getAssetRegistry(NSAsset + '.Order');
     console.log('Placing order for item: ' + transaction.item.id);
+    const assetRegistry = await getAssetRegistry(NSAsset + '.Order');
     await assetRegistry.add(order);
+    //
+    // Update OrderSequence asset
+    await orderSequenceRegistry.update(orderSequence);
 }

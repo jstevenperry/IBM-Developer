@@ -26,6 +26,9 @@ Feature: SellerSecurity
         And I have added the following participants of type com.makotogo.learn.composer.securegoods.participant.Shipper
             | username   | fullName |
             | ship001 | Shipper1 |
+        And I have added the following assets of type com.makotogo.learn.composer.securegoods.asset.OrderSequence
+            | id | nextId |
+            | ORDER_SEQ | 100 |
         And I have added the following assets of type com.makotogo.learn.composer.securegoods.asset.Item
             | id | sku | description |
             | WIDGET001 | W001 | Widget number 1 |

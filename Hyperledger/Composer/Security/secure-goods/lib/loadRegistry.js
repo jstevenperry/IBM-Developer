@@ -60,6 +60,9 @@ async function loadAssetRegistries() {
     // Items
     await createItems();
     //
+    // Order Sequence
+    await createOrderSequence();
+    //
     // Orders
     // await createOrders();
 }
@@ -126,7 +129,7 @@ async function createShippers() {
     shippers.push(shipper);
     //
     shipper = factory.newResource(NSParticipant, 'Shipper', 'ship002');
-    shipper.fullName = 'Jim Sipper';
+    shipper.fullName = 'Jim Shipper';
     shippers.push(shipper);
     //
     // Add the new Buyer instances to the registry
@@ -141,7 +144,7 @@ async function createItems() {
     // Get a reference to the Items in the participant registry
     const itemRegistry = await getAssetRegistry(NSAsset + '.Item');
     //
-    // Create new Item instanes
+    // Create new Item instances
     let items = [];
     const factory = getFactory();
     for (let aa = 1; aa <= 5; aa++) {
@@ -153,4 +156,21 @@ async function createItems() {
     //
     // Add the new Item instances to the registry
     await itemRegistry.addAll(items);
+}
+
+/**
+ * Create the OrderSequence asset
+ */
+async function createOrderSequence() {
+    //
+    // Get a reference to the Items in the participant registry
+    const orderRegistry = await getAssetRegistry(NSAsset + '.OrderSequence');
+    //
+    // Create a new OrderSequence asset
+    const factory = getFactory();
+    let orderSequence = factory.newResource(NSAsset, 'OrderSequence', 'ORDER_SEQ');
+    orderSequence.nextId = 100;
+    //
+    // Add it to the registry
+    await orderRegistry.add(orderSequence);
 }
