@@ -42,21 +42,27 @@ export BUYER_ID
 echo "auth: $AUTH_ID_CARD" >&2
 echo "buyerId: $BUYER_ID" >&2
 
+# Default: optimism
+greenLight=YES
+
 # Complain, then exit, if no ID card is specified
 if [ -z $AUTH_ID_CARD ]; then
   echo "No ID card specified, cannot continue!" >&2
-  echo "" >&2
-  usage
-  exit 1
+  greenLight=NO
 fi
 
 # Complain, then exit, if no Buyer ID is specified
 if [ -z $BUYER_ID ]; then
   echo "No Buyer ID specified, cannot continue!" >&2
-  echo "" >&2
+  greenLight=NO
+fi
+
+# Do we have a green light?
+if [ $greenLight = 'NO' ]; then
+  # We do not
   usage
   exit 1
 fi
 
 # Run the JavaScript
-node findOrdersForBuyer
+node js/findOrdersForBuyer

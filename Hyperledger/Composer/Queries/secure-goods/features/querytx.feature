@@ -37,24 +37,44 @@ Feature: QuerySecurity
             | WIDGET002 | W002 | Widget number 2 |
         And I have added the following assets
         """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.asset.Order",
-            "id": "ORD0000001",
-            "item": "WIDGET001",
-            "quantity": "1000",
-            "unitCost": {
-                "$class": "com.makotogo.learn.composer.securegoods.common.Price",
-                "currency": "USD", "amount": "1.5" 
+        [
+            {
+                "$class": "com.makotogo.learn.composer.securegoods.asset.Order",
+                "id": "ORD0000001",
+                "item": "WIDGET001",
+                "quantity": "1000",
+                "unitCost": {
+                    "$class": "com.makotogo.learn.composer.securegoods.common.Price",
+                    "currency": "USD", "amount": "1.5" 
+                },
+                "buyer": "buy001",
+                "seller": "sell001",
+                "shipper": "ship001",
+                "shippingCost": {
+                    "$class": "com.makotogo.learn.composer.securegoods.common.Price",
+                    "currency": "USD", "amount": "100" 
+                },
+                "status": "CREATED"
             },
-            "buyer": "buy001",
-            "seller": "sell001",
-            "shipper": "ship001",
-            "shippingCost": {
-                "$class": "com.makotogo.learn.composer.securegoods.common.Price",
-                "currency": "USD", "amount": "100" 
-            },
-            "status": "CREATED"
-        }
+            {
+                "$class": "com.makotogo.learn.composer.securegoods.asset.Order",
+                "id": "ORD0000100",
+                "item": "WIDGET001",
+                "quantity": "1000",
+                "unitCost": {
+                    "$class": "com.makotogo.learn.composer.securegoods.common.Price",
+                    "currency": "USD", "amount": "1.5" 
+                },
+                "buyer": "buy001",
+                "seller": "sell001",
+                "shipper": "ship001",
+                "shippingCost": {
+                    "$class": "com.makotogo.learn.composer.securegoods.common.Price",
+                    "currency": "USD", "amount": "100" 
+                },
+                "status": "CREATED"
+            }
+        ]
         """
         And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Buyer#buy001 with the identity BUYER001
         And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Buyer#buy002 with the identity BUYER002
@@ -63,108 +83,101 @@ Feature: QuerySecurity
         And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Shipper#ship001 with the identity SHIPPER001
         And I have issued the participant com.makotogo.learn.composer.securegoods.participant.Shipper#ship002 with the identity SHIPPER002
 
-    Scenario: Seller 1 can invoke the CreateOrder transaction
-        When I use the identity SELLER001
-        And I submit the following transaction
-        """
-        { 
-            "$class": "com.makotogo.learn.composer.securegoods.asset.CreateOrder",
-            "item": "WIDGET001",
-            "quantity": "1000",
-            "unitCost": {
-                "$class": "com.makotogo.learn.composer.securegoods.common.Price",
-                "currency": "USD", "amount": "1.5" 
-            },
-            "buyer": "buy001",
-            "seller": "sell001",
-            "shipper": "ship001",
-            "shippingCost": {
-                "$class": "com.makotogo.learn.composer.securegoods.common.Price",
-                "currency": "USD", "amount": "100" 
-            }
-        }
-        """
-        Then I should have the following assets
-        """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.asset.Order",
-            "id": "ORD0000100",
-            "item": "WIDGET001",
-            "quantity": "1000",
-            "unitCost": {
-                "$class": "com.makotogo.learn.composer.securegoods.common.Price",
-                "currency": "USD", "amount": "1.5" 
-            },
-            "buyer": "buy001",
-            "seller": "sell001",
-            "shipper": "ship001",
-            "shippingCost": {
-                "$class": "com.makotogo.learn.composer.securegoods.common.Price",
-                "currency": "USD", "amount": "100" 
-            },
-            "status": "CREATED"
-        }
-        """
-
     Scenario: Buyer 1 can invoke the FindOrdersForBuyer transaction
         When I use the identity BUYER001
         And I submit the following transaction
         """
         {
             "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
-            "buyer": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
+            "buyerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
         }
         """
 
-    Scenario: Buyer 2 can invoke the FindOrdersForBuyer transaction
-        When I use the identity BUYER002
-        And I submit the following transaction
-        """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
-            "buyer": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
-        }
-        """
-
-    Scenario: Seller 1 can invoke the FindOrdersForBuyer transaction
+    Scenario: Seller 1 cannot invoke the FindOrdersForBuyer transaction
         When I use the identity SELLER001
         And I submit the following transaction
         """
         {
             "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
-            "buyer": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
+            "buyerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
         }
         """
+        Then I should get an error matching /does not have .* access to resource/
 
-    Scenario: Seller 2 can invoke the FindOrdersForBuyer transaction
-        When I use the identity SELLER002
-        And I submit the following transaction
-        """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
-            "buyer": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
-        }
-        """
-
-    Scenario: Shipper 1 can invoke the FindOrdersForBuyer transaction
+    Scenario: Shipper 1 cannot invoke the FindOrdersForBuyer transaction
         When I use the identity SHIPPER001
         And I submit the following transaction
         """
         {
             "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
-            "buyer": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
+            "buyerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
         }
         """
+        Then I should get an error matching /does not have .* access to resource/
 
-    Scenario: Shipper 2 can invoke the FindOrdersForBuyer transaction
-        When I use the identity SHIPPER002
+    Scenario: Seller 1 can invoke the FindOrdersForSeller transaction
+        When I use the identity SELLER001
         And I submit the following transaction
         """
         {
-            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
-            "buyer": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForSeller",
+            "sellerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Seller#sell001"
         }
         """
+
+    Scenario: Buyer 1 cannot invoke the FindOrdersForSeller transaction
+        When I use the identity BUYER001
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForSeller",
+            "sellerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Seller#sell001"
+        }
+        """
+        Then I should get an error matching /does not have .* access to resource/
+
+    Scenario: Shipper 1 cannot invoke the FindOrdersForSeller transaction
+        When I use the identity SHIPPER001
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForSeller",
+            "sellerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Seller#sell001"
+        }
+        """
+        Then I should get an error matching /does not have .* access to resource/
+
+    Scenario: Shipper 1 can invoke the FindOrdersForShipper transaction
+        When I use the identity SHIPPER001
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForShipper",
+            "shipperResource": "resource:com.makotogo.learn.composer.securegoods.participant.Shipper#ship001"
+        }
+        """
+
+    Scenario: Buyer 1 can invoke the FindOrdersForShipper transaction
+        When I use the identity BUYER001
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForShipper",
+            "shipperResource": "resource:com.makotogo.learn.composer.securegoods.participant.Shipper#ship001"
+        }
+        """
+        Then I should get an error matching /does not have .* access to resource/
+
+    Scenario: Seller 1 can invoke the FindOrdersForShipper transaction
+        When I use the identity SELLER001
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForShipper",
+            "shipperResource": "resource:com.makotogo.learn.composer.securegoods.participant.Shipper#ship001"
+        }
+        """
+        Then I should get an error matching /does not have .* access to resource/
 
     Scenario: Buyer 1 can invoke the FindAllHistory transaction
         When I use the identity BUYER001

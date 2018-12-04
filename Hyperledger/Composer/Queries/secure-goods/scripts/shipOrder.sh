@@ -41,9 +41,18 @@ done
 echo "auth: $auth" >&2
 echo "OrderId: $orderId" >&2
 
+# Default: optimism
+greenLight=YES
+
 # Complain, then exit, if no order ID is specified
 if [ -z $orderId ]; then
   echo "No Order ID specified, cannot continue!" >&2
+  greenLight=NO
+fi
+
+# Do we have a green light?
+if [ $greenLight = 'NO' ]; then
+  # We do not
   echo "" >&2
   usage
   exit 1

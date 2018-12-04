@@ -26,16 +26,6 @@ rule AnyParticipant_R_Item {
 }
 
 // All participants can invoke transaction:
-// com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer
-rule AnyParticipant_C_FindOrdersForBuyerTx {
-  description: "Any Participant gets CREATE access to querytx transactions"
-  participant: "com.makotogo.learn.composer.securegoods.participant.*"
-  operation: CREATE
-  resource: "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer"
-  action: ALLOW
-}
-
-// All participants can invoke transaction:
 // com.makotogo.learn.composer.securegoods.querytx.FindAllHistory
 rule AnyParticipant_C_FindAllHistoryTx {
   description: "Any Participant gets CREATE access to querytx transactions"
@@ -75,6 +65,15 @@ rule Buyer_C_ReceiveOrder {
   operation: CREATE
   resource(tx): "com.makotogo.learn.composer.securegoods.asset.ReceiveOrder"
   condition: (buyer.username == tx.order.buyer.username)
+  action: ALLOW
+}
+
+// Buyer can invoke the FindOrdersForBuyer transaction
+rule Seller_C_FindOrdersForBuyerTx {
+  description: "Grant Buyer CREATE access to FindOrdersForBuyer transaction"
+  participant: "com.makotogo.learn.composer.securegoods.participant.Buyer"
+  operation: CREATE
+  resource: "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer"
   action: ALLOW
 }
 
@@ -120,6 +119,15 @@ rule Seller_RU_OrderSequence {
   action: ALLOW
 }
 
+// Seller can invoke the FindOrdersForShipper transaction
+rule Seller_C_FindOrdersForSellerTx {
+  description: "Grant Seller CREATE access to FindOrdersForSeller transaction"
+  participant: "com.makotogo.learn.composer.securegoods.participant.Seller"
+  operation: CREATE
+  resource: "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForSeller"
+  action: ALLOW
+}
+
 //*********
 // Shipper rules
 
@@ -150,6 +158,15 @@ rule Shipper_C_CreateOrder {
   operation: CREATE
   resource(tx): "com.makotogo.learn.composer.securegoods.asset.ShipOrder"
   condition: (shipper.username == tx.order.shipper.username)
+  action: ALLOW
+}
+
+// Shipper can invoke the FindOrdersForShipper transaction
+rule Shipper_C_FindOrdersForShipperTx {
+  description: "Grant Shipper CREATE access to FindOrdersForShipper transaction"
+  participant: "com.makotogo.learn.composer.securegoods.participant.Shipper"
+  operation: CREATE
+  resource: "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForShipper"
   action: ALLOW
 }
 

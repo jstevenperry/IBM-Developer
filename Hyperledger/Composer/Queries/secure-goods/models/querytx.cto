@@ -19,6 +19,12 @@ import com.makotogo.learn.composer.securegoods.asset.Order
 import com.makotogo.learn.composer.securegoods.participant.Buyer
 
 /**
+  These transactions are used as a layer over
+  named queries so they can be securely accessed
+  using permissions.acl.
+ */
+
+/**
   Find all orders for the specified buyer and return
   the Order records to the caller.
 
@@ -27,7 +33,31 @@ import com.makotogo.learn.composer.securegoods.participant.Buyer
 @returns(Order[])
 @commit(false)
 transaction FindOrdersForBuyer {
-  o String buyer
+  o String buyerResource
+}
+
+/**
+  Find all orders for the specified seller and return
+  the Order records to the caller.
+
+  This transaction is not recorded in the blockchain.
+ */
+@returns(Order[])
+@commit(false)
+transaction FindOrdersForSeller {
+  o String sellerResource
+}
+
+/**
+  Find all orders for the specified shipper and return
+  the Order records to the caller.
+
+  This transaction is not recorded in the blockchain.
+ */
+@returns(Order[])
+@commit(false)
+transaction FindOrdersForShipper {
+  o String shipperResource
 }
 
 /**

@@ -1,6 +1,6 @@
 #! /bin/sh
 
-SOURCE_ROOT=..
+SOURCE_ROOT={$1:-..}
 
 echo 'Install network...'
 composer network install --card PeerAdmin@hlfv1 --archiveFile $SOURCE_ROOT/dist/secure-goods.bna

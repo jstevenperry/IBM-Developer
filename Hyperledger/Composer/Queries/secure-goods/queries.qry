@@ -12,14 +12,50 @@
  * limitations under the License.
  */
 
-query FindOrdersForBuyer {
+/**
+  Find all Items
+ */
+query FindAllItems {
+  description: "SELECTs all Items"
+  statement: 
+    SELECT com.makotogo.learn.composer.securegoods.asset.Item
+}
+
+
+/**
+  Find all Orders that match the specified Buyer
+ */
+query FindOrdersForBuyerQuery {
   description: "SELECTs all Orders by the specified Buyer"
   statement: 
     SELECT com.makotogo.learn.composer.securegoods.asset.Order
-      WHERE (buyer == _$buyer)
+      WHERE (buyer == _$buyerResource)
 }
 
-query FindAllHistory {
+/**
+  Find all Orders that match the specified Seller
+ */
+query FindOrdersForSellerQuery {
+  description: "SELECTs all Orders by the specified Seller"
+  statement: 
+    SELECT com.makotogo.learn.composer.securegoods.asset.Order
+      WHERE (seller == _$sellerResource)
+}
+
+/**
+  Find all Orders that match the specified Shipper
+ */
+query FindOrdersForShipperQuery {
+  description: "SELECTs all Orders by the specified Shipper"
+  statement: 
+    SELECT com.makotogo.learn.composer.securegoods.asset.Order
+      WHERE (shipper == _$shipperResource)
+}
+
+/**
+  Find all Historian records
+ */
+query FindAllHistoryQuery {
   description: "SELECTs all Historian records"
   statement: 
     SELECT org.hyperledger.composer.system.HistorianRecord

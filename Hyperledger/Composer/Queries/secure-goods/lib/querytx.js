@@ -18,26 +18,39 @@
 /* global getParticipantRegistry getAssetRegistry getFactory emit query */
 
 /**
- * Query the asset registry and return all Orders for the specified
- * buyer.
+ * Query the asset registry and return all Orders for the specified buyer.
  * @param {com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer} querytx - The query transaction.
  * @returns {Order[]} An array of Order records that matched the query
  * @transaction
  */
 async function findOrdersForBuyer(querytx) {
+    //
+    // Execute query and return the results
+    return await query('FindOrdersForBuyerQuery', { buyerResource: querytx.buyerResource });
+}
 
-    console.log('Querying all Orders for buyer: ' + querytx.buyer);
+/**
+ * Query the asset registry and return all Orders for the specified seller.
+ * @param {com.makotogo.learn.composer.securegoods.querytx.FindOrdersForSeller} querytx - The query transaction.
+ * @returns {Order[]} An array of Order records that matched the query
+ * @transaction
+ */
+async function findOrdersForSeller(querytx) {
+    //
+    // Execute query and return the results
+    return await query('FindOrdersForSellerQuery', { sellerResource: querytx.sellerResource });
+}
 
-    let results = await query('FindOrdersForBuyer', { buyer: querytx.buyer });
-
-    console.log('Query returned: ' + results.length + ' items.');
-
-    results.forEach(value => {
-        console.log('Query found value: ' + value);
-    });
-
-    return results;
-
+/**
+ * Query the asset registry and return all Orders for the specified shipper.
+ * @param {com.makotogo.learn.composer.securegoods.querytx.FindOrdersForShipper} querytx - The query transaction.
+ * @returns {Order[]} An array of Order records that matched the query
+ * @transaction
+ */
+async function findOrdersForShipper(querytx) {
+    //
+    // Execute query and return the results
+    return await query('FindOrdersForShipperQuery', { shipperResource: querytx.shipperResource });
 }
 
 /**
@@ -47,15 +60,7 @@ async function findOrdersForBuyer(querytx) {
  * @transaction
  */
 async function findAllHistory(querytx) {
-    console.log('Querying all history...');
-
-    let results = await query('FindAllHistory');
-
-    console.log('Query returned: ' + results.length + ' items.');
-
-    results.forEach(value => {
-        console.log('Historian Record: ' + value);
-    });
-
-    return results;
+    //
+    // Execute query and return the results
+    return await query('FindAllHistoryQuery');
 }
