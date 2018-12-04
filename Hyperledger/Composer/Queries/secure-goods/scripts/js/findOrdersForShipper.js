@@ -30,7 +30,7 @@ async function query() {
         const bnc = new BusinessNetworkConnection();
 
         // Get the required parameters and exit if all not present
-        const { authIdCard, buyerId } = checkRequiredParameters();
+        const { authIdCard, shipperId } = checkRequiredParameters();
 
         // Connect to the business network
         await bnc.connect(authIdCard);
@@ -39,8 +39,8 @@ async function query() {
         const factory = bnc.getBusinessNetwork().getFactory();
 
         // Create a new transaction
-        const transaction = factory.newTransaction('com.makotogo.learn.composer.securegoods.querytx', 'FindOrdersForBuyer');
-        transaction.buyerResource = 'resource:com.makotogo.learn.composer.securegoods.participant.Buyer#' + buyerId;
+        const transaction = factory.newTransaction('com.makotogo.learn.composer.securegoods.querytx', 'FindOrdersForShipper');
+        transaction.shipperResource = 'resource:com.makotogo.learn.composer.securegoods.participant.Shipper#' + shipperId;
 
         // Submit the transaction
         const results = await bnc.submitTransaction(transaction);
@@ -59,7 +59,7 @@ async function query() {
 
         // Disconnect so Node can exit
         await bnc.disconnect();
-    } catch (err) {
+    } catch(err) {
         console.log('Error occurred: ' + err.message + ', Node process exiting.');
         process.exit(1);
     }
@@ -78,12 +78,12 @@ function checkRequiredParameters() {
         console.log('ID card must be specified, cannot continue!');
         process.exit(1);
     }
-    // The buyer ID to use for the query
-    const buyerId = process.env.BUYER_ID;
-    if (buyerId === null) {
-        console.log('Buyer ID must be specified, cannot continue!');
+    // The seller ID to use for the query
+    const shipperId = process.env.SHIPPER_ID;
+    if (shipperId === null) {
+        console.log('Shipper ID must be specified, cannot continue!');
         process.exit(1);
     }
 
-    return { authIdCard, buyerId };
+    return { authIdCard, shipperId };
 }

@@ -44,10 +44,17 @@ async function query() {
 
         // Submit the transaction
         const results = await bnc.submitTransaction(transaction);
+        console.log(results.length + ' Order(s) found.');
 
         // Process the results
-        results.forEach(value => {
-            console.log('Value: ' + value);
+        results.forEach(record => {
+            console.log('Order ID: ' + record.id);
+            console.log('\tOrder Status: ' + record.status);
+            console.log('\tQuantity: ' + record.quantity);
+            console.log('\tItem: ' + record.item.$identifier);
+            console.log('\tSeller: ' + record.seller.$identifier);
+            console.log('\tBuyer: ' + record.buyer.$identifier);
+            console.log('\tShipper: ' + record.shipper.$identifier);
         });
 
         // Disconnect so Node can exit

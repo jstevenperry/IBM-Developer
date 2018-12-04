@@ -93,7 +93,7 @@ Feature: QuerySecurity
         }
         """
 
-    Scenario: Seller 1 cannot invoke the FindOrdersForBuyer transaction
+    Scenario: Seller 1 can invoke the FindOrdersForBuyer transaction
         When I use the identity SELLER001
         And I submit the following transaction
         """
@@ -102,9 +102,8 @@ Feature: QuerySecurity
             "buyerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
         }
         """
-        Then I should get an error matching /does not have .* access to resource/
 
-    Scenario: Shipper 1 cannot invoke the FindOrdersForBuyer transaction
+    Scenario: Shipper 1 can invoke the FindOrdersForBuyer transaction
         When I use the identity SHIPPER001
         And I submit the following transaction
         """
@@ -113,7 +112,6 @@ Feature: QuerySecurity
             "buyerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
         }
         """
-        Then I should get an error matching /does not have .* access to resource/
 
     Scenario: Seller 1 can invoke the FindOrdersForSeller transaction
         When I use the identity SELLER001
@@ -125,7 +123,7 @@ Feature: QuerySecurity
         }
         """
 
-    Scenario: Buyer 1 cannot invoke the FindOrdersForSeller transaction
+    Scenario: Buyer 1 can invoke the FindOrdersForSeller transaction
         When I use the identity BUYER001
         And I submit the following transaction
         """
@@ -134,9 +132,8 @@ Feature: QuerySecurity
             "sellerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Seller#sell001"
         }
         """
-        Then I should get an error matching /does not have .* access to resource/
 
-    Scenario: Shipper 1 cannot invoke the FindOrdersForSeller transaction
+    Scenario: Shipper 1 can invoke the FindOrdersForSeller transaction
         When I use the identity SHIPPER001
         And I submit the following transaction
         """
@@ -145,7 +142,6 @@ Feature: QuerySecurity
             "sellerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Seller#sell001"
         }
         """
-        Then I should get an error matching /does not have .* access to resource/
 
     Scenario: Shipper 1 can invoke the FindOrdersForShipper transaction
         When I use the identity SHIPPER001
@@ -166,7 +162,6 @@ Feature: QuerySecurity
             "shipperResource": "resource:com.makotogo.learn.composer.securegoods.participant.Shipper#ship001"
         }
         """
-        Then I should get an error matching /does not have .* access to resource/
 
     Scenario: Seller 1 can invoke the FindOrdersForShipper transaction
         When I use the identity SELLER001
@@ -177,7 +172,6 @@ Feature: QuerySecurity
             "shipperResource": "resource:com.makotogo.learn.composer.securegoods.participant.Shipper#ship001"
         }
         """
-        Then I should get an error matching /does not have .* access to resource/
 
     Scenario: Buyer 1 can invoke the FindAllHistory transaction
         When I use the identity BUYER001

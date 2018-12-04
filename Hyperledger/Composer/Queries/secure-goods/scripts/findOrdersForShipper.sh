@@ -2,12 +2,13 @@
 
 # Usage message
 usage() {
-  echo "Usage: $0 -b BUYER_ID -a ID_CARD"
+  echo "Usage: $0 -b SHIPPER_ID -a ID_CARD"
   echo "Where:"
   echo "-a ID_CARD  : the ID card to use for authentication (REQUIRED)"
+  echo "-S SHIPPER_ID : the Shipper ID for whom to query Orders (REQUIRED)"
   echo "-h          : this message"
   echo ""
-  echo "Example: $0 -a buy001@secure-goods"
+  echo "Example: $0 -a ship001@secure-goods -b ship001"
 }
 
 # defaults
@@ -15,12 +16,14 @@ usage() {
 
 # read the options
  
-while getopts "a:h" opt; do
+while getopts "a:S:h" opt; do
   case $opt in
     a)
       AUTH_ID_CARD=$OPTARG
       ;;
-
+    S)
+      SHIPPER_ID=$OPTARG
+      ;;
     h)
       usage
       exit 1
@@ -34,8 +37,10 @@ done
 
 # Dump out the options
 export AUTH_ID_CARD
+export SHIPPER_ID
 
 echo "auth: $AUTH_ID_CARD" >&2
+echo "shipperId: $SHIPPER_ID" >&2
 
 # Default: optimism
 greenLight=YES
@@ -43,6 +48,12 @@ greenLight=YES
 # Complain, then exit, if no ID card is specified
 if [ -z $AUTH_ID_CARD ]; then
   echo "No ID card specified, cannot continue!" >&2
+  greenLight=NO
+fi
+
+# Complain, then exit, if no Buyer ID is specified
+if [ -z $SHIPPER_ID ]; then
+  echo "No Shipper ID specified, cannot continue!" >&2
   greenLight=NO
 fi
 
@@ -55,4 +66,4 @@ if [ $greenLight = 'NO' ]; then
 fi
 
 # Run the JavaScript
-node js/findAllHistory
+node js/findOrdersForShipper

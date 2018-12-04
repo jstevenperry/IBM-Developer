@@ -44,12 +44,14 @@ async function query() {
 
         // Process the HistorianRecords
         const historianRecords = processHistorianRecords(results);
+        console.log(historianRecords.length + ' transaction record(s) found.');
 
         // Collect the records we care about
         // Print out the results
+        console.log('Transactions (Oldest first):');
         historianRecords.forEach(record => {
-            console.log(record.transactionTimestamp + ':' +
-                record.transactionType + ' (' +
+            console.log(record.transactionTimestamp + ': ' +
+                record.transactionInvoked.getType() + ' (' +
                 record.participantInvoking.getIdentifier() + ')'
             );
         });
