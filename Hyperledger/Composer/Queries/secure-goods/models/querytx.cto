@@ -16,6 +16,7 @@ namespace com.makotogo.learn.composer.securegoods.querytx
 
 import org.hyperledger.composer.system.HistorianRecord
 import com.makotogo.learn.composer.securegoods.asset.Order
+import com.makotogo.learn.composer.securegoods.participant.Buyer
 
 /**
   Find all orders for the specified buyer and return
@@ -26,7 +27,7 @@ import com.makotogo.learn.composer.securegoods.asset.Order
 @returns(Order[])
 @commit(false)
 transaction FindOrdersForBuyer {
-  o String username
+  o String buyer
 }
 
 /**

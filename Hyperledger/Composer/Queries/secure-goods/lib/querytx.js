@@ -26,8 +26,9 @@
  */
 async function findOrdersForBuyer(querytx) {
 
-    console.log('Querying all Orders for buyer: ' + querytx.username);
-    let results = await query('FindOrdersForBuyer', { username: querytx.username });
+    console.log('Querying all Orders for buyer: ' + querytx.buyer);
+
+    let results = await query('FindOrdersForBuyer', { buyer: querytx.buyer });
 
     console.log('Query returned: ' + results.length + ' items.');
 

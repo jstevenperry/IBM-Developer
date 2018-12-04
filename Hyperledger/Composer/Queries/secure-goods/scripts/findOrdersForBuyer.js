@@ -47,7 +47,7 @@ async function mainline() {
 
     // Create a new transaction
     const transaction = factory.newTransaction('com.makotogo.learn.composer.securegoods.querytx', 'FindOrdersForBuyer');
-    transaction.username = buyerId;
+    transaction.buyer = 'resource:com.makotogo.learn.composer.securegoods.participant.Buyer#' + buyerId;
 
     // Submit the transaction
     const results = await bnc.submitTransaction(transaction);
@@ -56,4 +56,7 @@ async function mainline() {
     results.forEach(value => {
         console.log('Value: ' + value);
     });
+
+    // Disconnect so Node can exit
+    await bnc.disconnect();
 }

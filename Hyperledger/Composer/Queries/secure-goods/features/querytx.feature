@@ -112,7 +112,7 @@ Feature: QuerySecurity
         """
         {
             "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
-            "username": "buy001"
+            "buyer": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
         }
         """
 
@@ -122,30 +122,46 @@ Feature: QuerySecurity
         """
         {
             "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
-            "username": "buy001"
+            "buyer": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
         }
         """
 
     Scenario: Seller 1 can invoke the FindOrdersForBuyer transaction
         When I use the identity SELLER001
-        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer
-            | username |
-            | buy001   |
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
+            "buyer": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
+        }
+        """
 
     Scenario: Seller 2 can invoke the FindOrdersForBuyer transaction
         When I use the identity SELLER002
-        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer
-            | username |
-            | buy001   |
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
+            "buyer": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
+        }
+        """
 
     Scenario: Shipper 1 can invoke the FindOrdersForBuyer transaction
         When I use the identity SHIPPER001
-        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer
-            | username |
-            | buy001   |
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
+            "buyer": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
+        }
+        """
 
     Scenario: Shipper 2 can invoke the FindOrdersForBuyer transaction
         When I use the identity SHIPPER002
-        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer
-            | username |
-            | buy001   |
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
+            "buyer": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
+        }
+        """

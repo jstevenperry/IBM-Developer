@@ -16,7 +16,7 @@ query FindOrdersForBuyer {
   description: "SELECTs all Orders by the specified Buyer"
   statement: 
     SELECT com.makotogo.learn.composer.securegoods.asset.Order
-    WHERE (buyer.username == _$username)
+      WHERE (buyer == _$buyer)
 }
 
 query FindAllHistory {
