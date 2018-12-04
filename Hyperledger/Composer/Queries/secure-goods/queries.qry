@@ -23,5 +23,4 @@ query FindAllHistory {
   description: "SELECTs all Historian records"
   statement: 
     SELECT org.hyperledger.composer.system.HistorianRecord
-    FROM HistorianRegistry
 }
