@@ -165,3 +165,30 @@ Feature: QuerySecurity
             "buyer": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
         }
         """
+
+    Scenario: Buyer 1 can invoke the FindAllHistory transaction
+        When I use the identity BUYER001
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindAllHistory"
+        }
+        """
+
+    Scenario: Seller 1 can invoke the FindAllHistory transaction
+        When I use the identity SELLER001
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindAllHistory"
+        }
+        """
+
+    Scenario: Shipper 1 can invoke the FindAllHistory transaction
+        When I use the identity SHIPPER001
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindAllHistory"
+        }
+        """
