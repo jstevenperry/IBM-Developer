@@ -33,12 +33,6 @@ async function query() {
         process.exit(1);
     }
 
-    const buyerId = process.env.BUYER_ID;
-    if (buyerId === null) {
-        console.log('Buyer ID must be specified, cannot continue!');
-        process.exit(1);
-    }
-
     // Connect (do not need return value, I assume?)
     await bnc.connect(authIdCard);
 
@@ -46,8 +40,7 @@ async function query() {
     const factory = bnc.getBusinessNetwork().getFactory();
 
     // Create a new transaction
-    const transaction = factory.newTransaction('com.makotogo.learn.composer.securegoods.querytx', 'FindOrdersForBuyer');
-    transaction.buyer = 'resource:com.makotogo.learn.composer.securegoods.participant.Buyer#' + buyerId;
+    const transaction = factory.newTransaction('com.makotogo.learn.composer.securegoods.querytx', 'FindAllHistory');
 
     // Submit the transaction
     const results = await bnc.submitTransaction(transaction);

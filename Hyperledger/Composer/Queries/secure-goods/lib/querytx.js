@@ -47,7 +47,11 @@ async function findOrdersForBuyer(querytx) {
  * @transaction
  */
 async function findAllHistory(querytx) {
+    console.log('Querying all history...');
+
     let results = await query('FindAllHistory');
+
+    console.log('Query returned: ' + results.length + ' items.');
 
     results.forEach(value => {
         console.log('Historian Record: ' + value);
