@@ -2,7 +2,7 @@
 
 # Usage message
 usage() {
-  echo "Usage: $0 -b BUYER_ID -a ID_CARD"
+  echo "Usage: $0 -a ID_CARD"
   echo "Where:"
   echo "-a ID_CARD  : the ID card to use for authentication (REQUIRED)"
   echo "-h          : this message"
