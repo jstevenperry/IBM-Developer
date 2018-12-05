@@ -13,15 +13,6 @@
  */
 
 /**
-  Find all Items
- */
-query FindAllItemsQuery {
-  description: "SELECTs all Items"
-  statement: 
-    SELECT com.makotogo.learn.composer.securegoods.asset.Item
-}
-
-/**
   Find all Orders that match the specified Buyer
  */
 query FindOrdersForBuyerQuery {
