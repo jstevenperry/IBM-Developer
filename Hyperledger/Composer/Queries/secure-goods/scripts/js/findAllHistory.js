@@ -30,17 +30,27 @@ async function query() {
         const bnc = new BusinessNetworkConnection();
 
         // Get the required parameters and exit if all not present
-        const { authIdCard } = checkRequiredParameters();
+        const { authIdCard, useClientApi } = checkRequiredParameters();
 
         // Connect to the business network
         await bnc.connect(authIdCard);
 
-        // Get the factory and create a new transaction
-        const factory = bnc.getBusinessNetwork().getFactory();
-        const transaction = factory.newTransaction('com.makotogo.learn.composer.securegoods.querytx', 'FindAllHistory');
+        // The query results
+        let results = [];
 
-        // Submit the transaction
-        const results = await bnc.submitTransaction(transaction);
+        if (useClientApi === true) {
+            console.log('Using Composer client API to run the query...');
+            // Run the query
+            results = await bnc.query('FindAllHistoryQuery');
+        } else {
+            console.log('Using transaction to run the query...');
+            // Get the factory and create a new transaction
+            const factory = bnc.getBusinessNetwork().getFactory();
+            const transaction = factory.newTransaction('com.makotogo.learn.composer.securegoods.querytx', 'FindAllHistory');
+
+            // // Submit the transaction
+            results = await bnc.submitTransaction(transaction);
+        }
 
         // Process the HistorianRecords
         const historianRecords = processHistorianRecords(results);
@@ -77,8 +87,13 @@ function checkRequiredParameters() {
         console.log('ID card must be specified, cannot continue!');
         process.exit(1);
     }
-
-    return { authIdCard };
+    // Use Client API to run the query directly?
+    let useClientApi = false; // default: use a transaction to run the query
+    const useClientApiEnv = process.env.USE_CLIENT_API;
+    if (useClientApiEnv !== null && useClientApiEnv === 'true') {
+        useClientApi = true;
+    }
+    return { authIdCard, useClientApi };
 }
 
 /**

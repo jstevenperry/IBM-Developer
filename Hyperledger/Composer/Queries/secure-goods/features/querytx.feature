@@ -173,7 +173,7 @@ Feature: QuerySecurity
         }
         """
 
-    Scenario: Buyer 1 can invoke the FindAllHistory transaction
+    Scenario: Buyer 1 cannot invoke the FindAllHistory transaction
         When I use the identity BUYER001
         And I submit the following transaction
         """
@@ -181,6 +181,7 @@ Feature: QuerySecurity
             "$class": "com.makotogo.learn.composer.securegoods.querytx.FindAllHistory"
         }
         """
+        Then I should get an error matching /does not have .* access to resource/
 
     Scenario: Seller 1 can invoke the FindAllHistory transaction
         When I use the identity SELLER001
@@ -191,7 +192,7 @@ Feature: QuerySecurity
         }
         """
 
-    Scenario: Shipper 1 can invoke the FindAllHistory transaction
+    Scenario: Shipper 1 cannot invoke the FindAllHistory transaction
         When I use the identity SHIPPER001
         And I submit the following transaction
         """
@@ -199,3 +200,4 @@ Feature: QuerySecurity
             "$class": "com.makotogo.learn.composer.securegoods.querytx.FindAllHistory"
         }
         """
+        Then I should get an error matching /does not have .* access to resource/

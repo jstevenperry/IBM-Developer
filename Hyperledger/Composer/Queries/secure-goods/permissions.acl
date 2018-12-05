@@ -52,15 +52,6 @@ rule AnyParticipant_C_FindOrdersForShipperTx {
   action: ALLOW
 }
 
-// All participants can invoke the FindAllHistory transaction
-rule AnyParticipant_C_FindAllHistoryTx {
-  description: "Any Participant gets CREATE access to querytx transactions"
-  participant: "com.makotogo.learn.composer.securegoods.participant.*"
-  operation: CREATE
-  resource: "com.makotogo.learn.composer.securegoods.querytx.FindAllHistory"
-  action: ALLOW
-}
-
 //*********
 // Buyer rules
 
@@ -133,6 +124,15 @@ rule Seller_RU_OrderSequence {
   participant: "com.makotogo.learn.composer.securegoods.participant.Seller"
   operation: READ,UPDATE
   resource: "com.makotogo.learn.composer.securegoods.asset.OrderSequence"
+  action: ALLOW
+}
+
+// Sellers can invoke the FindAllHistory transaction
+rule Seller_C_FindAllHistoryTx {
+  description: "Grant Seller CREATE access to FindAllHistory transaction"
+  participant: "com.makotogo.learn.composer.securegoods.participant.Seller"
+  operation: CREATE
+  resource: "com.makotogo.learn.composer.securegoods.querytx.FindAllHistory"
   action: ALLOW
 }
 

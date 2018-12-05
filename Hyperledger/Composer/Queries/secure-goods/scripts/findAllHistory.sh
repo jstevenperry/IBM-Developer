@@ -5,22 +5,25 @@ usage() {
   echo "Usage: $0 -a ID_CARD"
   echo "Where:"
   echo "-a ID_CARD  : the ID card to use for authentication (REQUIRED)"
+  echo "-c          : use the Composer client API to run the query directly"
   echo "-h          : this message"
   echo ""
   echo "Example: $0 -a buy001@secure-goods"
 }
 
 # defaults
-# NONE
+USE_CLIENT_API=false
 
 # read the options
  
-while getopts "a:h" opt; do
+while getopts "a:ch" opt; do
   case $opt in
     a)
       AUTH_ID_CARD=$OPTARG
       ;;
-
+    c)
+      USE_CLIENT_API=true
+      ;;
     h)
       usage
       exit 1
@@ -34,6 +37,7 @@ done
 
 # Dump out the options
 export AUTH_ID_CARD
+export USE_CLIENT_API
 
 echo "auth: $AUTH_ID_CARD" >&2
 
