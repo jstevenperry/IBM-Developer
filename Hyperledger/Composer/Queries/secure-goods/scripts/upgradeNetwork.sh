@@ -85,18 +85,25 @@ fi
 # Install the new network
 echo "Install network version $networkVersionNumber..."
 composer network install --card ${auth} --archiveFile ${bnaDistDir}/${networkName}.bna
+if [ $? -ne 0]; then
+  exit 1
+fi
+[ $? -ne 0 ]; exit 1;
 echo "Done."
 
-# TODO: check return value and bail if something went wrong
 #
 # Upgrade the new network
 echo "Upgrading the network (this may take a few minutes)..."
 composer network upgrade -c ${auth} -n ${networkName} -V ${networkVersionNumber}
+if [ $? -ne 0]; then
+  exit 1
+fi
+[ $? -ne 0 ]; exit 1;
 echo "Done."
 
-# TODO: check return value and bail if something went wrong
 #
 # Ping the new network
 echo "Pinging the network (one moment)..."
 composer network ping --card admin@${networkName} 
+[ $? -ne 0 ]; exit 1;
 echo "Done."
