@@ -19,18 +19,6 @@
 
 /**
  * Query the asset registry and return all Orders for the specified buyer.
- * @param {com.makotogo.learn.composer.securegoods.querytx.FindAllItems} querytx - The query transaction.
- * @returns {Item[]} An array of Item records
- * @transaction
- */
-async function findAllItems(querytx) {
-    //
-    // Execute query and return the results
-    return await query('FindAllItemsQuery', { buyerResource: querytx.buyerResource });
-}
-
-/**
- * Query the asset registry and return all Orders for the specified buyer.
  * @param {com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer} querytx - The query transaction.
  * @returns {Order[]} An array of Order records that matched the query
  * @transaction
