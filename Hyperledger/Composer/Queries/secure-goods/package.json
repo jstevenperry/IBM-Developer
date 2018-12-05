@@ -3,7 +3,7 @@
     "composer": "^0.20.4"
   },
   "name": "secure-goods",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Basic Secure Goods Network Query Demo",
   "scripts": {
     "clean": "rm -Rf node_modules dist out",
