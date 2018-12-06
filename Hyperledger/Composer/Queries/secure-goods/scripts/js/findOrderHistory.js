@@ -35,25 +35,29 @@ async function query() {
         // Connect to the business network
         await bnc.connect(authIdCard);
 
-        // Get the factory
+        // The query results
+        let results = [];
+
+        console.log('Using transaction to run the query...');
+        // Get the factory and create a new transaction
         const factory = bnc.getBusinessNetwork().getFactory();
+        const transaction = factory.newTransaction('com.makotogo.learn.composer.securegoods.querytx', 'FindOrderHistory');
 
-        // Build the query
-        const query = await bnc.buildQuery('SELECT com.makotogo.learn.composer.securegoods.asset.Order');
+        // // Submit the transaction
+        results = await bnc.submitTransaction(transaction);
 
-        // Submit the query
-        const results = await bnc.query(query);
-        console.log(results.length + ' Order(s) found.');
+        // Process the HistorianRecords
+        const historianRecords = processHistorianRecords(results);
+        console.log(historianRecords.length + ' transaction record(s) found.');
 
-        // Process the results
-        results.forEach(record => {
-            console.log('Order ID: ' + record.id);
-            console.log('\tOrder Status: ' + record.status);
-            console.log('\tQuantity: ' + record.quantity);
-            console.log('\tItem: ' + record.item.$identifier);
-            console.log('\tSeller: ' + record.seller.$identifier);
-            console.log('\tBuyer: ' + record.buyer.$identifier);
-            console.log('\tShipper: ' + record.shipper.$identifier);
+        // Collect the records we care about
+        // Print out the results
+        console.log('Transactions (Oldest first):');
+        historianRecords.forEach(record => {
+            console.log(record.transactionTimestamp + ': ' +
+                record.transactionInvoked.getType() + ' (' +
+                record.participantInvoking.getIdentifier() + ')'
+            );
         });
 
         // Disconnect so Node can exit
@@ -79,4 +83,33 @@ function checkRequiredParameters() {
     }
 
     return { authIdCard };
+}
+
+/**
+ * Process the HistorianRecords:
+ * Filter out those with unknown participants
+ * Sort them by timestamp (asending)
+ */
+function processHistorianRecords(results) {
+
+    let historianRecords = [];
+
+    // Process the results
+    results.forEach(record => {
+        if (record.participantInvoking != null) { //eslint-disable-line eqeqeq
+            historianRecords.push(record);
+        }
+    });
+
+    // Sort them by timestamp
+    historianRecords.sort((left, right) => {
+        // Uncomment for descending
+        // descending sort (latest first)
+        // return right.transactionTimestamp - left.transactionTimestamp;
+        // ascending sort (earliest first)
+        return left.transactionTimestamp - right.transactionTimestamp;
+    });
+
+    return historianRecords;
+
 }

@@ -33,19 +33,16 @@ import com.makotogo.learn.composer.securegoods.participant.Buyer
 @returns(Order[])
 @commit(false)
 transaction FindOrdersForBuyer {
-  o String buyerResource
+  o String buyerId
 }
 
 /**
   Find all orders for the specified seller and return
   the Order records to the caller.
-
-  This transaction is not recorded in the blockchain.
  */
 @returns(Order[])
-@commit(false)
 transaction FindOrdersForSeller {
-  o String sellerResource
+  o String sellerId
 }
 
 /**
@@ -57,15 +54,36 @@ transaction FindOrdersForSeller {
 @returns(Order[])
 @commit(false)
 transaction FindOrdersForShipper {
-  o String shipperResource
+  o String shipperId
+}
+
+/**
+  Find all Orders that contain the specified Item.
+ */
+@returns(Order[])
+transaction FindOrdersByItem {
+  o String itemId
+}
+
+/**
+  Find all Orders that contain the specified CurrencyCode
+ */
+ @returns(Order[])
+transaction FindOrdersByCurrencyCode {
+  o String currencyCode
 }
 
 /**
   Find all Historian records and return them to the caller.
-  
-  This transaction is not recorded in the blockchain.
  */
 @returns(HistorianRecord[])
-@commit(false)
 transaction FindAllHistory {
+}
+
+/**
+  Find all Orders from the Historian (and only HistorianRecords for Orders)
+  and return them to the caller.
+ */
+ @returns(HistorianRecord[])
+transaction FindOrderHistory {
 }

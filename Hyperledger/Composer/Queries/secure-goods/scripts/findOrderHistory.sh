@@ -11,7 +11,7 @@ usage() {
 }
 
 # defaults
-# NONE
+USE_CLIENT_API=false
 
 # read the options
  
@@ -20,7 +20,6 @@ while getopts "a:h" opt; do
     a)
       AUTH_ID_CARD=$OPTARG
       ;;
-
     h)
       usage
       exit 1
@@ -55,4 +54,4 @@ if [ $greenLight = 'NO' ]; then
 fi
 
 # Run the JavaScript
-node js/findAllOrders
+node js/findOrderHistory

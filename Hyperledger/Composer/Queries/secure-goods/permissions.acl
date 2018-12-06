@@ -27,7 +27,7 @@ rule AnyParticipant_R_Item {
 
 // All participants can invoke the FindOrdersForBuyer transaction
 rule AnyParticipant_C_FindOrdersForBuyerTx {
-  description: "Grant Buyer CREATE access to FindOrdersForBuyer transaction"
+  description: "Grant Any Participant CREATE access to FindOrdersForBuyer transaction"
   participant: "com.makotogo.learn.composer.securegoods.participant.*"
   operation: CREATE
   resource: "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer"
@@ -36,7 +36,7 @@ rule AnyParticipant_C_FindOrdersForBuyerTx {
 
 // All participants can invoke the FindOrdersForShipper transaction
 rule AnyParticipant_C_FindOrdersForSellerTx {
-  description: "Grant Seller CREATE access to FindOrdersForSeller transaction"
+  description: "Grant Any Participant CREATE access to FindOrdersForSeller transaction"
   participant: "com.makotogo.learn.composer.securegoods.participant.*"
   operation: CREATE
   resource: "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForSeller"
@@ -45,10 +45,28 @@ rule AnyParticipant_C_FindOrdersForSellerTx {
 
 // All participants can invoke the FindOrdersForShipper transaction
 rule AnyParticipant_C_FindOrdersForShipperTx {
-  description: "Grant Shipper CREATE access to FindOrdersForShipper transaction"
+  description: "Grant Any Participant CREATE access to FindOrdersForShipper transaction"
   participant: "com.makotogo.learn.composer.securegoods.participant.*"
   operation: CREATE
   resource: "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForShipper"
+  action: ALLOW
+}
+
+// All participants can invoke the FindOrdersByItem transaction
+rule AnyParticipant_C_FindOrdersByItemTx {
+  description: "Grant Any Participant CREATE access to FindOrdersByItem transaction"
+  participant: "com.makotogo.learn.composer.securegoods.participant.*"
+  operation: CREATE
+  resource: "com.makotogo.learn.composer.securegoods.querytx.FindOrdersByItem"
+  action: ALLOW
+}
+
+// All participants can invoke the FindOrdersByCurrencyCode transaction
+rule AnyParticipant_C_FindOrdersByCurrencyCodeTx {
+  description: "Grant Any Participant CREATE access to FindOrdersByCurrencyCode transaction"
+  participant: "com.makotogo.learn.composer.securegoods.participant.*"
+  operation: CREATE
+  resource: "com.makotogo.learn.composer.securegoods.querytx.FindOrdersByCurrencyCode"
   action: ALLOW
 }
 
@@ -124,15 +142,6 @@ rule Seller_RU_OrderSequence {
   participant: "com.makotogo.learn.composer.securegoods.participant.Seller"
   operation: READ,UPDATE
   resource: "com.makotogo.learn.composer.securegoods.asset.OrderSequence"
-  action: ALLOW
-}
-
-// Sellers can invoke the FindAllHistory transaction
-rule Seller_C_FindAllHistoryTx {
-  description: "Grant Seller CREATE access to FindAllHistory transaction"
-  participant: "com.makotogo.learn.composer.securegoods.participant.Seller"
-  operation: CREATE
-  resource: "com.makotogo.learn.composer.securegoods.querytx.FindAllHistory"
   action: ALLOW
 }
 

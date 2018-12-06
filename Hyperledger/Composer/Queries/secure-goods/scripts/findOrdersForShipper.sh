@@ -6,23 +6,27 @@ usage() {
   echo "Where:"
   echo "-a ID_CARD  : the ID card to use for authentication (REQUIRED)"
   echo "-S SHIPPER_ID : the Shipper ID for whom to query Orders (REQUIRED)"
+  echo "-c          : use the Composer client API to run the query directly"
   echo "-h          : this message"
   echo ""
   echo "Example: $0 -a ship001@secure-goods -b ship001"
 }
 
 # defaults
-# NONE
+USE_CLIENT_API=false
 
 # read the options
  
-while getopts "a:S:h" opt; do
+while getopts "a:S:ch" opt; do
   case $opt in
     a)
       AUTH_ID_CARD=$OPTARG
       ;;
     S)
       SHIPPER_ID=$OPTARG
+      ;;
+    c)
+      USE_CLIENT_API=true
       ;;
     h)
       usage
@@ -38,9 +42,11 @@ done
 # Dump out the options
 export AUTH_ID_CARD
 export SHIPPER_ID
+export USE_CLIENT_API
 
 echo "auth: $AUTH_ID_CARD" >&2
 echo "shipperId: $SHIPPER_ID" >&2
+echo "useClientApi: $USE_CLIENT_API" >&2
 
 # Default: optimism
 greenLight=YES

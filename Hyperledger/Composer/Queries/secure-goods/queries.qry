@@ -41,12 +41,3 @@ query FindOrdersForShipperQuery {
     SELECT com.makotogo.learn.composer.securegoods.asset.Order
       WHERE (shipper == _$shipperResource)
 }
-
-/**
-  Find all Historian records
- */
-query FindAllHistoryQuery {
-  description: "SELECTs all Historian records"
-  statement: 
-    SELECT org.hyperledger.composer.system.HistorianRecord
-}

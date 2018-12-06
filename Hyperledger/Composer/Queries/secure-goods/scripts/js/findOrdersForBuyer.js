@@ -17,53 +17,11 @@
 // Ignore the specified global functions (or the code won't lint)
 /* global getParticipantRegistry getAssetRegistry getFactory emit query */
 
+// Get the required parameters and exit if all not present
+const { authIdCard, buyerId, useClientApi } = checkRequiredParameters();
+
+// Run the query
 query();
-
-/**
- * The program mainline
- */
-async function query() {
-    // Catch any exceptions and exit if any are thrown
-    try {
-        // Get the Composer client API BusinessConnection
-        const BusinessNetworkConnection = require('composer-client').BusinessNetworkConnection;
-        const bnc = new BusinessNetworkConnection();
-
-        // Get the required parameters and exit if all not present
-        const { authIdCard, buyerId } = checkRequiredParameters();
-
-        // Connect to the business network
-        await bnc.connect(authIdCard);
-
-        // Get the factory
-        const factory = bnc.getBusinessNetwork().getFactory();
-
-        // Create a new transaction
-        const transaction = factory.newTransaction('com.makotogo.learn.composer.securegoods.querytx', 'FindOrdersForBuyer');
-        transaction.buyerResource = 'resource:com.makotogo.learn.composer.securegoods.participant.Buyer#' + buyerId;
-
-        // Submit the transaction
-        const results = await bnc.submitTransaction(transaction);
-        console.log(results.length + ' Order(s) found.');
-
-        // Process the results
-        results.forEach(record => {
-            console.log('Order ID: ' + record.id);
-            console.log('\tOrder Status: ' + record.status);
-            console.log('\tQuantity: ' + record.quantity);
-            console.log('\tItem: ' + record.item.$identifier);
-            console.log('\tSeller: ' + record.seller.$identifier);
-            console.log('\tBuyer: ' + record.buyer.$identifier);
-            console.log('\tShipper: ' + record.shipper.$identifier);
-        });
-
-        // Disconnect so Node can exit
-        await bnc.disconnect();
-    } catch (err) {
-        console.log('Error occurred: ' + err.message + ', Node process exiting.');
-        process.exit(1);
-    }
-}
 
 /**
  * Check for the required parameters.
@@ -85,5 +43,68 @@ function checkRequiredParameters() {
         process.exit(1);
     }
 
-    return { authIdCard, buyerId };
+    // Use Client API to run the query directly?
+    let useClientApi = false; // default: use a transaction to run the query
+    const useClientApiEnv = process.env.USE_CLIENT_API;
+    if (useClientApiEnv !== null && useClientApiEnv === 'true') {
+        useClientApi = true;
+    }
+
+    return { authIdCard, buyerId, useClientApi };
+}
+
+/**
+ * The program mainline
+ */
+async function query() {
+    // Catch any exceptions and exit if any are thrown
+    try {
+        // Get the Composer client API BusinessConnection
+        const BusinessNetworkConnection = require('composer-client').BusinessNetworkConnection;
+        const connection = new BusinessNetworkConnection();
+
+        // Connect to the business network
+        await connection.connect(authIdCard);
+
+        // Get the factory
+        const factory = connection.getBusinessNetwork().getFactory();
+
+        // The query results
+        let results = [];
+
+        // Construct the required buyerResource parameter
+        const buyerResource = 'resource:com.makotogo.learn.composer.securegoods.participant.Buyer#' + buyerId;
+
+        if (useClientApi === true) {
+            console.log('Using Composer client API to run the query directly...');
+            // Run the query
+            results = await connection.query('FindOrdersForBuyerQuery', { buyerResource: buyerResource });
+        } else {
+            console.log('Using transaction to run the query...');
+            // Create a new transaction
+            const transaction = factory.newTransaction('com.makotogo.learn.composer.securegoods.querytx', 'FindOrdersForBuyer');
+            transaction.buyerResource = buyerResource;
+
+            // Submit the transaction
+            results = await connection.submitTransaction(transaction);
+        }
+        console.log(results.length + ' Order(s) found for buyerId ' + buyerId + '.');
+
+        // Process the results
+        results.forEach(record => {
+            console.log('Order ID: ' + record.id);
+            console.log('\tOrder Status: ' + record.status);
+            console.log('\tQuantity: ' + record.quantity);
+            console.log('\tItem: ' + record.item.$identifier);
+            console.log('\tSeller: ' + record.seller.$identifier);
+            console.log('\tBuyer: ' + record.buyer.$identifier);
+            console.log('\tShipper: ' + record.shipper.$identifier);
+        });
+
+        // Disconnect so Node can exit
+        await connection.disconnect();
+    } catch (err) {
+        console.log('Error occurred: ' + err.message + ', Node process exiting.');
+        process.exit(1);
+    }
 }

@@ -85,93 +85,93 @@ Feature: QuerySecurity
 
     Scenario: Buyer 1 can invoke the FindOrdersForBuyer transaction
         When I use the identity BUYER001
-        And I submit the following transaction
-        """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
-            "buyerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
-        }
-        """
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer
+            | buyerId |
+            | buy001  |
 
     Scenario: Seller 1 can invoke the FindOrdersForBuyer transaction
         When I use the identity SELLER001
-        And I submit the following transaction
-        """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
-            "buyerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
-        }
-        """
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer
+            | buyerId |
+            | buy001  |
 
     Scenario: Shipper 1 can invoke the FindOrdersForBuyer transaction
         When I use the identity SHIPPER001
-        And I submit the following transaction
-        """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer",
-            "buyerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Buyer#buy001"
-        }
-        """
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersForBuyer
+            | buyerId |
+            | buy001  |
 
     Scenario: Seller 1 can invoke the FindOrdersForSeller transaction
         When I use the identity SELLER001
-        And I submit the following transaction
-        """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForSeller",
-            "sellerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Seller#sell001"
-        }
-        """
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersForSeller
+            | sellerId |
+            | sell001  |
 
     Scenario: Buyer 1 can invoke the FindOrdersForSeller transaction
         When I use the identity BUYER001
-        And I submit the following transaction
-        """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForSeller",
-            "sellerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Seller#sell001"
-        }
-        """
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersForSeller
+            | sellerId |
+            | sell001  |
 
     Scenario: Shipper 1 can invoke the FindOrdersForSeller transaction
         When I use the identity SHIPPER001
-        And I submit the following transaction
-        """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForSeller",
-            "sellerResource": "resource:com.makotogo.learn.composer.securegoods.participant.Seller#sell001"
-        }
-        """
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersForSeller
+            | sellerId |
+            | sell001  |
 
     Scenario: Shipper 1 can invoke the FindOrdersForShipper transaction
         When I use the identity SHIPPER001
-        And I submit the following transaction
-        """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForShipper",
-            "shipperResource": "resource:com.makotogo.learn.composer.securegoods.participant.Shipper#ship001"
-        }
-        """
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersForShipper
+            | shipperId |
+            | ship001  |
 
     Scenario: Buyer 1 can invoke the FindOrdersForShipper transaction
         When I use the identity BUYER001
-        And I submit the following transaction
-        """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForShipper",
-            "shipperResource": "resource:com.makotogo.learn.composer.securegoods.participant.Shipper#ship001"
-        }
-        """
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersForShipper
+            | shipperId |
+            | ship001  |
 
     Scenario: Seller 1 can invoke the FindOrdersForShipper transaction
         When I use the identity SELLER001
-        And I submit the following transaction
-        """
-        {
-            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrdersForShipper",
-            "shipperResource": "resource:com.makotogo.learn.composer.securegoods.participant.Shipper#ship001"
-        }
-        """
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersForShipper
+            | shipperId |
+            | ship001  |
+
+    Scenario: Buyer 1 can invoke the FindOrdersByItem transaction
+        When I use the identity BUYER001
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersByItem
+            | itemId |
+            | WIDGET001  |
+
+    Scenario: Buyer 1 can invoke the FindOrdersByCurrencyCode transaction
+        When I use the identity BUYER001
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersByCurrencyCode
+            | currencyCode |
+            | USD          |
+
+    Scenario: Seller 1 can invoke the FindOrdersByItem transaction
+        When I use the identity SELLER001
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersByItem
+            | itemId |
+            | WIDGET001  |
+
+    Scenario: Seller 1 can invoke the FindOrdersByCurrencyCode transaction
+        When I use the identity SELLER001
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersByCurrencyCode
+            | currencyCode |
+            | USD          |
+
+    Scenario: Shipper 1 can invoke the FindOrdersByItem transaction
+        When I use the identity SHIPPER001
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersByItem
+            | itemId |
+            | WIDGET001  |
+
+    Scenario: Shipper 1 can invoke the FindOrdersByCurrencyCode transaction
+        When I use the identity SHIPPER001
+        And I submit the following transaction of type com.makotogo.learn.composer.securegoods.querytx.FindOrdersByCurrencyCode
+            | currencyCode |
+            | USD          |
 
     Scenario: Buyer 1 cannot invoke the FindAllHistory transaction
         When I use the identity BUYER001
@@ -183,7 +183,17 @@ Feature: QuerySecurity
         """
         Then I should get an error matching /does not have .* access to resource/
 
-    Scenario: Seller 1 can invoke the FindAllHistory transaction
+    Scenario: Buyer 1 cannot invoke the FindOrderHistory transaction
+        When I use the identity BUYER001
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrderHistory"
+        }
+        """
+        Then I should get an error matching /does not have .* access to resource/
+
+    Scenario: Seller 1 cannot invoke the FindAllHistory transaction
         When I use the identity SELLER001
         And I submit the following transaction
         """
@@ -191,6 +201,17 @@ Feature: QuerySecurity
             "$class": "com.makotogo.learn.composer.securegoods.querytx.FindAllHistory"
         }
         """
+        Then I should get an error matching /does not have .* access to resource/
+
+    Scenario: Seller 1 cannot invoke the FindOrderHistory transaction
+        When I use the identity SELLER001
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrderHistory"
+        }
+        """
+        Then I should get an error matching /does not have .* access to resource/
 
     Scenario: Shipper 1 cannot invoke the FindAllHistory transaction
         When I use the identity SHIPPER001
@@ -201,3 +222,14 @@ Feature: QuerySecurity
         }
         """
         Then I should get an error matching /does not have .* access to resource/
+
+    Scenario: Shipper 1 cannot invoke the FindOrderHistory transaction
+        When I use the identity SHIPPER001
+        And I submit the following transaction
+        """
+        {
+            "$class": "com.makotogo.learn.composer.securegoods.querytx.FindOrderHistory"
+        }
+        """
+        Then I should get an error matching /does not have .* access to resource/
+
