@@ -18,7 +18,7 @@
 /* global getParticipantRegistry getAssetRegistry getFactory emit query */
 
 // Get the required parameters and exit if all not present
-const { authIdCard, buyerId, useClientApi } = checkRequiredParameters();
+const { authIdCard, itemId, useClientApi } = checkRequiredParameters();
 
 // Run the query
 query();
@@ -36,10 +36,10 @@ function checkRequiredParameters() {
         console.log('ID card must be specified, cannot continue!');
         process.exit(1);
     }
-    // The buyer ID to use for the query
-    const buyerId = process.env.BUYER_ID;
-    if (buyerId === null) {
-        console.log('Buyer ID must be specified, cannot continue!');
+    // The Item ID to use for the query
+    const itemId = process.env.ITEM_ID;
+    if (itemId === null) {
+        console.log('Item ID must be specified, cannot continue!');
         process.exit(1);
     }
 
@@ -50,7 +50,7 @@ function checkRequiredParameters() {
         useClientApi = true;
     }
 
-    return { authIdCard, buyerId, useClientApi };
+    return { authIdCard, itemId, useClientApi };
 }
 
 /**
@@ -72,23 +72,25 @@ async function query() {
         // The query results
         let results = [];
 
-        // Construct the required buyerResource parameter
-        const buyerResource = 'resource:com.makotogo.learn.composer.securegoods.participant.Buyer#' + buyerId;
-
         if (useClientApi === true) {
             console.log('Using Composer client API to run the query directly...');
+            // Construct the required itemResource parameter
+            const itemResource = 'resource:com.makotogo.learn.composer.securegoods.asset.Item#' + itemId;
+            // Build the query using Composer Query Language
+            const cql = "SELECT com.makotogo.learn.composer.securegoods.asset.Order WHERE (item == _$itemResource)";
+            const builtQuery = connection.buildQuery(cql);
             // Run the query
-            results = await connection.query('FindOrdersForBuyerQuery', { buyerResource: buyerResource });
+            results = await connection.query(builtQuery, { itemResource: itemResource });
         } else {
             console.log('Using transaction to run the query...');
             // Create a new transaction
-            const transaction = factory.newTransaction('com.makotogo.learn.composer.securegoods.querytx', 'FindOrdersForBuyer');
-            transaction.buyerResource = buyerResource;
+            const transaction = factory.newTransaction('com.makotogo.learn.composer.securegoods.querytx', 'FindOrdersByItem');
+            transaction.itemId = itemId;
 
             // Submit the transaction
             results = await connection.submitTransaction(transaction);
         }
-        console.log(results.length + ' Order(s) found for buyerId ' + buyerId + '.');
+        console.log(results.length + ' Order(s) found for itemId ' + itemId + '.');
 
         // Process the results
         results.forEach(record => {

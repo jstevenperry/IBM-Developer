@@ -93,11 +93,12 @@ async function query() {
         results.forEach(record => {
             console.log('Order ID: ' + record.id);
             console.log('\tOrder Status: ' + record.status);
-            console.log('\tQuantity: ' + record.quantity);
+            console.log('\tQuantity: ' + record.quantity + ' (@' + record.unitCost.amount + record.unitCost.currency + ')');
             console.log('\tItem: ' + record.item.$identifier);
             console.log('\tSeller: ' + record.seller.$identifier);
             console.log('\tBuyer: ' + record.buyer.$identifier);
             console.log('\tShipper: ' + record.shipper.$identifier);
+            console.log('\tShipping cost: ' + record.shippingCost.amount + record.shippingCost.currency);
         });
 
         // Disconnect so Node can exit
