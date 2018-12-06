@@ -4,20 +4,20 @@
 usage() {
   echo "Usage: $0 -b SHIPPER_ID -a ID_CARD"
   echo "Where:"
-  echo "-a ID_CARD  : the ID card to use for authentication (REQUIRED)"
+  echo "-a ID_CARD    : the ID card to use for authentication (REQUIRED)"
   echo "-S SHIPPER_ID : the Shipper ID for whom to query Orders (REQUIRED)"
-  echo "-c          : use the Composer client API to run the query directly"
-  echo "-h          : this message"
+  echo "-t            : invoke the query's transaction to run the query"
+  echo "-h            : this message"
   echo ""
-  echo "Example: $0 -a ship001@secure-goods -b ship001"
+  echo "Example: $0 -a ship001@secure-goods -S ship001"
 }
 
 # defaults
-USE_CLIENT_API=false
+USE_CLIENT_API=true
 
 # read the options
  
-while getopts "a:S:ch" opt; do
+while getopts "a:S:th" opt; do
   case $opt in
     a)
       AUTH_ID_CARD=$OPTARG
@@ -25,8 +25,8 @@ while getopts "a:S:ch" opt; do
     S)
       SHIPPER_ID=$OPTARG
       ;;
-    c)
-      USE_CLIENT_API=true
+    t)
+      USE_CLIENT_API=false
       ;;
     h)
       usage

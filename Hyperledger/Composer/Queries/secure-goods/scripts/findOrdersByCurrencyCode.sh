@@ -5,28 +5,28 @@ usage() {
   echo "Usage: $0 -i ITEM_ID -a ID_CARD"
   echo "Where:"
   echo "-a ID_CARD       : the ID card to use for authentication (REQUIRED)"
-  echo "-c               : use the Composer client API to run the query directly"
-  echo "-C CURRENCY_CODE : the currency code for which to query Orders (REQUIRED)"
+  echo "-c CURRENCY_CODE : the currency code for which to query Orders (REQUIRED)"
+  echo "-t               : invoke the query's transaction to run the query"
   echo "-h               : this message"
   echo ""
-  echo "Example: $0 -a buy001@secure-goods -i WIDGET001"
+  echo "Example: $0 -a buy001@secure-goods -c EUR"
 }
 
 # defaults
-USE_CLIENT_API=false
+USE_CLIENT_API=true
 
 # read the options
  
-while getopts "a:C:ch" opt; do
+while getopts "a:c:th" opt; do
   case $opt in
     a)
       AUTH_ID_CARD=$OPTARG
       ;;
-    C)
+    c)
       CURRENCY_CODE=$OPTARG
       ;;
-    c)
-      USE_CLIENT_API=true
+    t)
+      USE_CLIENT_API=false
       ;;
     h)
       usage

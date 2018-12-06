@@ -6,18 +6,18 @@ usage() {
   echo "Where:"
   echo "-a ID_CARD  : the ID card to use for authentication (REQUIRED)"
   echo "-b BUYER_ID : the Buyer ID for whom to query Orders (REQUIRED)"
-  echo "-c          : use the Composer client API to run the query directly"
+  echo "-t          : invoke the query's transaction to run the query"
   echo "-h          : this message"
   echo ""
-  echo "Example: $0 -a buy001@secure-goods -b buy001"
+  echo "Example: $0 -a sell001@secure-goods -b buy001"
 }
 
 # defaults
-USE_CLIENT_API=false
+USE_CLIENT_API=true
 
 # read the options
  
-while getopts "a:b:ch" opt; do
+while getopts "a:b:th" opt; do
   case $opt in
     a)
       AUTH_ID_CARD=$OPTARG
@@ -25,8 +25,8 @@ while getopts "a:b:ch" opt; do
     b)
       BUYER_ID=$OPTARG
       ;;
-    c)
-      USE_CLIENT_API=true
+    t)
+      USE_CLIENT_API=false
       ;;
     h)
       usage
