@@ -17,7 +17,28 @@
 // Ignore the specified global functions (or the code won't lint)
 /* global getParticipantRegistry getAssetRegistry getFactory emit query */
 
+// Get the required parameters and exit if all not present
+const { authIdCard } = checkRequiredParameters();
+
+// Run the query
 query();
+
+/**
+ * Check for the required parameters.
+ * If they are all found, this function returns them in
+ * an object. If not, process.exit() is called to bail
+ * out, since there's no point in continuing.
+ */
+function checkRequiredParameters() {
+    // The ID card used for authentication
+    const authIdCard = process.env.AUTH_ID_CARD;
+    if (authIdCard === null) {
+        console.log('ID card must be specified, cannot continue!');
+        process.exit(1);
+    }
+
+    return { authIdCard };
+}
 
 /**
  * The program mainline
@@ -28,9 +49,6 @@ async function query() {
         // Get the Composer client API BusinessConnection
         const BusinessNetworkConnection = require('composer-client').BusinessNetworkConnection;
         const bnc = new BusinessNetworkConnection();
-
-        // Get the required parameters and exit if all not present
-        const { authIdCard } = checkRequiredParameters();
 
         // Connect to the business network
         await bnc.connect(authIdCard);
@@ -66,23 +84,6 @@ async function query() {
         console.log('Error occurred: ' + err.message + ', Node process exiting.');
         process.exit(1);
     }
-}
-
-/**
- * Check for the required parameters.
- * If they are all found, this function returns them in
- * an object. If not, process.exit() is called to bail
- * out, since there's no point in continuing.
- */
-function checkRequiredParameters() {
-    // The ID card used for authentication
-    const authIdCard = process.env.AUTH_ID_CARD;
-    if (authIdCard === null) {
-        console.log('ID card must be specified, cannot continue!');
-        process.exit(1);
-    }
-
-    return { authIdCard };
 }
 
 /**

@@ -11,7 +11,7 @@ usage() {
 }
 
 # defaults
-USE_CLIENT_API=false
+# NONE
 
 # read the options
  
