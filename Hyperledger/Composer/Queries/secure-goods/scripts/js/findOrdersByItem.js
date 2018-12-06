@@ -77,7 +77,7 @@ async function query() {
             // Construct the required itemResource parameter
             const itemResource = 'resource:com.makotogo.learn.composer.securegoods.asset.Item#' + itemId;
             // Build the query using Composer Query Language
-            const cql = "SELECT com.makotogo.learn.composer.securegoods.asset.Order WHERE (item == _$itemResource)";
+            const cql = 'SELECT com.makotogo.learn.composer.securegoods.asset.Order WHERE (item == _$itemResource)';
             const builtQuery = connection.buildQuery(cql);
             // Run the query
             results = await connection.query(builtQuery, { itemResource: itemResource });
