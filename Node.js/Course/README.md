@@ -16,7 +16,7 @@ If you are a Node developer and see something that looks wrong, it just might be
 
 * As of today (15 December 2018) units 1-6 have been published, with more on the way. 
 
-A Learning Path is a Herculean effort, not just for the content provided (me), but also for the fearless, tireless, and totally awesome editor who is saddled with the unenviable task of turning my writing into something a human being would actually want to read.
+A Learning Path is a Herculean effort, not just for the content provider (me), but also for the fearless, tireless, and totally awesome editor(s) who take on the unenviable task of turning my writing into something a human being might actually want to read.
 
 # Who am I?
 
