@@ -2,7 +2,9 @@
 
 This is the code for my [Node.js Learning Path](https://developer.ibm.com/articles/learn-node-unit-1-overview-nodejs-learning-path/), which you can find only at IBM Developer.
 
-There is one directory for each unit of the course, named like this: `Unit-X`, where `X` is the unit number.
+There is one directory for each unit of the course, named like this: `Unit-X`, where `X` is the unit number (Unit 1 doesn't have a directory because it doesn't have any code).
+
+There are also some other directories for common code, configuration settings, and so forth.
 
 # Caveats
 
@@ -22,4 +24,4 @@ I'm Steve Perry. And I **love** to write code, and write about writing code.
 
 Be sure to check out [my blog](https://jstevenperry.wordpress.com/), and [my YouTube channel](https://www.youtube.com/channel/UCAoqQ5DnRyLisPdzUodMrww).
 
-You can also follow me on [Twitter](https://twitter.com/jstevenperry) or [LinkedIn](https://www.linkedin.com/in/jstevenperry1/).
+You can also follow me on [Twitter](https://twitter.com/jstevenperry) and [LinkedIn](https://www.linkedin.com/in/jstevenperry1/).
