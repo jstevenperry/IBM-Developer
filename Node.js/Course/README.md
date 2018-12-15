@@ -1,23 +1,25 @@
 # What is this?
 
-I'm working on a Node.js Learning Path for IBM Code. This directory is a work in progress that contains (for now) the scribblings of code that will become the source for the LP.
+This is the code for my [Node.js Learning Path](https://developer.ibm.com/articles/learn-node-unit-1-overview-nodejs-learning-path/), which you can find only at IBM Developer.
 
-I'm putting together basic examples showing how Node.js
+There is one directory for each unit of the course, named like this: `Unit-X`, where `X` is the unit number.
 
 # Caveats
 
-* As of today (26 May 2018) the code here is a __WIP__. So please, no PRs with bug fixes (or other optimizations). I'm well aware that the code is not quite _there_ yet.
+* Some of the code is (and will always be) **purposely** bad (or poorly optimized), and unlinted, in order to illustrate concepts as part of the LP (like why you would want to use a linter... you kinda need to see both the "before" and "after" code, right?). 
 
-* Some of the code is (and will always be) **purposely** bad (or poorly optimized) in order to illustrate concepts as part of the LP.
-
-* Use this code at your own risk. It's a __WORK IN PROGRESS__ (I may have mentioned that).
+If you are a Node developer and see something that looks wrong, it just might be that way on purpose (to make a point), so no issues (or god forbid, PRs) please because something doesn't look perfect (or the way you would do it). That said... if something is just flat out wrong, please let me know (by opening an issue).
 
 # When will the LP be published?
 
-* I'm shooting for completing this by end of July 2018, but not sure when it will go live on the developerWorks, er IBM Code, site.
+* As of today (15 December 2018) units 1-6 have been published, with more on the way. 
+
+A Learning Path is a Herculean effort, not just for the content provided (me), but also for the fearless, tireless, and totally awesome editor who is saddled with the unenviable task of turning my writing into something a human being would actually want to read.
 
 # Who am I?
 
-I'm Steve Perry. And I love to write code.
+I'm Steve Perry. And I **love** to write code, and write about writing code.
 
-Follow me on [Twitter](https://twitter.com/jstevenperry) or [LinkedIn](https://www.linkedin.com/in/jstevenperry1/).
+Be sure to check out [my blog](https://jstevenperry.wordpress.com/), and [my YouTube channel](https://www.youtube.com/channel/UCAoqQ5DnRyLisPdzUodMrww).
+
+You can also follow me on [Twitter](https://twitter.com/jstevenperry) or [LinkedIn](https://www.linkedin.com/in/jstevenperry1/).
