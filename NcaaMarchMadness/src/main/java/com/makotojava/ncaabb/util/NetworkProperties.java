@@ -173,6 +173,11 @@ public class NetworkProperties {
     return BigDecimal.valueOf(performanceThreshold).setScale(0, RoundingMode.HALF_UP);
   }
 
+  public static BigDecimal getSymmetricPerformanceThreshold() {
+    Integer performanceThreshold = getIntegerPropertyValue("symmetric.performance.threshold", 60);
+    return BigDecimal.valueOf(performanceThreshold).setScale(0, RoundingMode.HALF_UP);
+  }
+
   public static final String getSimulationDirectoryName() {
     return getStringPropertyValue("simulation.directory.name", "Simulation");
   }
