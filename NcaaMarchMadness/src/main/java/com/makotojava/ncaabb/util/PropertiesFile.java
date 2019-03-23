@@ -89,6 +89,10 @@ public class PropertiesFile {
     }
   }
 
+  public PropertiesFile(Properties properties) {
+    this.properties = properties;
+  }
+
   /**
    * Fetches a single property whose value will be returned as a String.
    * 
@@ -98,7 +102,7 @@ public class PropertiesFile {
    * @return String - the value of the property as a String (e.g., "propertyValue")
    */
   public String getProperty(String propertyName) {
-    String ret = "";
+    String ret;
     log.fine("Looking for property '" + propertyName + "'...");
 
     // Read the property
@@ -155,7 +159,7 @@ public class PropertiesFile {
    *           - if something goes horribly wrong.
    */
   private String fetchCopyright() throws IOException {
-    String ret = null;
+    String ret;
 
     byte[] bytes = Files.readAllBytes(Paths.get("./COPYRIGHT"));
 
