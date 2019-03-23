@@ -198,7 +198,7 @@ public class NetworkProperties {
   }
 
   public static String getNetworksFileName() {
-    return getStringPropertyValue("networks.file.name", null);
+    return getStringPropertyValue("networks.file.name", "networks.txt");
   }
 
   public static Integer getNumberOfInputs() {

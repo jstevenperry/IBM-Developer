@@ -93,7 +93,7 @@ public class Networks {
           lines.add(line);
           line = bufferedReader.readLine();
         }
-        log.info(String.format("Attempting to process %d networks from file '%s'...", lines.size(), networksFileName));
+        log.info(String.format("Attempting to process up to %d networks (which may include comment and empty lines) from file '%s'...", lines.size(), networksFileName));
         List<int[]> networks = lines.stream()
           .filter(s -> !s.startsWith("#") && StringUtils.isNotEmpty(s)) // allow for comment lines and empty in the network file, but ignore them
           .map(Networks::parseNetworkStructure)
@@ -105,9 +105,9 @@ public class Networks {
         }
         log.info("Processing of externally defined networks complete.");
       } catch (IOException e) {
-        String errorMessage = String.format("Error reading networks file '%s'", networksFileName);
+        String errorMessage = String.format("Error reading networks file '%s'. Using the default networks.", networksFileName);
         log.error(errorMessage, e);
-        throw new RuntimeException(errorMessage, e);
+        log.error(errorMessage);
       }
     }
     return ret;
