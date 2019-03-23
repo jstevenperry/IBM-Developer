@@ -195,7 +195,6 @@ public class TournamentMatrixPredictor implements NetworkRunner<MultiLayerPercep
    * We need some way of knowing who is in the big dance, and this seems
    * as good as any.
    * 
-   * @param teamsFile
    * @param year
    * @return
    */
