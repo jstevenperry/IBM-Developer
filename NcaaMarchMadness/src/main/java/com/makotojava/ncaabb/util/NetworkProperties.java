@@ -95,9 +95,8 @@ public class NetworkProperties {
     // Sanity check
     String baseDirectory = propertiesFile.getProperty(BASE_DIRECTORY);
     if (baseDirectory.equalsIgnoreCase("REPLACE_WITH_YOUR_VALUE")) {
-      String errorMessage = String.format("You must specify a value for %s", BASE_DIRECTORY);
-      log.error(errorMessage);
-      throw new RuntimeException(errorMessage);
+      String warningMessage = String.format("You should specify a value for %s. The default value of '.' will be used.", BASE_DIRECTORY);
+      log.warn(warningMessage);
     }
     return propertiesFile;
   }
@@ -111,7 +110,7 @@ public class NetworkProperties {
    * @return String The Base directory property value.
    */
   public static String getBaseDirectory() {
-    return getStringPropertyValue(BASE_DIRECTORY, null);
+    return getStringPropertyValue(BASE_DIRECTORY, ".");
   }
 
   public static String getDatabaseName() {
@@ -186,16 +185,20 @@ public class NetworkProperties {
     return getDoublePropertyValue("momentum.default.value", 0.10);
   }
 
-  public static final String getNetworkDirectoryName() {
+  public static String getNetworkDirectoryName() {
     return getStringPropertyValue("network.directory.name", "Networks");
   }
 
-  public static final String getNetworkFileBase() {
+  public static String getNetworkFileBase() {
     return getStringPropertyValue("network.file.base", "NCAA-BB-MLP-Network");
   }
 
-  public static final String getNetworkFileExtension() {
+  public static String getNetworkFileExtension() {
     return getStringPropertyValue("network.file.extension", ".ann");
+  }
+
+  public static String getNetworksFileName() {
+    return getStringPropertyValue("networks.file.name", null);
   }
 
   public static Integer getNumberOfInputs() {
@@ -216,7 +219,7 @@ public class NetworkProperties {
     return BigDecimal.valueOf(performanceThreshold).setScale(0, RoundingMode.HALF_UP);
   }
 
-  public static final String getSimulationDirectoryName() {
+  public static String getSimulationDirectoryName() {
     return getStringPropertyValue("simulation.directory.name", "Simulation");
   }
 
@@ -232,15 +235,15 @@ public class NetworkProperties {
     return getBooleanPropertyValue("randomize.momentum", Boolean.TRUE);
   }
 
-  public static final String getTeamMatrixFileName() {
+  public static String getTeamMatrixFileName() {
     return getStringPropertyValue("team.matrix.file.name", "all-vs");
   }
 
-  public static final String getTrainingDataFileBase() {
+  public static String getTrainingDataFileBase() {
     return getStringPropertyValue("training.data.file.base", "NCAA-BB-TRAINING_DATA");
   }
 
-  public static final String getTrainingDataFileExtension() {
+  public static String getTrainingDataFileExtension() {
     return getStringPropertyValue("training.data.file.extension", ".trn");
   }
 
