@@ -258,8 +258,7 @@ public class MlpNetworkTrainer implements LearningEventListener {
    *          The complete layer structure (includes both the
    *          input layer and output layers)
    * 
-   * @param neuronProperties
-   *          {@link NeuronProperties}
+   * @param yearsToSimulate
    * @return
    */
   private MultiLayerPerceptron createNetwork(List<Integer> neuronLayerDescriptor,
@@ -350,8 +349,6 @@ public class MlpNetworkTrainer implements LearningEventListener {
    *          The data used to train the network.
    * @param network
    *          The MLP network to be trained.
-   * @param metrics
-   *          The {@link NetworkMetrics} object where metrics info is stored.
    */
   private void trainNetwork(DataSet trainingData, MultiLayerPerceptron network) {
     //
@@ -578,9 +575,6 @@ public class MlpNetworkTrainer implements LearningEventListener {
    * @param network
    *          The trained MLP network to run in the simulation.
    * 
-   * @param incorrectPicks
-   *          The number of incorrect picks for this network. Used for reporting.
-   * 
    * @param seasonAnalytics
    *          The {@link SeasonAnalytics} object, used to normalize the data.
    * 
@@ -779,7 +773,7 @@ public class MlpNetworkTrainer implements LearningEventListener {
         .valueOf(100.0 * metrics.getNumberOfSymmetricWinsThisIteration() / metrics.getNumberOfGamesThisIteration())
         .setScale(5,
             RoundingMode.HALF_UP);
-    log.info("SYMMETRIC WINNING PERCENTAGE: " + symmetricWinningPercentage.toPlainString() + "%");
+    log.info("SYMMETRIC WINNING PERCENTAGE: " + symmetricWinningPercentage.toPlainString() + "% (" + metrics.getLayerStructure() + ")");
   }
 
   /**
@@ -800,14 +794,24 @@ public class MlpNetworkTrainer implements LearningEventListener {
     // Current method of determing whether or not network should be saved:
     // Compute winning percentage and round it to an integer number and compare it
     /// the threshold value in NetworkProperties
+    BigDecimal symmetricWinningPercentage = BigDecimal
+      .valueOf(100.0 * metrics.getNumberOfSymmetricWinsThisIteration() / metrics.getNumberOfGamesThisIteration())
+      .setScale(5,
+        RoundingMode.HALF_UP);
     BigDecimal winningPercentage = BigDecimal
         .valueOf(100.0 * metrics.getNumberOfWinsThisIteration() / metrics.getNumberOfGamesThisIteration()).setScale(5,
             RoundingMode.HALF_UP);
     BigDecimal currentPerformance =
-        BigDecimal.valueOf(winningPercentage.doubleValue()).setScale(0, RoundingMode.HALF_UP);
+      BigDecimal.valueOf(winningPercentage.doubleValue()).setScale(0, RoundingMode.HALF_UP);
+    BigDecimal currentSymmetricPerformance =
+      BigDecimal.valueOf(symmetricWinningPercentage.doubleValue()).setScale(0, RoundingMode.HALF_UP);
     //
-    // Return true if network performed above threshold, false otherwise
-    return currentPerformance.doubleValue() >= NetworkProperties.getPerformanceThreshold().doubleValue();
+    // Return true if winning percentage and symmetric winning percentage are both above the threshold, false otherwise
+    return
+      currentPerformance.doubleValue() >= NetworkProperties.getPerformanceThreshold().doubleValue()
+        &&
+        currentSymmetricPerformance.doubleValue() >= NetworkProperties.getSymmetricPerformanceThreshold().doubleValue()
+      ;
   }
 
   /**
@@ -883,10 +887,7 @@ public class MlpNetworkTrainer implements LearningEventListener {
 
   /**
    * Logs/prints metrics for the current CTV iteration of the network.
-   * 
-   * @param metrics
-   *          The ubiquitous @{link NetworkMetrics} object.
-   * 
+   * @param network
    */
   private void logIterationStatsForNetwork(MultiLayerPerceptron network) {
     NetworkMetrics metrics = networkMetricsCache.get(network);
