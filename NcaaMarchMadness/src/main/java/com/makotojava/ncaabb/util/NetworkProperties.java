@@ -15,8 +15,15 @@
  */
 package com.makotojava.ncaabb.util;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Properties;
 
 /**
  * Provides access to the network properties.
@@ -36,11 +43,19 @@ import java.math.RoundingMode;
 public class NetworkProperties {
 
   /**
+   * The one property that is absolutely required (if externalized)
+   */
+  public static final String BASE_DIRECTORY = "base.directory";
+  public static final String NETWORK_PROPERTIES_FILE = "network.properties.file";
+
+  /**
    * Private constructor.
    */
   private NetworkProperties() {
     // Can't touch this
   }
+
+  private static final Logger log = Logger.getLogger(NetworkProperties.class);
 
   /**
    * The underlying PropertiesFile object
@@ -60,6 +75,29 @@ public class NetworkProperties {
   private static PropertiesFile getPropertiesFile() {
     if (propertiesFile == null) {
       propertiesFile = new PropertiesFile(PROPERTIES_FILE_NAME);
+      log.info("Loaded properties file from WAR (the default behavior)");
+      String propertiesFileNameFromEnvironmentVariable = System.getProperty(NETWORK_PROPERTIES_FILE);
+      if (StringUtils.isNotEmpty(propertiesFileNameFromEnvironmentVariable)) {
+        log.info(String.format("Override found for property (%s). Attempting to load properties file: %s", NETWORK_PROPERTIES_FILE, propertiesFileNameFromEnvironmentVariable));
+        try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(propertiesFileNameFromEnvironmentVariable))){
+          Properties properties = new Properties();
+          properties.load(bufferedInputStream);
+          propertiesFile = new PropertiesFile(properties);
+          log.info(String.format("Base directory: '%s' (doesn't mean everything is okay, but is a good sign).", propertiesFile.getProperty(BASE_DIRECTORY)));
+        } catch (IOException e) {
+          String errorMessage = String.format("Error attempting to read file '%s'", propertiesFileNameFromEnvironmentVariable, e);
+          log.error(errorMessage, e);
+          throw new RuntimeException(errorMessage, e);
+        }
+        log.info(String.format("Loaded properties file: %s", propertiesFileNameFromEnvironmentVariable));
+      }
+    }
+    // Sanity check
+    String baseDirectory = propertiesFile.getProperty(BASE_DIRECTORY);
+    if (baseDirectory.equalsIgnoreCase("REPLACE_WITH_YOUR_VALUE")) {
+      String errorMessage = String.format("You must specify a value for %s", BASE_DIRECTORY);
+      log.error(errorMessage);
+      throw new RuntimeException(errorMessage);
     }
     return propertiesFile;
   }
@@ -73,7 +111,7 @@ public class NetworkProperties {
    * @return String The Base directory property value.
    */
   public static String getBaseDirectory() {
-    return getStringPropertyValue("base.directory", null);
+    return getStringPropertyValue(BASE_DIRECTORY, null);
   }
 
   public static String getDatabaseName() {
