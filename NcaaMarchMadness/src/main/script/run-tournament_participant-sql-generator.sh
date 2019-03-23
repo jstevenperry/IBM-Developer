@@ -4,6 +4,11 @@
 #
 # Set DEBUG to something other than true to turn it off
 DEBUG=true
+# Add network.properties.file system property to JAVA_OPTS to use an external properties file.
+# Lame, but at least gives you a way to run the code without having to rebuild the network
+# every time you tweak the network.properties file.
+# You can also specify this property in the shell (but I probably didn't need to tell you that).
+#EXAMPLE_JAVA_OPTS="-Dnetwork.properties.file=/Users/sperry/home/network.properties"
 
 function usage {
   echo "Usage: $0 tournament_participants_file year"
@@ -23,19 +28,19 @@ function usage {
 
 # Process number of arguments
 NUMARGS=$#
-if [ "$DEBUG" == "true" ]; then echo -e \\n"Number of arguments: $NUMARGS"; fi
-if [ "$NUMARGS" -eq 0 ]; then
+if [[ "$DEBUG" == "true" ]]; then echo -e \\n"Number of arguments: $NUMARGS"; fi
+if [[ "$NUMARGS" -eq 0 ]]; then
   usage
   exit 1
 fi
-if [ "$DEBUG" == "true" ]; then echo "Script arguments: $@"; fi
+if [[ "$DEBUG" == "true" ]]; then echo "Script arguments: $@"; fi
 
 # Below is an example that works on my Mac.
 # Change this to match your source location.
 ROOT_DIR=/Users/sperry/home/development/projects/IBM-Developer/NcaaMarchMadness
 
 # Make sure ROOT_DIR is set or bail out
-if [ -z "$ROOT_DIR" ]
+if [[ -z "$ROOT_DIR" ]]
 then
   echo "ROOT_DIR is not set! This variable should be set to the source root of your project."
   echo "Make sure that you run a Maven build to create the necessary class files"
@@ -43,7 +48,7 @@ then
   exit 1
 fi
 
-if [ "$DEBUG" == "true" ]; then echo "ROOT_DIR = ${ROOT_DIR}"; fi
+if [[ "$DEBUG" == "true" ]]; then echo "ROOT_DIR = ${ROOT_DIR}"; fi
 
 # Set the lib directory as a convenience
 LIB_DIR=$ROOT_DIR/target/lib
@@ -70,4 +75,4 @@ $LIB_DIR/opencsv-3.6.jar
 if [ "$DEBUG" == "true" ]; then echo "CLASSPATH = $CP"; fi
 
 # Fire up the program
-java -cp $CP:$ROOT_DIR/target/classes com.makotojava.ncaabb.sqlgenerator.TournamentParticipantSqlGenerator $@
+java $JAVA_OPTS -cp $CP:$ROOT_DIR/target/classes com.makotojava.ncaabb.sqlgenerator.TournamentParticipantSqlGenerator $@
