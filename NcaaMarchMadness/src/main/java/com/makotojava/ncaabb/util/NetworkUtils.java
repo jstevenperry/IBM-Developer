@@ -58,7 +58,7 @@ public class NetworkUtils {
    *           - if the year to validate is outside the supported range.
    */
   public static void validateYear(Integer year) {
-    if (year < 2010 || year > 2017) {
+    if (year < 2010 || year > 2019) {
       throw new RuntimeException("Invalid year: " + year + " (must be between 2011 and 2017, inclusive)");
     }
   }
