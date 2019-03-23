@@ -32,7 +32,7 @@ if [ "$DEBUG" == "true" ]; then echo "Script arguments: $@"; fi
 
 # Below is an example that works on my Mac.
 # Change this to match your source location.
-ROOT_DIR=/Users/sperry/home/development/projects/developerWorks/NcaaMarchMadness
+ROOT_DIR=/Users/sperry/home/development/projects/IBM-Developer/NcaaMarchMadness
 
 # Make sure ROOT_DIR is set or bail out
 if [ -z "$ROOT_DIR" ]
