@@ -1,12 +1,12 @@
 /*
  * Copyright 2017 Makoto Consulting Group, Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,17 +14,6 @@
  * limitations under the License.
  */
 package com.makotojava.ncaabb.generation;
-
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.log4j.Logger;
-import org.neuroph.core.data.DataSet;
-import org.neuroph.core.data.DataSetRow;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.makotojava.ncaabb.dao.SeasonAnalyticsDao;
 import com.makotojava.ncaabb.dao.SeasonDataDao;
@@ -39,12 +28,21 @@ import com.makotojava.ncaabb.springconfig.ApplicationConfig;
 import com.makotojava.ncaabb.util.NetworkProperties;
 import com.makotojava.ncaabb.util.NetworkUtils;
 import com.makotojava.ncaabb.util.StatsUtils;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.log4j.Logger;
+import org.neuroph.core.data.DataSet;
+import org.neuroph.core.data.DataSetRow;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Creates data used to train Multi-layer Perceptron (MLP) networks.
- * 
- * @author J Steven Perry
  *
+ * @author J Steven Perry
  */
 public class DataCreator {
 
@@ -56,8 +54,21 @@ public class DataCreator {
   private TournamentAnalyticsDao tournamentAnalyticsDao;
 
   /**
+   * Constructor.
+   *
+   * @param applicationContext The Spring ApplicationContext object that
+   *                           contains the environment.
+   */
+  public DataCreator(ApplicationContext applicationContext) {
+    seasonDataDao = applicationContext.getBean(SeasonDataDao.class);
+    tournamentResultDao = applicationContext.getBean(TournamentResultDao.class);
+    seasonAnalyticsDao = applicationContext.getBean(SeasonAnalyticsDao.class);
+    tournamentAnalyticsDao = applicationContext.getBean(TournamentAnalyticsDao.class);
+  }
+
+  /**
    * The main (driver) method for this class.
-   * 
+   *
    * @param args
    */
   public static void main(String[] args) {
@@ -68,25 +79,149 @@ public class DataCreator {
     //
     // Let's kick the tires and light the fires
     DataCreator trainingDataCreator = new DataCreator(
-        new AnnotationConfigApplicationContext(ApplicationConfig.class));
+      new AnnotationConfigApplicationContext(ApplicationConfig.class));
     //
     // First let's figure out what year(s) we are running.
     Integer[] yearsForTraining = trainingDataCreator.computeYearsToTrain(args);
     log.info("*********** CREATING TRAINING DATA **************");
     log.info(
-        "Using data from the following years for training: " + ReflectionToStringBuilder.toString(yearsForTraining));
+      "Using data from the following years for training: " + ReflectionToStringBuilder.toString(yearsForTraining));
     //
     // Now create the data
     trainingDataCreator.go(yearsForTraining);
 
   }
 
+  protected static boolean isTournamentGameWinner(SeasonData teamSeasonData, TournamentResult tournamentResult) {
+    return teamSeasonData.getTeamName().equalsIgnoreCase(tournamentResult.getWinningTeamName());
+  }
+
+  /**
+   * @param inputAndOutput
+   * @param seasonAnalytics
+   * @param tournamentResult
+   * @param team1SeasonData
+   * @param team2SeasonData
+   */
+  private static void setScoresInOutputData(double[] inputAndOutput, SeasonAnalytics seasonAnalytics,
+                                            TournamentAnalytics tournamentAnalytics,
+                                            TournamentResult tournamentResult, SeasonData team1SeasonData, SeasonData team2SeasonData) {
+    //
+    // The output scores are at the end of the array. The last index is for team2, and the next
+    /// to last is for team 1.
+    //
+    /// The scores are the normalized scores from the historical contest between the two teams
+    int team1ScoreIndex = inputAndOutput.length - 2;
+    int team2ScoreIndex = inputAndOutput.length - 1;
+    //
+    // First, figure out which team is team1 in the tournament data
+    String winningTeamName = tournamentResult.getWinningTeamName();
+    BigDecimal winningScore = BigDecimal.valueOf(tournamentResult.getWinningScore().longValue());
+    BigDecimal losingScore = BigDecimal.valueOf(tournamentResult.getLosingScore().longValue());
+    //
+    // Set the team scores based on who won the contest
+    BigDecimal team1Score = (winningTeamName.equals(team1SeasonData.getTeamName())) ? winningScore : losingScore;
+    BigDecimal team2Score = (winningTeamName.equals(team2SeasonData.getTeamName())) ? winningScore : losingScore;
+    //
+    // Compute Team1's normalized score
+    BigDecimal team1NormalizedScore =
+      StatsUtils.normalize(team1Score, BigDecimal.valueOf(tournamentAnalytics.getMinScore()).setScale(5),
+        BigDecimal.valueOf(tournamentAnalytics.getMaxScore()).setScale(5));
+    BigDecimal team2NormalizedScore =
+      StatsUtils.normalize(team2Score, BigDecimal.valueOf(tournamentAnalytics.getMinScore()).setScale(5),
+        BigDecimal.valueOf(tournamentAnalytics.getMaxScore()).setScale(5));
+    //
+    // Set the scores in their places in the array
+    inputAndOutput[team1ScoreIndex] = team1NormalizedScore.doubleValue();
+    inputAndOutput[team2ScoreIndex] = team2NormalizedScore.doubleValue();
+  }
+
+  /**
+   * Creates a single row of normalized data used to run against a trained network (i.e., a simulation,
+   * or prediction).
+   *
+   * @param seasonAnalytics    Season Analytics, used to compute the normalized data.
+   * @param team1SeasonData The first Team's {@link SeasonData}.
+   * @param team2SeasonData The second Team's {@link SeasonData}.
+   * @return DataSetRow - the row of normalized data that will be used for training the network.
+   */
+  public static DataSetRow processAsDataSetRowForSimulation(SeasonAnalytics seasonAnalytics, SeasonData team1SeasonData,
+                                                            SeasonData team2SeasonData) {
+    DataSetRow ret;
+    //
+    // Normalize the data
+    NormalizedData normalizedData = new NormalizedData(seasonAnalytics, team1SeasonData, team2SeasonData);
+    //
+    // Convert the normalized data to a double[] containing both input and output data
+    /// so it can be run through the network
+    double[] inputAndOutput = normalizedData.asInputAndOutput();
+    //
+    // Create the DataSetRow object Neuroph is expecting
+    ret = createDataSetRow(inputAndOutput);
+    return ret;
+  }
+
+  /**
+   * Create a Neuroph DataSetRow from the specified double array.
+   *
+   * @param inputAndOutput The double[] of data containing both input and output.
+   * @return
+   */
+  private static DataSetRow createDataSetRow(double[] inputAndOutput) {
+    DataSetRow ret = new DataSetRow();
+    //
+    // Validate/Sanity check
+    int expectedInputAndOutputLength = NetworkProperties.getNumberOfInputs().intValue()
+      + NetworkProperties.getNumberOfOutputs().intValue();
+    //
+    // Bail out if something doesn't look right
+    if (inputAndOutput.length != expectedInputAndOutputLength) {
+      throw new RuntimeException(
+        "The expected size of " + expectedInputAndOutputLength + " does not match the actual size of "
+          + inputAndOutput.length);
+    }
+    //
+    // Split up the array into input and output
+    // Input
+    double[] input = new double[NetworkProperties.getNumberOfInputs()];
+    System.arraycopy(inputAndOutput, 0, input, 0, NetworkProperties.getNumberOfInputs());
+    //
+    // Output
+    double[] output = new double[NetworkProperties.getNumberOfOutputs()];
+    //
+    // The output is at the end of the <code>inputAndOutput</code> parameter
+    output[0] = inputAndOutput[NetworkProperties.getNumberOfInputs()];
+    output[1] = inputAndOutput[NetworkProperties.getNumberOfInputs() + 1];
+    //
+    // Now set the input and output
+    ret.setInput(input);
+    //
+    // Set the "answer"
+    ret.setDesiredOutput(output);
+    return ret;
+  }
+
+  /**
+   * Displayed if the program was invoked incorrectly.
+   */
+  protected static void usage() {
+    System.out.println("Usage: ");
+    System.out.println("\t" + DataCreator.class.getSimpleName()
+      + " TRAINING_YEAR_1 TRAINING_YEAR_2 ... TRAINING_YEAR_N");
+    System.out.println("\t Where:");
+    System.out.println("\t TRAINING_YEAR_x is the year for which training data is to be generated");
+    System.out.println("\t Multiple years are separated by spaces.");
+    System.out.println("Example:");
+    System.out.println("\t" + DataCreator.class.getSimpleName()
+      + " 2011 2012 2014");
+    System.out.println("Generates data for 2011, 2012, and 2014");
+  }
+
   /**
    * Entry point for creating the training data for the specified years.
-   * 
-   * @param yearsForTraining
-   *          The years for which training data is to be
-   *          created.
+   *
+   * @param yearsForTraining The years for which training data is to be
+   *                         created.
    */
   public void go(Integer[] yearsForTraining) {
     //
@@ -122,13 +257,13 @@ public class DataCreator {
         SeasonData seasonDataLosing = pullSeasonData(year, losingTeamName);
         // Winner is LHS, Loser is RHS
         DataSetRow dataSetRow =
-            processAsDataSetRowForTraining(seasonAnalytics, tournamentAnalytics, tournamentResult, seasonDataWinning,
-                seasonDataLosing);
+          processAsDataSetRowForTraining(seasonAnalytics, tournamentAnalytics, tournamentResult, seasonDataWinning,
+            seasonDataLosing);
         trainingData.addRow(dataSetRow);
         // Loser is LHS, Winner is RHS
         dataSetRow =
-            processAsDataSetRowForTraining(seasonAnalytics, tournamentAnalytics, tournamentResult, seasonDataLosing,
-                seasonDataWinning);
+          processAsDataSetRowForTraining(seasonAnalytics, tournamentAnalytics, tournamentResult, seasonDataLosing,
+            seasonDataWinning);
         trainingData.addRow(dataSetRow);
       }
       if (log.isTraceEnabled()) {
@@ -147,22 +282,8 @@ public class DataCreator {
   }
 
   /**
-   * Constructor.
-   * 
-   * @param applicationContext
-   *          The Spring ApplicationContext object that
-   *          contains the environment.
-   */
-  public DataCreator(ApplicationContext applicationContext) {
-    seasonDataDao = applicationContext.getBean(SeasonDataDao.class);
-    tournamentResultDao = applicationContext.getBean(TournamentResultDao.class);
-    seasonAnalyticsDao = applicationContext.getBean(SeasonAnalyticsDao.class);
-    tournamentAnalyticsDao = applicationContext.getBean(TournamentAnalyticsDao.class);
-  }
-
-  /**
    * Pulls season data for the specified year and team.
-   * 
+   *
    * @param year
    * @param teamName
    * @return
@@ -172,7 +293,6 @@ public class DataCreator {
   }
 
   /**
-   * 
    * @param year
    * @return
    */
@@ -184,12 +304,15 @@ public class DataCreator {
     return seasonAnalyticsDao.fetchByYear(year);
   }
 
+  /**
+   * Transform the normalized data into the double[] required by Neuroph.
+   *
+   * @param year the year for which to pull analytics
+   * @return
+   */
+
   protected TournamentAnalytics pullTournamentAnalytics(Integer year) {
     return tournamentAnalyticsDao.fetchByYear(year);
-  }
-
-  protected static boolean isTournamentGameWinner(SeasonData teamSeasonData, TournamentResult tournamentResult) {
-    return teamSeasonData.getTeamName().equalsIgnoreCase(tournamentResult.getWinningTeamName());
   }
 
   /**
@@ -197,21 +320,17 @@ public class DataCreator {
    * {@link SeasonAnalytics}, {@link TournamentResult} data, along with {@link SeasonData} for
    * "team 1" and "team 2". They are opaque in this manner because we don't know (or care) which
    * is the winner and loser of the specified game.
-   * 
-   * @param seasonAnalytics
-   *          Season Analytics, used to compute the normalized data.
-   * @param tournamentResult
-   *          Represents the results of a single Tournament game.
-   * @param team1SeasonData
-   *          Team 1's {@link SeasonData}.
-   * @param team2SeasonData
-   *          Team 2's {@link SeasonData}.
+   *
+   * @param seasonAnalytics  Season Analytics, used to compute the normalized data.
+   * @param tournamentResult Represents the results of a single Tournament game.
+   * @param team1SeasonData  Team 1's {@link SeasonData}.
+   * @param team2SeasonData  Team 2's {@link SeasonData}.
    * @return DataSetRow - the row of normalized data that will be used for training the network.
    */
   public DataSetRow processAsDataSetRowForTraining(SeasonAnalytics seasonAnalytics,
-      TournamentAnalytics tournamentAnalytics,
-      TournamentResult tournamentResult,
-      SeasonData team1SeasonData, SeasonData team2SeasonData) {
+                                                   TournamentAnalytics tournamentAnalytics,
+                                                   TournamentResult tournamentResult,
+                                                   SeasonData team1SeasonData, SeasonData team2SeasonData) {
     DataSetRow ret;
     //
     // Normalize the data
@@ -223,7 +342,7 @@ public class DataCreator {
     // For training, we need to set the output values based on each team's score in the game.
     /// This only works for sports that do not allow ties (like Basketball, for example)
     setScoresInOutputData(inputAndOutput, seasonAnalytics, tournamentAnalytics, tournamentResult, team1SeasonData,
-        team2SeasonData);
+      team2SeasonData);
     if (log.isDebugEnabled()) {
       StringBuilder sb = new StringBuilder();
       sb.append("Training Data:");
@@ -239,148 +358,11 @@ public class DataCreator {
   }
 
   /**
-   * 
-   * @param inputAndOutput
-   * @param seasonAnalytics
-   * @param tournamentResult
-   * @param team1SeasonData
-   * @param team2SeasonData
-   */
-  private static void setScoresInOutputData(double[] inputAndOutput, SeasonAnalytics seasonAnalytics,
-      TournamentAnalytics tournamentAnalytics,
-      TournamentResult tournamentResult, SeasonData team1SeasonData, SeasonData team2SeasonData) {
-    //
-    // The output scores are at the end of the array. The last index is for team2, and the next
-    /// to last is for team 1.
-    //
-    /// The scores are the normalized scores from the historical contest between the two teams
-    int team1ScoreIndex = inputAndOutput.length - 2;
-    int team2ScoreIndex = inputAndOutput.length - 1;
-    //
-    // First, figure out which team is team1 in the tournament data
-    String winningTeamName = tournamentResult.getWinningTeamName();
-    BigDecimal winningScore = BigDecimal.valueOf(tournamentResult.getWinningScore().longValue());
-    BigDecimal losingScore = BigDecimal.valueOf(tournamentResult.getLosingScore().longValue());
-    //
-    // Set the team scores based on who won the contest
-    BigDecimal team1Score = (winningTeamName.equals(team1SeasonData.getTeamName())) ? winningScore : losingScore;
-    BigDecimal team2Score = (winningTeamName.equals(team2SeasonData.getTeamName())) ? winningScore : losingScore;
-    //
-    // Compute Team1's normalized score
-    BigDecimal team1NormalizedScore =
-        StatsUtils.normalize(team1Score, BigDecimal.valueOf(tournamentAnalytics.getMinScore()).setScale(5),
-            BigDecimal.valueOf(tournamentAnalytics.getMaxScore()).setScale(5));
-    BigDecimal team2NormalizedScore =
-        StatsUtils.normalize(team2Score, BigDecimal.valueOf(tournamentAnalytics.getMinScore()).setScale(5),
-            BigDecimal.valueOf(tournamentAnalytics.getMaxScore()).setScale(5));
-    //
-    // Set the scores in their places in the array
-    inputAndOutput[team1ScoreIndex] = team1NormalizedScore.doubleValue();
-    inputAndOutput[team2ScoreIndex] = team2NormalizedScore.doubleValue();
-  }
-
-  /**
-   * Creates a single row of normalized data used to run against a trained network (i.e., a simulation,
-   * or prediction).
-   * 
-   * @param seasonAnalytics
-   *          Season Analytics, used to compute the normalized data.
-   * @param homeTeamSeasonData
-   *          The Home Team's {@link SeasonData}.
-   * @param awayTeamSeasonData
-   *          The Away Team's {@link SeasonData}.
-   * @return DataSetRow - the row of normalized data that will be used for training the network.
-   */
-  public static DataSetRow processAsDataSetRowForSimulation(SeasonAnalytics seasonAnalytics, SeasonData team1SeasonData,
-      SeasonData team2SeasonData) {
-    DataSetRow ret;
-    //
-    // Normalize the data
-    NormalizedData normalizedData = new NormalizedData(seasonAnalytics, team1SeasonData, team2SeasonData);
-    //
-    // Convert the normalized data to a double[] containing both input and output data
-    /// so it can be run through the network
-    double[] inputAndOutput = normalizedData.asInputAndOutput();
-    //
-    // Create the DataSetRow object Neuroph is expecting
-    ret = createDataSetRow(inputAndOutput);
-    return ret;
-  }
-
-  /**
-   * Transform the normalized data into the double[] required by Neuroph.
-   * 
-   * @param team1SeasonData
-   *          Team 1's {@link SeasonData}.
-   * @param team2SeasonData
-   *          Team 2's {@link SeasonData}.
-   * @return
-   */
-  /**
-   * Create a Neuroph DataSetRow from the specified double array.
-   * 
-   * @param inputAndOutput
-   *          The double[] of data containing both input and output.
-   * 
-   * @return
-   */
-  private static DataSetRow createDataSetRow(double[] inputAndOutput) {
-    DataSetRow ret = new DataSetRow();
-    //
-    // Validate/Sanity check
-    int expectedInputAndOutputLength = NetworkProperties.getNumberOfInputs().intValue()
-        + NetworkProperties.getNumberOfOutputs().intValue();
-    //
-    // Bail out if something doesn't look right
-    if (inputAndOutput.length != expectedInputAndOutputLength) {
-      throw new RuntimeException(
-          "The expected size of " + expectedInputAndOutputLength + " does not match the actual size of "
-              + inputAndOutput.length);
-    }
-    //
-    // Split up the array into input and output
-    // Input
-    double[] input = new double[NetworkProperties.getNumberOfInputs()];
-    System.arraycopy(inputAndOutput, 0, input, 0, NetworkProperties.getNumberOfInputs());
-    //
-    // Output
-    double[] output = new double[NetworkProperties.getNumberOfOutputs()];
-    //
-    // The output is at the end of the <code>inputAndOutput</code> parameter
-    output[0] = inputAndOutput[NetworkProperties.getNumberOfInputs()];
-    output[1] = inputAndOutput[NetworkProperties.getNumberOfInputs() + 1];
-    //
-    // Now set the input and output
-    ret.setInput(input);
-    //
-    // Set the "answer"
-    ret.setDesiredOutput(output);
-    return ret;
-  }
-
-  /**
-   * Displayed if the program was invoked incorrectly.
-   */
-  protected static void usage() {
-    System.out.println("Usage: ");
-    System.out.println("\t" + DataCreator.class.getSimpleName()
-        + " TRAINING_YEAR_1 TRAINING_YEAR_2 ... TRAINING_YEAR_N");
-    System.out.println("\t Where:");
-    System.out.println("\t TRAINING_YEAR_x is the year for which training data is to be generated");
-    System.out.println("\t Multiple years are separated by spaces.");
-    System.out.println("Example:");
-    System.out.println("\t" + DataCreator.class.getSimpleName()
-        + " 2011 2012 2014");
-    System.out.println("Generates data for 2011, 2012, and 2014");
-  }
-
-  /**
    * Parses the String array of years into an Integer array of years
    * that is used to generate data. This method validates the years to
    * ensure they are valid.
-   * 
-   * @param args
-   *          The input String array. Each element is a year in character numeric format.
+   *
+   * @param args The input String array. Each element is a year in character numeric format.
    * @return Integer[] - the Integer array.
    */
   protected Integer[] computeYearsToTrain(String[] args) {
