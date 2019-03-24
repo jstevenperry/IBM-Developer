@@ -1,7 +1,7 @@
 --
 -- Drop views used for the model
 --
-DROP VIEW v_tourament_analytics;
+DROP VIEW v_tournament_analytics;
 DROP VIEW v_season_analytics;
 DROP VIEW v_season_data;
 DROP VIEW v_errors;
