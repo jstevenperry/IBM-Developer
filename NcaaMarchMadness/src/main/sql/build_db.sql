@@ -3,7 +3,7 @@
 -- If you need to rebuild the DB, dropping tables and views
 -- will be required, and you should run rebuild.sh
 --
-\set ROOT_DIR ''/Users/sperry/home/development/projects/developerWorks/NcaaMarchMadness/src/main''
+\set ROOT_DIR ''/Users/sperry/home/development/projects/IBM-Developer/NcaaMarchMadness/src/main''
 \set SQL_ROOT_DIR :ROOT_DIR/sql
 \set DATA_ROOT_DIR :ROOT_DIR/data
 \set LOAD_SCRIPT_ROOT_DIR ''/Users/sperry/l/MarchMadness/data''
@@ -84,6 +84,18 @@
 \set YEAR 2017
 \i :LOAD_SCRIPT_ROOT_DIR/load_season_data_:YEAR.sql
 \i :DATA_ROOT_DIR/load_tournament_participants-2017.sql
+
+\echo 'YEAR: 2018...'
+\qecho 'YEAR: 2018...'
+\set YEAR 2018
+\i :LOAD_SCRIPT_ROOT_DIR/load_season_data_:YEAR.sql
+\i :DATA_ROOT_DIR/load_tournament_participants-2018.sql
+
+\echo 'YEAR: 2019...'
+\qecho 'YEAR: 2019...'
+\set YEAR 2019
+\i :LOAD_SCRIPT_ROOT_DIR/load_season_data_:YEAR.sql
+\i :DATA_ROOT_DIR/load_tournament_participants-2019.sql
 
 \echo 'LOADING TOURNAMENT RESULT DATA FOR ALL YEARS...'
 \qecho 'LOADING TOURNAMENT RESULT DATA FOR ALL YEARS...'
