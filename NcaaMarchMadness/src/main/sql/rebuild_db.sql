@@ -1,5 +1,5 @@
 -- You should probably run this inside of a TX block
-\set ROOT_DIR ''/Users/sperry/home/development/projects/developerWorks/NcaaMarchMadness/src/main''
+\set ROOT_DIR ''/Users/sperry/home/development/projects/IBM-Developer/NcaaMarchMadness/src/main''
 \set SQL_ROOT_DIR :ROOT_DIR/sql
 \set DATA_ROOT_DIR :ROOT_DIR/data
 \set LOAD_SCRIPT_ROOT_DIR ''/Users/sperry/l/MarchMadness/data''
