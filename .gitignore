@@ -21,3 +21,9 @@
 
 # Composer networks
 **/*.bna
+
+# Log files
+**/*.log
+
+# IDEA files
+**/.idea
