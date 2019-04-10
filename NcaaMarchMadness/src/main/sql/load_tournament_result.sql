@@ -678,13 +678,80 @@ INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_s
 INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (989, 2018, '2018-03-31', 'Michigan', 69, 'Loyola Chicago', 57);
 INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (990, 2018, '2018-03-31', 'Villanova', 95, 'Kansas', 79);
 INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (991, 2018, '2018-04-02', 'Villanova', 79, 'Michigan', 62);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1059, 2019, '2019-03-19', 'Fairleigh Dickinson', 82, 'Prairie View', 76);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1060, 2019, '2019-03-19', 'Belmont', 81, 'Temple', 70);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1061, 2019, '2019-03-19', 'North Dakota St', 78, 'NC Central', 74);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1062, 2019, '2019-03-19', 'Arizona St', 74, 'St Johns NY', 65);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1063, 2019, '2019-03-21', 'Duke', 85, 'North Dakota St', 62);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1064, 2019, '2019-03-21', 'UCF', 73, 'VCU', 58);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1065, 2019, '2019-03-21', 'Liberty', 80, 'Mississippi St', 76);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1066, 2019, '2019-03-21', 'Virginia Tech', 66, 'Saint Louis', 52);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1067, 2019, '2019-03-21', 'Maryland', 79, 'Belmont', 77);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1068, 2019, '2019-03-21', 'LSU', 79, 'Yale', 74);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1069, 2019, '2019-03-21', 'Minnesota', 86, 'Louisville', 76);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1070, 2019, '2019-03-21', 'Michigan St', 76, 'Bradley', 65);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1071, 2019, '2019-03-21', 'Virginia', 71, 'Gardner-Webb', 56);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1072, 2019, '2019-03-21', 'Oklahoma', 95, 'Ole Miss', 72);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1073, 2019, '2019-03-21', 'Oregon', 72, 'Wisconsin', 54);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1074, 2019, '2019-03-21', 'UC Irvine', 70, 'Kansas St', 64);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1075, 2019, '2019-03-21', 'Villanova', 71, 'Saint Marys CA', 57);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1076, 2019, '2019-03-21', 'Purdue', 61, 'Old Dominion', 48);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1077, 2019, '2019-03-21', 'Iowa', 79, 'Cincinnati', 72);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1078, 2019, '2019-03-21', 'Tennessee', 77, 'Colgate', 70);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1079, 2019, '2019-03-21', 'North Carolina', 88, 'Iona', 73);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1080, 2019, '2019-03-21', 'Washington', 78, 'Utah St', 61);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1081, 2019, '2019-03-21', 'Auburn', 78, 'New Mexico St', 77);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1082, 2019, '2019-03-21', 'Kansas', 87, 'Northeastern', 53);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1083, 2019, '2019-03-21', 'Ohio St', 62, 'Iowa St', 59);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1084, 2019, '2019-03-21', 'Houston', 84, 'Georgia St', 55);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1085, 2019, '2019-03-21', 'Wofford', 84, 'Seton Hall', 68);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1086, 2019, '2019-03-21', 'Kentucky', 79, 'Abilene Christian', 44);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1087, 2019, '2019-03-21', 'Gonzaga', 87, 'Fairleigh Dickinson', 49);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1088, 2019, '2019-03-21', 'Baylor', 78, 'Syracuse', 69);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1089, 2019, '2019-03-21', 'Murray St', 83, 'Marquette', 64);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1090, 2019, '2019-03-21', 'Florida St', 76, 'Vermont', 69);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1091, 2019, '2019-03-21', 'Buffalo', 91, 'Arizona St', 74);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1092, 2019, '2019-03-21', 'Texas Tech', 72, 'Northern Ky', 57);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1093, 2019, '2019-03-21', 'Florida', 70, 'Nevada', 61);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1094, 2019, '2019-03-21', 'Michigan', 74, 'Montana', 55);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1095, 2019, '2019-03-23', 'Duke', 77, 'UCF', 76);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1096, 2019, '2019-03-23', 'Virginia Tech', 67, 'Liberty', 58);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1097, 2019, '2019-03-23', 'LSU', 69, 'Maryland', 67);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1098, 2019, '2019-03-23', 'Michigan St', 70, 'Minnesota', 50);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1099, 2019, '2019-03-23', 'Gonzaga', 83, 'Baylor', 71);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1100, 2019, '2019-03-23', 'Florida St', 90, 'Murray St', 62);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1101, 2019, '2019-03-23', 'Texas Tech', 78, 'Buffalo', 58);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1102, 2019, '2019-03-23', 'Michigan', 64, 'Florida', 49);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1103, 2019, '2019-03-23', 'Virginia', 63, 'Oklahoma', 51);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1104, 2019, '2019-03-23', 'Oregon', 73, 'UC Irvine', 54);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1105, 2019, '2019-03-23', 'Purdue', 87, 'Villanova', 61);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1106, 2019, '2019-03-23', 'Tennessee', 83, 'Iowa', 77);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1107, 2019, '2019-03-23', 'North Carolina', 81, 'Washington', 59);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1108, 2019, '2019-03-23', 'Auburn', 89, 'Kansas', 75);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1109, 2019, '2019-03-23', 'Houston', 74, 'Ohio St', 59);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1110, 2019, '2019-03-23', 'Kentucky', 62, 'Wofford', 56);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1111, 2019, '2019-03-28', 'Kentucky', 62, 'Houston', 58);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1112, 2019, '2019-03-28', 'Auburn', 97, 'North Carolina', 80);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1113, 2019, '2019-03-28', 'Purdue', 99, 'Tennessee', 94);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1114, 2019, '2019-03-28', 'Virginia', 53, 'Oregon', 49);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1115, 2019, '2019-03-28', 'Duke', 75, 'Virginia Tech', 73);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1116, 2019, '2019-03-28', 'Michigan St', 80, 'LSU', 63);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1117, 2019, '2019-03-28', 'Gonzaga', 72, 'Florida St', 58);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1118, 2019, '2019-03-28', 'Texas Tech', 63, 'Michigan', 64);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1119, 2019, '2019-03-30', 'Texas Tech', 75, 'Gonzaga', 69);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1120, 2019, '2019-03-30', 'Michigan St', 68, 'Duke', 67);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1121, 2019, '2019-03-30', 'Virginia', 80, 'Purdue', 75);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1122, 2019, '2019-03-30', 'Auburn', 77, 'Kentucky', 71);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1123, 2019, '2019-04-06', 'Virginia', 63, 'Auburn', 62);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1124, 2019, '2019-04-06', 'Texas Tech', 61, 'Michigan St', 51);
+INSERT INTO tournament_result (id, year, game_date, winning_team_name, winning_score, losing_team_name, losing_score) VALUES (1125, 2019, '2019-04-08', 'Virginia', 85, 'Texas Tech', 77);
 
 
 --
 -- Name: tournament_result_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sperry
 --
 
-SELECT pg_catalog.setval('tournament_result_id_seq', 991, true);
+SELECT pg_catalog.setval('tournament_result_id_seq', 1125, true);
 
 
 --
