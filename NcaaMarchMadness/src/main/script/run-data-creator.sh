@@ -58,7 +58,7 @@ SPRING_FRAMEWORK_VERSION=4.3.6.RELEASE
 CP=\
 $LIB_DIR/neuroph-2.94.jar:\
 $LIB_DIR/postgresql-9.1-901-1.jdbc4.jar:\
-$LIB_DIR/commons-lang3-3.4.jar:\
+$LIB_DIR/commons-lang3-3.8.1.jar:\
 $LIB_DIR/spring-context-$SPRING_FRAMEWORK_VERSION.jar:\
 $LIB_DIR/spring-core-$SPRING_FRAMEWORK_VERSION.jar:\
 $LIB_DIR/spring-beans-$SPRING_FRAMEWORK_VERSION.jar:\
