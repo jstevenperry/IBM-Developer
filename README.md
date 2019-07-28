@@ -47,7 +47,7 @@ Click [here for Part 3](https://www.ibm.com/developerworks/cloud/library/cl-depl
 
 **Description**: Code that accompanies my Kotlin Learning Path. The LP consists of 17 units where you learn Kotlin, along with principles of object-oriented and functional programming.
 
-**AWAITING PUBLICATION**
+Click [here to start Part 1 of the series](https://developer.ibm.com/series/learn-kotlin/).
 
 ## `Node.js`
 
