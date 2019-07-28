@@ -183,10 +183,8 @@ function testItemFindByDescription() {
  */
 function testItemFindByUpc() {
     return new Promise((resolve, reject) => {
-        const expected_item_id = 7874;
         const expected_item_description = 'Pacific Natural Foods Broth Free Range Chicken Organic - 4 Ct';
         const expected_upc = '052603054294'
-        const expected_brand_id = 402;
         const expected_brand_description = 'Pacific';
         const expected_brand_manufacturer = 'Pacific Foods of Oregon, Inc.';
         request('GET', `/items?upc=052603054294`, null, (err, data) => {
@@ -201,10 +199,8 @@ function testItemFindByUpc() {
                     // This request returns JSON data
                     let jsonData = JSON.parse(data);
                     // Assert on enough data that we know it works
-                    //assertEqual(jsonData.item_id, expected_item_id);
                     assertEqual(jsonData.item_description, expected_item_description);
                     assertEqual(jsonData.upc, expected_upc);
-                    //assertEqual(jsonData.brand_id, expected_brand_id);
                     assertEqual(jsonData.brand_description, expected_brand_description);
                     assertEqual(jsonData.manufacturer, expected_brand_manufacturer);
                     logger.info('TEST PASSED', 'testItemFindByUpc()');
