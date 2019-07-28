@@ -1,0 +1,1 @@
+src/main/script/run-tournament_participant-sql-generator.sh
