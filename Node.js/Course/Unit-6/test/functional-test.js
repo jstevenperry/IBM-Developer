@@ -112,7 +112,8 @@ function request(requestMethod, requestPath, postData, resultsCallback) {
     // The code in these tests runs asynchronously.
     // The tests return a Promise, so they can be chained
     /// together and run in a specific order
-    testItemFindByDescription()
+    testItemFindById()
+    .then(() => { return testItemFindByDescription() })
     .then(() => { return testItemFindByUpc() })
     .then(() => { return testListsCreate() })
     .then(() => { return testListsFindById() })
@@ -122,6 +123,25 @@ function request(requestMethod, requestPath, postData, resultsCallback) {
     .then(() => { return testListsUpdateItem() })
     .then(() => { return testListsRemoveItem() });
 })();
+
+/**
+ * THIS TEST DOESN'T DO ANYTHING. IT IS HERE SO THE TEST OUTPUT
+ * IS CONSISTENT WITH THE LEARNING PATH CONTENT AT
+ * https://developer.ibm.com/tutorials/learn-nodejs-your-first-node-application/.
+ * 
+ * There is no guarantee that from DB load to DB load the IDs will
+ * be consistent, so this unit test was never really appropriate and
+ * I never should have included it to begin with. Oh well, live and learn,
+ * right?
+ * 
+ * For more info see this issue: https://github.com/jstevenperry/IBM-Developer/issues/14
+ */
+function testItemFindById() {
+    return new Promise((resolve, reject) => {
+        logger.info('TEST PASSED', 'testItemFindById()');
+        resolve()
+    })
+}
 
 /**
  * Functional test - find all items matching the specified partial description
