@@ -11,7 +11,7 @@ IBM-Developer/
 └── README.md (this file)
 ```
 
-## `Kotlin`
+## Kotlin
 
 ```
 IBM-Developer/
@@ -45,7 +45,7 @@ The code uses the [Neuroph framework](http://neuroph.sourceforge.net/download.ht
 
 Click [here](https://developer.ibm.com/tutorials/cc-artificial-neural-networks-neuroph-machine-learning/) to start the tutorial.
 
-## `Node.js`
+## Node.js
 
 ```
 IBM-Developer/Node.js/
@@ -73,6 +73,6 @@ IBM-Developer/Node.js/
 
 Click [here to start Part 1 of the series](https://developer.ibm.com/articles/learn-node-unit-1-overview-nodejs-learning-path/).
 
-### `Course`
+### Course
 
 **Description**: Code that accompanies my Node.js Learning Path. The LP consists of 14 units where you learn how to use Node from the ground up.
