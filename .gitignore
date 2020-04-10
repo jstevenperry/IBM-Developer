@@ -27,3 +27,9 @@
 
 # IDEA files
 **/.idea
+
+# Eclipse files
+**/.classpath
+**/.project
+**/.settings/
+**/bin/
