@@ -5,10 +5,41 @@ Directories you'll find in this repository (as of 28 July 2019):
 
 ```
 IBM-Developer/
+├── IntroToJava
 ├── Kotlin
 ├── NcaaMarchMadness
 ├── Node.js
 └── README.md (this file)
+```
+
+## IntroToJava (WIP)
+
+
+**Description**: Code that accompanies my Intro to Java Programming Course.
+
+(THIS IS A WORK IN PROGRESS)
+
+```
+IntroToJava/
+├── Unit-2
+│   └── Tutorial
+│       └── src
+│           └── com
+│               └── jstevenperry
+│                   └── intro
+│                       ├── Person.java
+│                       └── PersonTest.java
+└── Unit-4
+    └── Tutorial
+        └── src
+            └── com
+                └── jstevenperry
+                    └── intro
+                        ├── Employee.java
+                        ├── EmployeeTest.java
+                        ├── HumanResourcesApplication.java
+                        ├── Person.java
+                        └── PersonTest.java
 ```
 
 ## Kotlin
