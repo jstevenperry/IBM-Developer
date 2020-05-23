@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 
 public class Employee extends Person {
 	
-	  private String taxpayerIdNumber;
-	  private String employeeNumber;
-	  private BigDecimal salary;
+	private String taxpayerIdNumber;
+	private String employeeNumber;
+	private BigDecimal salary;
 
 
 	public Employee() {
@@ -25,13 +25,13 @@ public class Employee extends Person {
 		// TODO Auto-generated method stub
 		super.printAudit(buffer);
 		
-		  // Now format this instance's values
-		  buffer.append("TaxpayerIdentificationNumber=");
-		  buffer.append(getTaxpayerIdNumber());
-		  buffer.append(","); buffer.append("EmployeeNumber=");
-		  buffer.append(getEmployeeNumber());
-		  buffer.append(","); buffer.append("Salary=");
-		  buffer.append(getSalary().setScale(2).toPlainString());
+		// Now format this instance's values
+		buffer.append("TaxpayerIdentificationNumber=");
+		buffer.append(getTaxpayerIdNumber());
+		buffer.append(","); buffer.append("EmployeeNumber=");
+		buffer.append(getEmployeeNumber());
+		buffer.append(","); buffer.append("Salary=");
+		buffer.append(getSalary().setScale(2).toPlainString());
 	}
 
 	public String getTaxpayerIdNumber() {
