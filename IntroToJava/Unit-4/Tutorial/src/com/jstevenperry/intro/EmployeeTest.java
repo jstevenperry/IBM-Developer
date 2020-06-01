@@ -7,18 +7,6 @@ import org.junit.jupiter.api.Test;
 public class EmployeeTest {
 
 	@Test
-	public void testPrintAudit() {
-		Employee e = new Employee("Joe Q Author", 42, 173, 82, "Brown", "MALE");
-		e.setSalary(BigDecimal.valueOf(95000L));
-		e.setEmployeeNumber("A123");
-		e.setTaxpayerIdNumber("123-45-6789");
-
-		Logger l = Logger.getLogger(EmployeeTest.class.getName());
-
-		e.printAudit(l);
-	}
-	
-	@Test
 	public void test() {
 		int int1 = 1;
 		int int2 = 1;
@@ -72,4 +60,16 @@ public class EmployeeTest {
 		}	
 	}
 
+	@Test
+	public void testPrintAudit() {
+		Employee e = new Employee("Joe Q Author", 42, 173, 82, "Brown", "MALE");
+		e.setSalary(BigDecimal.valueOf(95000L));
+		e.setEmployeeNumber("A123");
+		e.setTaxpayerIdNumber("123-45-6789");
+
+		Logger l = Logger.getLogger(EmployeeTest.class.getName());
+
+		e.printAudit(l);
+	}
+	
 }

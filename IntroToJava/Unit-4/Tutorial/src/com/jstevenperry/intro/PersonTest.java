@@ -22,7 +22,7 @@ class PersonTest {
 		assertEquals("Brown", p.getEyeColor());
 		assertEquals("MALE", p.getGender());
 	}
-		
+	
 	@Test
 	public void testPrintAudit() {
 		Person p = new Person("Joe Q Author", 42, 173, 82, "Brown", "MALE");
