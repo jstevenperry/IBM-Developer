@@ -18,6 +18,9 @@ public class Executive extends Manager {
 		log.info("Wow, I can't believe I got " + numberOfOptions + " at $" + executivePrice.toPlainString() + " each!");
 	}
 	
-	
+	@Override
+	public BigDecimal calculateBonus() {
+		return getSalary().multiply(BigDecimal.valueOf(0.2));
+	}
 
 }

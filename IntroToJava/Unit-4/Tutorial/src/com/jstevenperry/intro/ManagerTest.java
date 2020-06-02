@@ -10,7 +10,16 @@ class ManagerTest {
 	void testProcessStockOptions() {
 		Manager m = new Manager();
 		
-		m.processStockOptions(1000, BigDecimal.valueOf(1));
+		m.processStockOptions(1000, BigDecimal.valueOf(1.0));
+	}
+	
+	@Test
+	void testCalculateBonus() {
+		Manager m = new Manager();
+		m.setSalary(BigDecimal.valueOf(100000));
+		
+		BigDecimal bonus = m.calculateBonus();
+		assertEquals(BigDecimal.valueOf(10000.0), bonus);
 	}
 
 }

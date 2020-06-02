@@ -1,6 +1,7 @@
 package com.jstevenperry.intro;
 
-public class Manager {
+public class Manager implements StockOptionEligible, BonusEligible {
+
     public Manager() {
     }
 

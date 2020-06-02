@@ -10,7 +10,16 @@ class ExecutiveTest {
 	void testProcessStockOptions() {
 		Executive e = new Executive();
 		
-		e.processStockOptions(10000, BigDecimal.valueOf(1));
+		e.processStockOptions(10000, BigDecimal.valueOf(1.0));
+    }
+    	
+	@Test
+	void testCalculateBonus() {
+		Executive e = new Executive();
+		e.setSalary(BigDecimal.valueOf(1000000));
+		
+		assertEquals(BigDecimal.valueOf(200000.0), e.calculateBonus());
 	}
+
 
 }
