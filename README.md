@@ -1,7 +1,7 @@
 # IBM-Developer
 Source code for articles and tutorials I've written for IBM Developer (formerly IBM Code, formerly IBM developerWorks)
 
-Directories you'll find in this repository (as of 28 July 2019):
+Directories you'll find in this repository (as of 7 June 2020):
 
 ```
 IBM-Developer/
