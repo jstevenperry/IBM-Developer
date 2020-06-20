@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 public class EmployeeTest {
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void test() {
 		int int1 = 1;
@@ -25,6 +26,7 @@ public class EmployeeTest {
 		l.info("Q: Employee1 == Employee2? A: " + (employee1 == employee2));
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Test
 	public void anotherTest() {
 		Logger l = Logger.getLogger(Employee.class.getName());
@@ -42,6 +44,7 @@ public class EmployeeTest {
 		l.info("Q: employee1.equals(employee2) ? A : " + employee1.equals(employee2));
 	}
 	
+	@SuppressWarnings("null")
 	@Test
 	public void yetAnotherTest() {
 		Logger l = Logger.getLogger(Employee.class.getName());
