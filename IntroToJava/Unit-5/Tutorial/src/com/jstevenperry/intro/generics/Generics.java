@@ -80,7 +80,8 @@ public class Generics {
 
         int index = 0;
         for (E element : arrayToFormat) {
-            if (index > 0) sb.append(", ");
+            if (index > 0)
+                sb.append(", ");
             sb.append("Element ");
             sb.append(index++);
             sb.append(" => ");

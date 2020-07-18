@@ -21,14 +21,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class GenericsTest {
-    
+
     private Generics generics;
-    
+
     @BeforeEach
     public void setUp() {
         generics = new Generics();
     }
-    
+
     @AfterEach
     public void tearDown() {
         generics = null;
@@ -41,26 +41,26 @@ class GenericsTest {
 
     @Test
     public void testListing4() {
-        assertThrows(ClassCastException.class, () -> generics.listing4()) ;
+        assertThrows(ClassCastException.class, () -> generics.listing4());
     }
 
     @Test
     public void testListing5_compileError() {
         generics.listing5();
     }
-    
+
     @Test
     public void testIteratingWithGenerics() {
         generics.iteratingWithGenerics();
     }
-    
+
     @Test
     public void testFormatArray() {
         // Integer array
-        Integer[] integerArray = { Integer.valueOf(1), Integer.valueOf(2)  };
+        Integer[] integerArray = { Integer.valueOf(1), Integer.valueOf(2) };
         String expected = generics.formatArray(integerArray);
         assertEquals("Element 0 => 1, Element 1 => 2", expected);
-        
+
         // String array
         String[] stringArray = { "Hello", "there" };
         expected = generics.formatArray(stringArray);

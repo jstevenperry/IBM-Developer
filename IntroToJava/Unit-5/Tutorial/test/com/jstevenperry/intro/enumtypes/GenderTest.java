@@ -20,13 +20,13 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 
 public class GenderTest {
-    
+
     private static final Logger log = Logger.getLogger(GenderTest.class.getName());
-    
+
     @Test
     void testGetDisplayName() {
         Gender[] values = Gender.values();
-        for (Gender gender: values) {
+        for (Gender gender : values) {
             log.info("Gender: value = " + gender.toString() + " display name = " + gender.getDisplayName());
         }
         assertEquals("PREFER_NOT_TO_SAY", Gender.PREFER_NOT_TO_SAY.toString());

@@ -14,18 +14,16 @@
 package com.jstevenperry.intro.enumtypes;
 
 public enum Gender implements Displayable {
-    
-    MALE("Male"),
-    FEMALE("Female"),
-    PREFER_NOT_TO_SAY("PreferNotToSay");
+
+    MALE("Male"), FEMALE("Female"), PREFER_NOT_TO_SAY("PreferNotToSay");
 
     private String displayName;
-    
+
     private Gender(String displayName) {
-      this.displayName = displayName;
+        this.displayName = displayName;
     }
 
     public String getDisplayName() {
-      return this.displayName;
+        return this.displayName;
     }
 }

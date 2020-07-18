@@ -18,51 +18,51 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class RegularExpressionTest {
-	
-	private RegularExpression regularExpression;
-	
-	@BeforeEach
-	public void setUp() {
-		this.regularExpression = new RegularExpression();		
-	}
-	
-	@AfterEach
-	public void tearDown() {
-		this.regularExpression = null;
-	}
 
-	@Test
-	public void testMatches() {
-		regularExpression.matches();
-	}
+    private RegularExpression regularExpression;
 
-	@Test
-	public void testLookingAt() {
-		regularExpression.lookingAt();
-	}
-	
-	@Test
-	public void testWikiWord() {
-		regularExpression.wikiWord();
-	}
-	
-	@Test
-	public void testReplace() {
-		regularExpression.replace();
-	}
-	
-	@Test
-	public void testReplaceFirst() {
-		regularExpression.replaceFirst();
-	}
-	
-	@Test
-	public void testMatchingGroups() {
-		regularExpression.matchingGroups();
-	}
-	
-	@Test
-	public void testMatchingGroupsWithStringBuffer() {
-		regularExpression.matchingGroupsWithStringBuffer();
-	}
+    @BeforeEach
+    public void setUp() {
+        this.regularExpression = new RegularExpression();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        this.regularExpression = null;
+    }
+
+    @Test
+    public void testMatches() {
+        regularExpression.matches();
+    }
+
+    @Test
+    public void testLookingAt() {
+        regularExpression.lookingAt();
+    }
+
+    @Test
+    public void testWikiWord() {
+        regularExpression.wikiWord();
+    }
+
+    @Test
+    public void testReplace() {
+        regularExpression.replace();
+    }
+
+    @Test
+    public void testReplaceFirst() {
+        regularExpression.replaceFirst();
+    }
+
+    @Test
+    public void testMatchingGroups() {
+        regularExpression.matchingGroups();
+    }
+
+    @Test
+    public void testMatchingGroupsWithStringBuffer() {
+        regularExpression.matchingGroupsWithStringBuffer();
+    }
 }

@@ -75,35 +75,35 @@ public class HumanResourcesApplication {
             log.info("Writing " + employees.size() + " Employee objects to disk (using Java serialization)...");
             outputStream.writeObject(employees);
             ret = true; // Looks good
-            log.info("Done.");            
+            log.info("Done.");
         } catch (IOException e) {
             log.log(Level.SEVERE, "Cannot find file " + file.getName() + ", message = " + e.getLocalizedMessage(), e);
         }
         return ret;
     }
-    
+
     public List<Employee> deserializeFromDisk(String filename) {
         List<Employee> ret = new ArrayList<>();
         File file = new File(filename);
         int numberOfEmployees = 0;
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
-          @SuppressWarnings("unchecked")
-        List<Employee> employees = (List<Employee>)inputStream.readObject();
-          log.info("Deserialized List says it contains " + employees.size() + " objects...");
-          for (Employee employee : employees) {
-            log.info("Read Employee: " + employee.toString());
-            numberOfEmployees++;
-          }
-          ret = employees;
-          log.info("Read " + numberOfEmployees + " Employee objects from disk (using Java serialization).");
+            @SuppressWarnings("unchecked")
+            List<Employee> employees = (List<Employee>) inputStream.readObject();
+            log.info("Deserialized List says it contains " + employees.size() + " objects...");
+            for (Employee employee : employees) {
+                log.info("Read Employee: " + employee.toString());
+                numberOfEmployees++;
+            }
+            ret = employees;
+            log.info("Read " + numberOfEmployees + " Employee objects from disk (using Java serialization).");
         } catch (FileNotFoundException e) {
-          log.log(Level.SEVERE, "Cannot find file " + file.getName() + ", message = " + e.getLocalizedMessage(), e);
+            log.log(Level.SEVERE, "Cannot find file " + file.getName() + ", message = " + e.getLocalizedMessage(), e);
         } catch (IOException e) {
-          log.log(Level.SEVERE, "IOException occurred: message = " + e.getLocalizedMessage(), e);
+            log.log(Level.SEVERE, "IOException occurred: message = " + e.getLocalizedMessage(), e);
         } catch (ClassNotFoundException e) {
-          log.log(Level.SEVERE, "ClassNotFoundException: message = " + e.getLocalizedMessage(), e);
+            log.log(Level.SEVERE, "ClassNotFoundException: message = " + e.getLocalizedMessage(), e);
         }
         return ret;
-      }    
+    }
 
 }

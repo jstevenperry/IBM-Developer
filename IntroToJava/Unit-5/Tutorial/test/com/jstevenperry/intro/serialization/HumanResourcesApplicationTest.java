@@ -11,9 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class HumanResourcesApplicationTest {
-    
+
     private static final String ROOT_DIRECTORY = "./test/com/jstevenperry/intro/serialization/";
-    
+
     private HumanResourcesApplication humanResourcesApplication;
 
     @BeforeEach
@@ -30,7 +30,7 @@ class HumanResourcesApplicationTest {
     @Test
     void testSerializeToDisk() {
         List<Employee> employees = HumanResourcesApplication.createEmployees();
-        String filename = ROOT_DIRECTORY + "Employees-JUnit.ser"; 
+        String filename = ROOT_DIRECTORY + "Employees-JUnit.ser";
         boolean serializationSucceeded = humanResourcesApplication.serializeToDisk(filename, employees);
         assertTrue(serializationSucceeded);
     }
@@ -38,7 +38,7 @@ class HumanResourcesApplicationTest {
     @Test
     void testDeserializeFromDisk() {
         List<Employee> employees = HumanResourcesApplication.createEmployees();
-        String filename = ROOT_DIRECTORY + "Employees-JUnit.ser"; 
+        String filename = ROOT_DIRECTORY + "Employees-JUnit.ser";
         boolean serializationSucceeded = humanResourcesApplication.serializeToDisk(filename, employees);
         assertTrue(serializationSucceeded);
         List<Employee> deserializedEmployees = (List<Employee>) humanResourcesApplication.deserializeFromDisk(filename);

@@ -15,7 +15,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-
 class InputOutputTest {
 
     private static final String ROOT_DIRECTORY = "./test/com/jstevenperry/intro/io/";
@@ -33,16 +32,17 @@ class InputOutputTest {
     public void tearDown() throws Exception {
         this.inputOutput = null;
     }
-    
+
     @AfterAll
     public static void tearDownAfterAll() throws Exception {
-        // Make sure to cleanup this file. 
-        // Q: Why? What happens if you run this test class twice without the code below (comment it out and see)?
-        Files.delete(Path.of(ROOT_DIRECTORY + "noSuchFile.txt"));                
-        Files.delete(Path.of(ROOT_DIRECTORY + "10Words.txt.out"));                
-        Files.delete(Path.of(ROOT_DIRECTORY + "10kWords.txt.out"));                
-        Files.delete(Path.of(ROOT_DIRECTORY + "100kWords.txt.out"));                
-        Files.delete(Path.of(ROOT_DIRECTORY + "1000kWords.txt.out"));                
+        // Make sure to cleanup this file.
+        // Q: Why? What happens if you run this test class twice without the code below
+        // (comment it out and see)?
+        Files.delete(Path.of(ROOT_DIRECTORY + "noSuchFile.txt"));
+        Files.delete(Path.of(ROOT_DIRECTORY + "10Words.txt.out"));
+        Files.delete(Path.of(ROOT_DIRECTORY + "10kWords.txt.out"));
+        Files.delete(Path.of(ROOT_DIRECTORY + "100kWords.txt.out"));
+        Files.delete(Path.of(ROOT_DIRECTORY + "1000kWords.txt.out"));
     }
 
     @ParameterizedTest
@@ -57,22 +57,16 @@ class InputOutputTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { ROOT_DIRECTORY + "10Words.txt", 
-            ROOT_DIRECTORY + "10kWords.txt", 
-            ROOT_DIRECTORY + "100kWords.txt",
-            ROOT_DIRECTORY + "1000kWords.txt"
-            })
+    @ValueSource(strings = { ROOT_DIRECTORY + "10Words.txt", ROOT_DIRECTORY + "10kWords.txt",
+            ROOT_DIRECTORY + "100kWords.txt", ROOT_DIRECTORY + "1000kWords.txt" })
     public void testReadWordsUnbufferedStream(final String inputFilename) {
         List<String> words = inputOutput.readWordsUnbufferedStream(inputFilename);
         assertFalse(words.isEmpty());
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { ROOT_DIRECTORY + "10Words.txt", 
-            ROOT_DIRECTORY + "10kWords.txt", 
-            ROOT_DIRECTORY + "100kWords.txt",
-            ROOT_DIRECTORY + "1000kWords.txt"
-            })
+    @ValueSource(strings = { ROOT_DIRECTORY + "10Words.txt", ROOT_DIRECTORY + "10kWords.txt",
+            ROOT_DIRECTORY + "100kWords.txt", ROOT_DIRECTORY + "1000kWords.txt" })
     public void testSaveWordsUnbufferedStream(final String inputFilename) {
         List<String> words = inputOutput.readWordsUnbufferedStream(inputFilename);
         assertFalse(words.isEmpty());
@@ -82,22 +76,16 @@ class InputOutputTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { ROOT_DIRECTORY + "10Words.txt", 
-            ROOT_DIRECTORY + "10kWords.txt", 
-            ROOT_DIRECTORY + "100kWords.txt",
-            ROOT_DIRECTORY + "1000kWords.txt"
-            })
+    @ValueSource(strings = { ROOT_DIRECTORY + "10Words.txt", ROOT_DIRECTORY + "10kWords.txt",
+            ROOT_DIRECTORY + "100kWords.txt", ROOT_DIRECTORY + "1000kWords.txt" })
     public void testReadWordsBufferedStream(final String inputFilename) {
         List<String> words = inputOutput.readWordsBufferedStream(inputFilename);
         assertFalse(words.isEmpty());
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { ROOT_DIRECTORY + "10Words.txt", 
-            ROOT_DIRECTORY + "10kWords.txt", 
-            ROOT_DIRECTORY + "100kWords.txt",
-            ROOT_DIRECTORY + "1000kWords.txt"
-            })
+    @ValueSource(strings = { ROOT_DIRECTORY + "10Words.txt", ROOT_DIRECTORY + "10kWords.txt",
+            ROOT_DIRECTORY + "100kWords.txt", ROOT_DIRECTORY + "1000kWords.txt" })
     public void testSaveWordsBufferedStream(final String inputFilename) {
         List<String> words = inputOutput.readWordsBufferedStream(inputFilename);
         assertFalse(words.isEmpty());

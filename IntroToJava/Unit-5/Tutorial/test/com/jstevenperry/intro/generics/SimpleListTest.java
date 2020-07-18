@@ -30,11 +30,11 @@ class SimpleListTest {
         simpleList.add(BigDecimal.ONE);
         assertEquals(1, simpleList.size());
         log.info("SimpleList size is " + simpleList.size());
-        
+
         simpleList.add(BigDecimal.ZERO);
         assertEquals(2, simpleList.size());
         log.info("SimpleList size is " + simpleList.size());
-        
+
         simpleList.clear();
         assertEquals(0, simpleList.size());
         log.info("SimpleList size is " + simpleList.size());
