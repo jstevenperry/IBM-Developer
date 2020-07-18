@@ -32,7 +32,7 @@ public class Generics {
     public void listing4() {
         ArrayList arrayList = new ArrayList();
         arrayList.add("A String");
-        arrayList.add(Integer.valueOf(10));
+        arrayList.add(Integer.valueOf(10)); // This feels wrong somehow...
         arrayList.add("Another String");
         log.info("Added " + arrayList.size() + " objects to arrayList");
         // So far, so good.

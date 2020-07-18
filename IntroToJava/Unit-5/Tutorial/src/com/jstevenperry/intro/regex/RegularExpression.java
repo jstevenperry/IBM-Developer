@@ -34,7 +34,7 @@ public class RegularExpression {
 
     public void lookingAt() {
         Pattern pattern = Pattern.compile("[Aa].*string");
-        Matcher matcher = pattern.matcher("A string");
+        Matcher matcher = pattern.matcher("A string with more than just the pattern");
         boolean didMatch = matcher.lookingAt();
         logger.info("Did match using lookingAt() ==> " + didMatch);
         int patternStartIndex = matcher.start();

@@ -25,7 +25,7 @@ class SimpleListTest {
     private static final Logger log = Logger.getLogger(SimpleListTest.class.getName());
 
     @Test
-    void testAdd() {
+    void testAdd_BigDecimal() {
         SimpleList<BigDecimal> simpleList = new SimpleList<>();
         simpleList.add(BigDecimal.ONE);
         assertEquals(1, simpleList.size());
