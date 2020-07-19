@@ -18,10 +18,11 @@ import java.util.logging.Logger;
 
 public class Person implements Serializable {
 
+
     /**
      * 
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -265820726104107219L;
 
     private static final Logger logger = Logger.getLogger(Person.class.getName());
 
