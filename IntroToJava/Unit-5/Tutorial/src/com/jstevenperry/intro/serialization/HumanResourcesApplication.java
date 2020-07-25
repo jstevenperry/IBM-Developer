@@ -30,15 +30,6 @@ public class HumanResourcesApplication {
 
     private static final Logger log = Logger.getLogger(HumanResourcesApplication.class.getName());
 
-    public static void main(String[] args) {
-        Employee e = new Employee();
-        e.setName("J Smith");
-        e.setEmployeeNumber("0001");
-        e.setTaxpayerIdNumber("123‑45‑6789");
-        e.setSalary(BigDecimal.valueOf(45000.0));
-        e.printAudit(log);
-    }
-
     /**
      * Canned method to create Employees that will be part of the Human Resources
      * "database". For purely teaching purposes only. Once we create a List of
