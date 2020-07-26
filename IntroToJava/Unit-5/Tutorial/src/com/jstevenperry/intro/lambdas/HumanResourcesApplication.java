@@ -40,9 +40,7 @@ public class HumanResourcesApplication {
             });
             retVal = false;
         } else {
-            callback.process((number, price) -> {
-                log.severe("Cannot consider awarding " + number + " options because " + person.getName() + " does not even work here!");
-            });
+            callback.process((number, price) -> log.severe("Cannot consider awarding " + number + " options because " + person.getName() + " does not even work here!"));
             retVal = false;
         }
         return retVal;

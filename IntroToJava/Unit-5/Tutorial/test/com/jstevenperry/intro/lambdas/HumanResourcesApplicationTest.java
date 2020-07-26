@@ -48,14 +48,17 @@ public class HumanResourcesApplicationTest {
         public void testLongForm() {
             List<Person> people = HumanResourcesApplication.createPeople();
             for (Person person : people) {
-                humanResourcesApplication.handleStockOptions(person, new StockOptionProcessingCallback() {
-    
+                boolean optionsAwarded = humanResourcesApplication.handleStockOptions(person, new StockOptionProcessingCallback() {
                     @Override
                     public void process(StockOptionEligible employee) {
                         employee.processStockOptions(1000, BigDecimal.valueOf(1.0));
-    
                     }
                 });
+                if (person instanceof StockOptionEligible) {
+                    assertTrue(optionsAwarded);
+                } else {
+                    assertFalse(optionsAwarded);
+                }
             }
         }
     
@@ -63,16 +66,14 @@ public class HumanResourcesApplicationTest {
         @DisplayName("When using a lambda expression")
         public void testUsingLambdaExpression() {
             List<Person> people = HumanResourcesApplication.createPeople();
-            people.forEach(person -> {
-                boolean optionsAwarded = humanResourcesApplication.handleStockOptions(person, (stockOptionEligible -> {
-                    stockOptionEligible.processStockOptions(1000, BigDecimal.valueOf(1.0));
-                }));
+            for (Person person : people) {
+                boolean optionsAwarded = humanResourcesApplication.handleStockOptions(person, (stockOptionEligible -> stockOptionEligible.processStockOptions(1000, BigDecimal.valueOf(1.0))));
                 if (person instanceof StockOptionEligible) {
                     assertTrue(optionsAwarded);
                 } else {
                     assertFalse(optionsAwarded);
                 }
-            });
+            }
         }
     }
     
@@ -94,13 +95,20 @@ public class HumanResourcesApplicationTest {
                 });
             }
         }
-    
+        
         @Test
         @DisplayName("When using a lambda expression")
         public void testUsingambdaExpression() {
             List<Person> people = HumanResourcesApplication.createPeople();
-            people.forEach(person -> humanResourcesApplication.handleDisplayName(person::getName));
+            people.forEach(person -> humanResourcesApplication.handleDisplayName(() -> person.getName()));
     
+        }
+        
+        @Test
+        @DisplayName("When using a lambda expression")
+        public void testUsingambdaExpressionWithMethodReference() {
+            List<Person> people = HumanResourcesApplication.createPeople();
+            people.forEach(person -> humanResourcesApplication.handleDisplayName(person::getName));
         }
     }
 }
