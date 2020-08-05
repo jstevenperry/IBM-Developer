@@ -26,6 +26,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.jstevenperry.intro.common.Employee;
+import com.jstevenperry.intro.common.Gender;
+
 public class HumanResourcesApplication {
 
     private static final Logger log = Logger.getLogger(HumanResourcesApplication.class.getName());
