@@ -18,6 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.jstevenperry.intro.common.Displayable;
+import com.jstevenperry.intro.common.Employee;
+import com.jstevenperry.intro.common.Executive;
+import com.jstevenperry.intro.common.Gender;
+import com.jstevenperry.intro.common.Manager;
+import com.jstevenperry.intro.common.Person;
+import com.jstevenperry.intro.common.StockOptionEligible;
+import com.jstevenperry.intro.common.StockOptionProcessingCallback;
+
 public class HumanResourcesApplication {
 
     private static final Logger log = Logger.getLogger(HumanResourcesApplication.class.getName());

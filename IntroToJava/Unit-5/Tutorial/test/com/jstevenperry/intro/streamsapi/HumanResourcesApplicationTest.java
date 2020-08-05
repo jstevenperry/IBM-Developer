@@ -30,6 +30,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import com.jstevenperry.intro.common.BonusEligible;
+import com.jstevenperry.intro.common.Employee;
+import com.jstevenperry.intro.common.Executive;
+import com.jstevenperry.intro.common.Manager;
+import com.jstevenperry.intro.common.Person;
+
 class HumanResourcesApplicationTest {
     
     private static final Logger log = Logger.getLogger(HumanResourcesApplicationTest.class.getName());

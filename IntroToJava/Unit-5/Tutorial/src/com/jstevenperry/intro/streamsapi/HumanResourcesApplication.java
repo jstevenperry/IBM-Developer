@@ -20,6 +20,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.jstevenperry.intro.common.BonusEligible;
+import com.jstevenperry.intro.common.Employee;
+import com.jstevenperry.intro.common.Executive;
+import com.jstevenperry.intro.common.Gender;
+import com.jstevenperry.intro.common.Manager;
+import com.jstevenperry.intro.common.Person;
+
 public class HumanResourcesApplication {
     
     public List<Person> filterBonusEligible(final List<Person> people) {

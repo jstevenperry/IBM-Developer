@@ -11,15 +11,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jstevenperry.intro.streamsapi;
+package com.jstevenperry.intro.common;
 
-public interface StockOptionProcessingCallback {
-    /**
-     * Processes stock options for the specified employee. Returns true if the
-     * options were processed, false otherwise.
-     * 
-     * @param employee The Employee to award options to.
-     * @return As described above.
-     */
-    public void process(StockOptionEligible employee);
+public enum Gender implements Displayable {
+
+    MALE("Male"), FEMALE("Female"), PREFER_NOT_TO_SAY("PreferNotToSay");
+
+    private String displayName;
+
+    private Gender(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return this.displayName;
+    }
 }

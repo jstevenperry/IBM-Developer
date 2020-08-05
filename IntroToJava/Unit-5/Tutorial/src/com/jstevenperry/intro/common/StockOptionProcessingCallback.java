@@ -11,17 +11,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jstevenperry.intro.streamsapi;
+package com.jstevenperry.intro.common;
 
-import java.math.BigDecimal;
-
-public interface BonusEligible {
-
-    BigDecimal getSalary();
-
-    default BigDecimal calculateBonus() {
-        // Default bonus: 10% of salary
-        return getSalary().multiply(BigDecimal.valueOf(0.1));
-    }
-
+public interface StockOptionProcessingCallback {
+    /**
+     * Processes stock options for the specified employee. Returns true if the
+     * options were processed, false otherwise.
+     * 
+     * @param employee The Employee to award options to.
+     * @return As described above.
+     */
+    public void process(StockOptionEligible employee);
 }

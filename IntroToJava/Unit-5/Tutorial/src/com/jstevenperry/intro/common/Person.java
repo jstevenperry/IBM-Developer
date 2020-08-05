@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jstevenperry.intro.lambdas;
+package com.jstevenperry.intro.common;
 
 import java.io.Serializable;
 import java.util.logging.Logger;
@@ -22,8 +22,6 @@ public class Person implements Serializable {
      * 
      */
     private static final long serialVersionUID = 1L;
-
-    private static final Logger logger = Logger.getLogger(Person.class.getName());
 
     private String name;
     private int age;
@@ -44,8 +42,6 @@ public class Person implements Serializable {
         this.weight = weight;
         this.eyeColor = eyeColor;
         this.gender = gender;
-
-        logger.info("Created a new Person object: " + this.name);
     }
 
     public void printAudit(StringBuilder buffer) {

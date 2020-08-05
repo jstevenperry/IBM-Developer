@@ -11,8 +11,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jstevenperry.intro.streamsapi;
+package com.jstevenperry.intro.common;
 
-public interface Displayable {
-    String getDisplayName();
+import java.math.BigDecimal;
+
+public interface StockOptionEligible {
+
+    void processStockOptions(int numberOfOptions, BigDecimal price);
+
 }

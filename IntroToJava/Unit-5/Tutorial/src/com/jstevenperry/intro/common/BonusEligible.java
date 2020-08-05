@@ -11,8 +11,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jstevenperry.intro.lambdas;
+package com.jstevenperry.intro.common;
 
-public interface Displayable {
-    String getDisplayName();
+import java.math.BigDecimal;
+
+public interface BonusEligible {
+
+    BigDecimal getSalary();
+
+    default BigDecimal calculateBonus() {
+        // Default bonus: 10% of salary
+        return getSalary().multiply(BigDecimal.valueOf(0.1));
+    }
+
 }

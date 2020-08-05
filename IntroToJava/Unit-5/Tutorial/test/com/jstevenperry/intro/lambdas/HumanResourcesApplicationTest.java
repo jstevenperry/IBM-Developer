@@ -25,6 +25,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import com.jstevenperry.intro.common.Displayable;
+import com.jstevenperry.intro.common.Person;
+import com.jstevenperry.intro.common.StockOptionEligible;
+import com.jstevenperry.intro.common.StockOptionProcessingCallback;
+
 public class HumanResourcesApplicationTest {
 
     private HumanResourcesApplication humanResourcesApplication;
