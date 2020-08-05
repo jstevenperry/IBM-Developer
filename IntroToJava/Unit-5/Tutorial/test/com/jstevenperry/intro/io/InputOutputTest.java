@@ -30,7 +30,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class InputOutputTest {
 
-    private static final String ROOT_DIRECTORY = "./test/com/jstevenperry/intro/io/";
+    private static final String ROOT_DIRECTORY = "./data_files/";
 
     private static final Logger log = Logger.getLogger(InputOutputTest.class.getName());
 
