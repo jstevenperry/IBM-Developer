@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.jstevenperry.intro.common.BonusEligible;
 import com.jstevenperry.intro.common.Employee;
@@ -93,6 +94,10 @@ public class HumanResourcesApplication {
                 .map(eyeColor -> eyeColorMap.get(eyeColor))
                 .flatMap(listOfEyeColors -> listOfEyeColors.stream())
                 .collect(Collectors.toList());
+    }
+    
+    public int computeSum(final Stream<Integer> integers) {
+        return integers.reduce(0, (current, value) -> current+value);
     }
 
     public static List<Person> createPeople() {

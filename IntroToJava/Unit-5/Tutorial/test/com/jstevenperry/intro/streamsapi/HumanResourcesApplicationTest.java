@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -157,6 +158,14 @@ class HumanResourcesApplicationTest {
         Map<String, List<Person>> eyeColorMap = humanResourcesApplication.collectByEyeColor(this.people);
         List<Person> actual = humanResourcesApplication.flattenEyeColorMap(eyeColorMap);
         actual.forEach(person -> log.info("Person: " + person.getName() + " with eyes of " + person.getEyeColor()));
+    }
+    
+    @Test
+    void testComputeSum() {
+        Stream<Integer> streamOfIntegersToSum = Stream.of(1, 54, 34, 0, -12, 206);
+        int expected = 1 + 54 + 34 + 0 -12 + 206;
+        int actual = humanResourcesApplication.computeSum(streamOfIntegersToSum);
+        assertEquals(expected, actual);
     }
 
     /**
