@@ -12,12 +12,12 @@ IBM-Developer/
 └── README.md (this file)
 ```
 
-## IntroToJava (WIP)
+## IntroToJava
 
 
 **Description**: Code that accompanies my Intro to Java Programming Course.
 
-(THIS IS A WORK IN PROGRESS)
+Directories you'll find in this repository (as of 5 Aug 2020):
 
 ```
 IntroToJava/
@@ -47,62 +47,69 @@ IntroToJava/
 │                        ├── Person.java
 │                        ├── PersonTest.java
 │                        └── StockOptionEligible.java
-└── Unit-5
-    └── Tutorial
-        ├── src
-        │   └── com
-        │       └── jstevenperry
-        │           └── intro
-        │               ├── enumtypes
-        │               │   ├── Displayable.java
-        │               │   └── Gender.java
-        │               ├── generics
-        │               │   ├── Generics.java
-        │               │   └── SimpleList.java
-        │               ├── io
-        │               │   └── InputOutput.java
-        │               ├── lambdas
-        │               │   ├── BonusEligible.java
-        │               │   ├── Displayable.java
-        │               │   ├── Employee.java
-        │               │   ├── Executive.java
-        │               │   ├── Gender.java
-        │               │   ├── HumanResourcesApplication.java
-        │               │   ├── Manager.java
-        │               │   ├── Person.java
-        │               │   ├── StockOptionEligible.java
-        │               │   └── StockOptionProcessingCallback.java
-        │               ├── regex
-        │               │   └── RegularExpression.java
-        │               ├── serialization
-        │               │   ├── Displayable.java
-        │               │   ├── Employee.java
-        │               │   ├── Gender.java
-        │               │   ├── HumanResourcesApplication.java
-        │               │   └── Person.java
-        │               ├── streamsapi
-        │               └── typeinference
-        └── test
-            └── com
-                └── jstevenperry
-                    └── intro
-                        ├── enumtypes
-                        │   └── GenderTest.java
-                        ├── generics
-                        │   ├── GenericsTest.java
-                        │   └── SimpleListTest.java
-                        ├── io
-                        │   ├── 1000kWords.txt
-                        │   ├── 100kWords.txt
-                        │   ├── 10Words.txt
-                        │   ├── 10kWords.txt
-                        │   └── InputOutputTest.java
-                        ├── lambdas
-                        │   └── HumanResourcesApplicationTest.java
-                        ├── regex
-                        │   └── RegularExpressionTest.java
-                        └── serialization
-                            └── HumanResourcesApplicationTest.java
+Unit-5
+└── Tutorial
+    ├── data_files
+    │   ├── 1000kWords.txt
+    │   ├── 100kWords.txt
+    │   ├── 10Words.txt
+    │   └── 10kWords.txt
+    ├── logging.properties
+    ├── src
+    │   └── com
+    │       └── jstevenperry
+    │           └── intro
+    │               ├── common
+    │               │   ├── BonusEligible.java
+    │               │   ├── Displayable.java
+    │               │   ├── Employee.java
+    │               │   ├── Executive.java
+    │               │   ├── Gender.java
+    │               │   ├── Manager.java
+    │               │   ├── Person.java
+    │               │   ├── StockOptionEligible.java
+    │               │   └── StockOptionProcessingCallback.java
+    │               ├── enumtypes
+    │               │   ├── Displayable.java
+    │               │   └── Gender.java
+    │               ├── generics
+    │               │   ├── Generics.java
+    │               │   └── SimpleList.java
+    │               ├── io
+    │               │   └── InputOutput.java
+    │               ├── lambdas
+    │               │   └── HumanResourcesApplication.java
+    │               ├── lvti
+    │               │   └── InputOutput.java
+    │               ├── regex
+    │               │   └── RegularExpression.java
+    │               ├── serialization
+    │               │   └── HumanResourcesApplication.java
+    │               └── streamsapi
+    │                   └── HumanResourcesApplication.java
+    └── test
+        └── com
+            └── jstevenperry
+                └── intro
+                    ├── enumtypes
+                    │   └── GenderTest.java
+                    ├── generics
+                    │   ├── GenericsTest.java
+                    │   └── SimpleListTest.java
+                    ├── io
+                    │   └── InputOutputTest.java
+                    ├── lambdas
+                    │   └── HumanResourcesApplicationTest.java
+                    ├── lvti
+                    │   └── InputOutputTest.java
+                    ├── regex
+                    │   └── RegularExpressionTest.java
+                    ├── serialization
+                    │   └── HumanResourcesApplicationTest.java
+                    └── streamsapi
+                        └── HumanResourcesApplicationTest.java
+
+
 ```
 
 ## Kotlin
