@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jstevenperry.intro.lvti;
+package com.jstevenperry.intro.localtype;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -119,7 +119,7 @@ public class InputOutput {
         var wordsFile = new File(wordsFilename);
 
         var numberOfWords = 0;
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(wordsFile)))) {
+        try (var reader = new BufferedReader(new InputStreamReader(new FileInputStream(wordsFile)))) {
             var line = reader.readLine();
             // While there is more in the file to read
             while (line != null) {
