@@ -32,7 +32,7 @@ public class HumanResourcesApplication {
     private static final Logger log = Logger.getLogger(HumanResourcesApplication.class.getName());
 
     public boolean handleStockOptions(final Person person, final StockOptionProcessingCallback callback) {
-        boolean retVal;
+        boolean retVal = false;
         if (person instanceof StockOptionEligible) {
             // Eligible Person, invoke the callback straight up
             callback.process((StockOptionEligible) person);
@@ -47,10 +47,9 @@ public class HumanResourcesApplication {
                     log.warning("Unfortunately, Employee " + person.getName() + " is not eligible for Stock Options!");
                 }
             });
-            retVal = false;
         } else {
+            // For this StockOptionEligible implementation, use a lambda expression
             callback.process((number, price) -> log.severe("Cannot consider awarding " + number + " options because " + person.getName() + " does not even work here!"));
-            retVal = false;
         }
         return retVal;
     }
