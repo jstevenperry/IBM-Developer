@@ -23,8 +23,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class InputOutput {
 
@@ -156,6 +159,11 @@ public class InputOutput {
         log.info("Wrote " + wordCount + " words in " + Long.toString(System.currentTimeMillis() - startTime) + "ms");
 
         return wordCount;
+    }
+
+    public Map<Character, Map<String, Long>> computeAlphabeticalWordMap(final List<String> words) {
+        return words.stream().collect(Collectors.groupingBy(word -> Character.valueOf(Character.toUpperCase(word.charAt(0))),
+                Collectors.groupingBy(Function.identity(), Collectors.counting())));
     }
 
 }

@@ -105,5 +105,19 @@ class InputOutputTest {
         var numberOfWordsWritten = inputOutput.saveWordsBufferedStream(outputFilename, words);
         assertEquals(words.size(), numberOfWordsWritten);
     }
+    
+    @ParameterizedTest
+    @ValueSource(strings = { ROOT_DIRECTORY + "10kWords.txt" })
+    public void testComputeAlphabeticalWordMap(final String inputFilename) {
+        var words = inputOutput.readWordsBufferedStream(inputFilename);
+        var wordMapByStartingLetter = inputOutput.computeAlphabeticalWordMap(words);
+        assertFalse(wordMapByStartingLetter.isEmpty());
+        log.info("There are " + wordMapByStartingLetter.size() + " unique starting letters.");
+        wordMapByStartingLetter.keySet().stream().sorted().forEach(startingLetter -> {
+            log.info("Letter " + startingLetter + ":");
+            var wordMap = wordMapByStartingLetter.get(startingLetter);
+            wordMap.keySet().stream().sorted().forEach(word -> log.info("\t" + word + ": occurs " + wordMap.get(word) + " times"));
+        });
+    }
 
 }
