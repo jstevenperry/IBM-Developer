@@ -45,18 +45,18 @@ public class HumanResourcesApplication {
                 .collect(Collectors.toList());
     }
     
-    public List<String> mapNames(final List<Person> people) {
-        return people
-                .stream()
-                .map(person -> person.getName())
-                .collect(Collectors.toList());
-    }
-    
     public List<Manager> mapManager(final List<Person> people) {
         return people
                 .stream()
                 .filter(person -> person instanceof Manager)
                 .map(person -> (Manager)person)
+                .collect(Collectors.toList());
+    }
+    
+    public List<String> mapNames(final List<Person> people) {
+        return people
+                .stream()
+                .map(person -> person.getName())
                 .collect(Collectors.toList());
     }
     
@@ -96,8 +96,16 @@ public class HumanResourcesApplication {
                 .collect(Collectors.toList());
     }
     
-    public int computeSum(final Stream<Integer> integers) {
-        return integers.reduce(0, (current, value) -> current+value);
+    public int computeSum(final Integer... integers) {
+        return Stream.of(integers)
+                .reduce(0, (current, value) -> current+value);
+    }
+    
+    public BigDecimal computeTotalPayroll(final List<Employee> employees) {
+        return employees
+                .stream()
+                .map(Employee::getSalary)
+                .reduce(BigDecimal.ZERO, (current, value) -> current.add(value));
     }
 
     public static List<Person> createPeople() {

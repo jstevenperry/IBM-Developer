@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -95,16 +94,6 @@ class HumanResourcesApplicationTest {
     }
     
     @Test
-    void testMapNames() {
-        // Invoke the method under test
-        List<String> names = humanResourcesApplication.mapNames(people);
-        // There should be as many names as there are people (everyone has a name)
-        assertEquals(people.size(), names.size());
-        // Print the names out
-        names.forEach(name -> log.info("Name: " + name));
-    }
-
-    @Test
     void testMapManager() {
         // Managers include Managers and Executives
         List<Manager> expected = new ArrayList<>(managers);
@@ -113,6 +102,16 @@ class HumanResourcesApplicationTest {
         List<Manager> actual = humanResourcesApplication.mapManager(this.people);
         // The list of Employee and the mapped list of Person -> Employee should be the same
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void testMapNames() {
+        // Invoke the method under test
+        List<String> names = humanResourcesApplication.mapNames(people);
+        // There should be as many names as there are people (everyone has a name)
+        assertEquals(people.size(), names.size());
+        // Print the names out
+        names.forEach(name -> log.info("Name: " + name));
     }
 
     @Test
@@ -162,9 +161,18 @@ class HumanResourcesApplicationTest {
     
     @Test
     void testComputeSum() {
-        Stream<Integer> streamOfIntegersToSum = Stream.of(1, 54, 34, 0, -12, 206);
         int expected = 1 + 54 + 34 + 0 -12 + 206;
-        int actual = humanResourcesApplication.computeSum(streamOfIntegersToSum);
+        int actual = humanResourcesApplication.computeSum(1, 54, 34, 0, -12, 206);
+        assertEquals(expected, actual);
+    }
+    
+    @Test
+    void testComputePayroll() {
+        BigDecimal expected = BigDecimal.valueOf(0);
+        for (Employee employee: this.employees) {
+            expected = expected.add(employee.getSalary());;
+        }
+        BigDecimal actual = humanResourcesApplication.computeTotalPayroll(this.employees);
         assertEquals(expected, actual);
     }
 
