@@ -76,6 +76,7 @@ class HumanResourcesApplicationTest {
         // The list of BonusEligible and the filtered list of BonusEligible should be
         // the same
         assertEquals(expected, actual);
+        actual.forEach(person -> assertTrue(person instanceof BonusEligible));
     }
 
     @ParameterizedTest
