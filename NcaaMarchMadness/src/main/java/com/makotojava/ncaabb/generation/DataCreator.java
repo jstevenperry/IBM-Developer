@@ -20,6 +20,7 @@ import com.makotojava.ncaabb.dao.SeasonDataDao;
 import com.makotojava.ncaabb.dao.TournamentAnalyticsDao;
 import com.makotojava.ncaabb.dao.TournamentResultDao;
 import com.makotojava.ncaabb.model.NormalizedData;
+import com.makotojava.ncaabb.model.NormalizedDataMinimum;
 import com.makotojava.ncaabb.model.SeasonAnalytics;
 import com.makotojava.ncaabb.model.SeasonData;
 import com.makotojava.ncaabb.model.TournamentAnalytics;
@@ -150,7 +151,7 @@ public class DataCreator {
     DataSetRow ret;
     //
     // Normalize the data
-    NormalizedData normalizedData = new NormalizedData(seasonAnalytics, team1SeasonData, team2SeasonData);
+    NormalizedData normalizedData = createDataNormalizer(seasonAnalytics, team1SeasonData, team2SeasonData);
     //
     // Convert the normalized data to a double[] containing both input and output data
     /// so it can be run through the network
@@ -334,7 +335,7 @@ public class DataCreator {
     DataSetRow ret;
     //
     // Normalize the data
-    NormalizedData normalizedData = new NormalizedData(seasonAnalytics, team1SeasonData, team2SeasonData);
+    NormalizedData normalizedData = createDataNormalizer(seasonAnalytics, team1SeasonData, team2SeasonData);
     //
     // Process the results into a double[] that Neuroph likes
     double[] inputAndOutput = normalizedData.asInputAndOutput();
@@ -378,4 +379,16 @@ public class DataCreator {
     return ret;
   }
 
+  /**
+   * Stub to isolate the actual data normalizer to this location so it can be swapped out.
+   * Same as above, but for static calls.
+   *
+   * It probably goes without saying that these two methods must be in lock step.
+   */
+  public static NormalizedData createDataNormalizer(SeasonAnalytics seasonAnalytics,
+                                                    SeasonData team1SeasonData,
+                                                    SeasonData team2SeasonData) {
+//    return new NormalizedData(seasonAnalytics, team1SeasonData, team2SeasonData);
+    return new NormalizedDataMinimum(seasonAnalytics, team1SeasonData, team2SeasonData);
+  }
 }
