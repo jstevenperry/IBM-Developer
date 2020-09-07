@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>MarchMadness</groupId>
   <artifactId>MarchMadness</artifactId>
-  <version>1.1.0</version>
+  <version>1.2.0</version>
   <properties>
     <java.version>1.8</java.version>
     <spring-framework.version>4.3.6.RELEASE</spring-framework.version>
