@@ -173,8 +173,8 @@ public class NetworkProperties {
     return getDoublePropertyValue("min.max.weight", 0.7);
   }
 
-  public static Double getMinMinWeight() {
-    return getDoublePropertyValue("min.min.weight", -0.7);
+  public static Double getMaxMinWeight() {
+    return getDoublePropertyValue("max.min.weight", -0.7);
   }
 
   public static Double getMinWeight() {

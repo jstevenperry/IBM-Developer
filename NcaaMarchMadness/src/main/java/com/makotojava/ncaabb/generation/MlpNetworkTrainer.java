@@ -464,8 +464,8 @@ public class MlpNetworkTrainer implements LearningEventListener {
   private void randomizeNetworkWeights(NeuralNetwork<BackPropagation> network) {
     Random randWeight = new Random();
     double minWeight =
-        randWeight.nextDouble() * (NetworkProperties.getMinWeight() - NetworkProperties.getMinMinWeight())
-            + NetworkProperties.getMinMinWeight();
+        randWeight.nextDouble() * (NetworkProperties.getMinWeight() - NetworkProperties.getMaxMinWeight())
+            + NetworkProperties.getMaxMinWeight();
     double maxWeight =
         randWeight.nextDouble() * (NetworkProperties.getMaxWeight() - NetworkProperties.getMinMaxWeight())
             + NetworkProperties.getMinMaxWeight();
