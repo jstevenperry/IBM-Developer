@@ -15,9 +15,8 @@
  */
 package com.makotojava.ncaabb.model;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.makotojava.ncaabb.util.StatsUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Wrapper around {@link SeasonData} to use when training or running the network.
@@ -31,9 +30,9 @@ public class NormalizedData {
    * Commons lang3 Pair object to hold the pair of SeasonData objects containing
    * normalized data.
    */
-  private Pair<SeasonData, SeasonData> seasonDataPair;
+  private final Pair<SeasonData, SeasonData> seasonDataPair;
 
-  private Pair<SeasonData, SeasonData> getSeasonDataPair() {
+  protected Pair<SeasonData, SeasonData> getSeasonDataPair() {
     if (seasonDataPair == null) {
       throw new RuntimeException("Configuration Error! The seasonDataPair object cannot be null!");
     }
@@ -78,7 +77,7 @@ public class NormalizedData {
    * @param raw
    *          The SeasonData object where the source data comes from (i.e., the source)
    */
-  private void normalizeData(SeasonAnalytics seasonAnalytics, SeasonData normalized, SeasonData raw) {
+  protected void normalizeData(SeasonAnalytics seasonAnalytics, SeasonData normalized, SeasonData raw) {
     normalized.setTeamName(raw.getTeamName());
     normalized
         .setAvgPointsPerGame(StatsUtils.normalize(raw.getAvgPointsPerGame(), seasonAnalytics.getMinAvgPointsPg(),
