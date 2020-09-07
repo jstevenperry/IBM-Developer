@@ -28,7 +28,6 @@ import com.makotojava.ncaabb.model.TournamentResult;
 import com.makotojava.ncaabb.springconfig.ApplicationConfig;
 import com.makotojava.ncaabb.util.NetworkProperties;
 import com.makotojava.ncaabb.util.NetworkUtils;
-import com.makotojava.ncaabb.util.StatsUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.log4j.Logger;
 import org.neuroph.core.data.DataSet;
@@ -97,16 +96,11 @@ public class DataCreator {
     return teamSeasonData.getTeamName().equalsIgnoreCase(tournamentResult.getWinningTeamName());
   }
 
-  /**
-   * @param inputAndOutput
-   * @param seasonAnalytics
-   * @param tournamentResult
-   * @param team1SeasonData
-   * @param team2SeasonData
-   */
-  private static void setScoresInOutputData(double[] inputAndOutput, SeasonAnalytics seasonAnalytics,
+  private static void setScoresInOutputData(double[] inputAndOutput,
                                             TournamentAnalytics tournamentAnalytics,
-                                            TournamentResult tournamentResult, SeasonData team1SeasonData, SeasonData team2SeasonData) {
+                                            TournamentResult tournamentResult,
+                                            SeasonData team1SeasonData,
+                                            SeasonData team2SeasonData) {
     //
     // The output scores are at the end of the array. The last index is for team2, and the next
     /// to last is for team 1.
@@ -115,38 +109,34 @@ public class DataCreator {
     int team1ScoreIndex = inputAndOutput.length - 2;
     int team2ScoreIndex = inputAndOutput.length - 1;
     //
-    // First, figure out which team is team1 in the tournament data
+    // Compute the values that are used to indicate a win and a loss
     String winningTeamName = tournamentResult.getWinningTeamName();
-    BigDecimal winningScore = BigDecimal.valueOf(tournamentResult.getWinningScore().longValue());
-    BigDecimal losingScore = BigDecimal.valueOf(tournamentResult.getLosingScore().longValue());
+    BigDecimal winningScore = BigDecimal.valueOf(1.0);
+    BigDecimal losingScore = BigDecimal.valueOf(0);
     //
     // Set the team scores based on who won the contest
     BigDecimal team1Score = (winningTeamName.equals(team1SeasonData.getTeamName())) ? winningScore : losingScore;
     BigDecimal team2Score = (winningTeamName.equals(team2SeasonData.getTeamName())) ? winningScore : losingScore;
     //
-    // Compute Team1's normalized score
-    BigDecimal team1NormalizedScore =
-      StatsUtils.normalize(team1Score, BigDecimal.valueOf(tournamentAnalytics.getMinScore()).setScale(5),
-        BigDecimal.valueOf(tournamentAnalytics.getMaxScore()).setScale(5));
-    BigDecimal team2NormalizedScore =
-      StatsUtils.normalize(team2Score, BigDecimal.valueOf(tournamentAnalytics.getMinScore()).setScale(5),
-        BigDecimal.valueOf(tournamentAnalytics.getMaxScore()).setScale(5));
-    //
     // Set the scores in their places in the array
-    inputAndOutput[team1ScoreIndex] = team1NormalizedScore.doubleValue();
-    inputAndOutput[team2ScoreIndex] = team2NormalizedScore.doubleValue();
+    inputAndOutput[team1ScoreIndex] = team1Score.doubleValue();
+    inputAndOutput[team2ScoreIndex] = team2Score.doubleValue();
+
+    // Set the winner as BigDecimal.ONE and the loser as BigDecimal.ZERO
+
   }
 
   /**
    * Creates a single row of normalized data used to run against a trained network (i.e., a simulation,
    * or prediction).
    *
-   * @param seasonAnalytics    Season Analytics, used to compute the normalized data.
+   * @param seasonAnalytics Season Analytics, used to compute the normalized data.
    * @param team1SeasonData The first Team's {@link SeasonData}.
    * @param team2SeasonData The second Team's {@link SeasonData}.
    * @return DataSetRow - the row of normalized data that will be used for training the network.
    */
-  public static DataSetRow processAsDataSetRowForSimulation(SeasonAnalytics seasonAnalytics, SeasonData team1SeasonData,
+  public static DataSetRow processAsDataSetRowForSimulation(SeasonAnalytics seasonAnalytics,
+                                                            SeasonData team1SeasonData,
                                                             SeasonData team2SeasonData) {
     DataSetRow ret;
     //
@@ -172,8 +162,7 @@ public class DataCreator {
     DataSetRow ret = new DataSetRow();
     //
     // Validate/Sanity check
-    int expectedInputAndOutputLength = NetworkProperties.getNumberOfInputs().intValue()
-      + NetworkProperties.getNumberOfOutputs().intValue();
+    int expectedInputAndOutputLength = NetworkProperties.getNumberOfInputs() + NetworkProperties.getNumberOfOutputs();
     //
     // Bail out if something doesn't look right
     if (inputAndOutput.length != expectedInputAndOutputLength) {
@@ -190,7 +179,7 @@ public class DataCreator {
     // Output
     double[] output = new double[NetworkProperties.getNumberOfOutputs()];
     //
-    // The output is at the end of the <code>inputAndOutput</code> parameter
+    // The output is at the end of the inputAndOutput parameter
     output[0] = inputAndOutput[NetworkProperties.getNumberOfInputs()];
     output[1] = inputAndOutput[NetworkProperties.getNumberOfInputs() + 1];
     //
@@ -219,6 +208,19 @@ public class DataCreator {
   }
 
   /**
+   * Stub to isolate the actual data normalizer to this location so it can be swapped out.
+   * Same as above, but for static calls.
+   * <p>
+   * It probably goes without saying that these two methods must be in lock step.
+   */
+  public static NormalizedData createDataNormalizer(SeasonAnalytics seasonAnalytics,
+                                                    SeasonData team1SeasonData,
+                                                    SeasonData team2SeasonData) {
+//    return new NormalizedData(seasonAnalytics, team1SeasonData, team2SeasonData);
+    return new NormalizedDataMinimum(seasonAnalytics, team1SeasonData, team2SeasonData);
+  }
+
+  /**
    * Entry point for creating the training data for the specified years.
    *
    * @param yearsForTraining The years for which training data is to be
@@ -230,10 +232,10 @@ public class DataCreator {
     for (Integer year : yearsForTraining) {
       //
       // Pull the current year's tournament results
-      List<TournamentResult> tournamentResults = pullTournamentResults(year);
+      List<TournamentResult> tournamentResults = fetchTournamentResults(year);
       //
       // Pull the current year's season analytics
-      SeasonAnalytics seasonAnalytics = pullSeasonAnalytics(year);
+      SeasonAnalytics seasonAnalytics = fetchSeasonAnalytics(year);
       //
       // Pull the current year's tournament analytics
       TournamentAnalytics tournamentAnalytics = pullTournamentAnalytics(year);
@@ -282,26 +284,15 @@ public class DataCreator {
     }
   }
 
-  /**
-   * Pulls season data for the specified year and team.
-   *
-   * @param year
-   * @param teamName
-   * @return
-   */
   protected SeasonData pullSeasonData(Integer year, String teamName) {
     return seasonDataDao.fetchByYearAndTeamName(year, teamName);
   }
 
-  /**
-   * @param year
-   * @return
-   */
-  protected List<TournamentResult> pullTournamentResults(Integer year) {
+  protected List<TournamentResult> fetchTournamentResults(Integer year) {
     return tournamentResultDao.fetchAllByYear(year);
   }
 
-  protected SeasonAnalytics pullSeasonAnalytics(Integer year) {
+  protected SeasonAnalytics fetchSeasonAnalytics(Integer year) {
     return seasonAnalyticsDao.fetchByYear(year);
   }
 
@@ -309,7 +300,6 @@ public class DataCreator {
    * Transform the normalized data into the double[] required by Neuroph.
    *
    * @param year the year for which to pull analytics
-   * @return
    */
 
   protected TournamentAnalytics pullTournamentAnalytics(Integer year) {
@@ -342,13 +332,11 @@ public class DataCreator {
     //
     // For training, we need to set the output values based on each team's score in the game.
     /// This only works for sports that do not allow ties (like Basketball, for example)
-    setScoresInOutputData(inputAndOutput, seasonAnalytics, tournamentAnalytics, tournamentResult, team1SeasonData,
+    setScoresInOutputData(inputAndOutput, tournamentAnalytics, tournamentResult, team1SeasonData,
       team2SeasonData);
     if (log.isDebugEnabled()) {
-      StringBuilder sb = new StringBuilder();
-      sb.append("Training Data:");
-      sb.append(Arrays.toString(inputAndOutput));
-      log.debug(sb.toString());
+      String sb = "Training Data:" + Arrays.toString(inputAndOutput);
+      log.debug(sb);
     }
     //
     // Create the DataSetRow object the Neuroph framework expects
@@ -369,7 +357,7 @@ public class DataCreator {
   protected Integer[] computeYearsToTrain(String[] args) {
     Integer[] ret = new Integer[args.length];
     for (int aa = 0; aa < args.length; aa++) {
-      Integer year = Integer.valueOf(args[aa]);
+      int year = Integer.parseInt(args[aa]);
       ret[aa] = year;
     }
     // Validate
@@ -377,18 +365,5 @@ public class DataCreator {
       NetworkUtils.validateYear(year);
     }
     return ret;
-  }
-
-  /**
-   * Stub to isolate the actual data normalizer to this location so it can be swapped out.
-   * Same as above, but for static calls.
-   *
-   * It probably goes without saying that these two methods must be in lock step.
-   */
-  public static NormalizedData createDataNormalizer(SeasonAnalytics seasonAnalytics,
-                                                    SeasonData team1SeasonData,
-                                                    SeasonData team2SeasonData) {
-//    return new NormalizedData(seasonAnalytics, team1SeasonData, team2SeasonData);
-    return new NormalizedDataMinimum(seasonAnalytics, team1SeasonData, team2SeasonData);
   }
 }
