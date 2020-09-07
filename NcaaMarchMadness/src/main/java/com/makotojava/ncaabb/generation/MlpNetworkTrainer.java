@@ -67,20 +67,19 @@ public class MlpNetworkTrainer implements LearningEventListener {
    */
   public static final TransferFunctionType NEURON_PROPERTY_TRANSFER_FUNCTION = TransferFunctionType.SIGMOID;
 
-  private SeasonDataDao seasonDataDao;
-  private TournamentResultDao tournamentResultDao;
-  private SeasonAnalyticsDao seasonAnalyticsDao;
+  private final SeasonDataDao seasonDataDao;
+  private final TournamentResultDao tournamentResultDao;
+  private final SeasonAnalyticsDao seasonAnalyticsDao;
 
   /**
    * The network metrics cache
    */
-  private Map<MultiLayerPerceptron, NetworkMetrics> networkMetricsCache =
-      new HashMap<MultiLayerPerceptron, NetworkMetrics>();
+  private final Map<MultiLayerPerceptron, NetworkMetrics> networkMetricsCache = new HashMap<>();
 
   /**
    * The network cache
    */
-  private Map<List<Integer>, MultiLayerPerceptron> networkCache = new HashMap<>();
+  private final Map<List<Integer>, MultiLayerPerceptron> networkCache = new HashMap<>();
 
   public SeasonData pullSeasonData(Integer year, String teamName) {
     return seasonDataDao.fetchByYearAndTeamName(year, teamName);
@@ -97,8 +96,6 @@ public class MlpNetworkTrainer implements LearningEventListener {
   /**
    * Constructor. Uses Spring's ApplicationContext to feed this class
    * with the DAOs it needs to function.
-   * 
-   * @param applicationContext
    */
   public MlpNetworkTrainer(ApplicationContext applicationContext) {
     seasonDataDao = applicationContext.getBean(SeasonDataDao.class);
@@ -108,8 +105,6 @@ public class MlpNetworkTrainer implements LearningEventListener {
 
   /**
    * The main entry point for the application.
-   * 
-   * @param args
    */
   public static void main(String[] args) {
     if (args.length < 2) {
@@ -125,8 +120,6 @@ public class MlpNetworkTrainer implements LearningEventListener {
 
   /**
    * Entry point for kicking off a training/validation run.
-   * 
-   * @param args
    */
   public void go(String[] args) {
     Integer[] yearsForTrainingData = computeYearsToTrain(args);
@@ -229,10 +222,9 @@ public class MlpNetworkTrainer implements LearningEventListener {
    *          The input String array, the last element of which is a comma-delimited
    *          list of years to simulate when validating the network.
    *          Assumes only the last argument in the array is used.
-   * @return
    */
   protected static Integer[] computeYearsToSimulate(String[] args) {
-    Integer[] ret = null;
+    Integer[] ret;
     //
     // Only care about the last argument.
     String yearsToSimulate = args[args.length - 1];
@@ -244,7 +236,7 @@ public class MlpNetworkTrainer implements LearningEventListener {
       NetworkUtils.validateYear(year);
       yts.add(year);
     }
-    ret = yts.toArray(new Integer[yts.size()]);
+    ret = yts.toArray(new Integer[0]);
     return ret;
   }
 
@@ -256,9 +248,6 @@ public class MlpNetworkTrainer implements LearningEventListener {
    * @param neuronLayerDescriptor
    *          The complete layer structure (includes both the
    *          input layer and output layers)
-   * 
-   * @param yearsToSimulate
-   * @return
    */
   private MultiLayerPerceptron createNetwork(List<Integer> neuronLayerDescriptor,
       Integer[] yearsToSimulate) {
@@ -280,7 +269,7 @@ public class MlpNetworkTrainer implements LearningEventListener {
     // Only use this callback if not in batch mode because Neuroph does not
     /// properly set the total network error, and we get NumberFormatExceptions
     /// when executing that code.
-    if (NetworkProperties.getLearningRuleIsBatchMode() == false) {
+    if (!NetworkProperties.getLearningRuleIsBatchMode()) {
       learningRule.addListener(this);
     }
     learningRule.setMaxError(NetworkProperties.getMaxNetworkError());
@@ -427,13 +416,12 @@ public class MlpNetworkTrainer implements LearningEventListener {
     int[][] networksToTry = Networks.getNetworks();
     //
     // For each network to be tried ("tried" means created, trained, and validated)...
-    for (int aa = 0; aa < networksToTry.length; aa++) {
+    for (int[] hiddenNeurons : networksToTry) {
       // ret.add(randomizeNetwork());
-      int[] hiddenNeurons = networksToTry[aa];
       //
       // Now setup the complete network descriptor for this network
       List<Integer> networkToTry = setupNeuronLayers(NetworkProperties.getNumberOfInputs(),
-          NetworkProperties.getNumberOfOutputs(), hiddenNeurons);
+        NetworkProperties.getNumberOfOutputs(), hiddenNeurons);
       ret.add(networkToTry);
     }
     return ret;
@@ -486,7 +474,7 @@ public class MlpNetworkTrainer implements LearningEventListener {
   }
 
   /**
-   * Randomizes the momentum between MIN and MAX values as specified in {@NetworkProperties}.
+   * Randomizes the momentum between MIN and MAX values as specified in NetworkProperties.
    * The learning momentum is a component that determines how fast the weights are adjusted between
    * each epoch, meaning, it is a component in how fast a network can be trained. But the value should
    * not be too high, or the weights will be adjusted so fast the network can't be trained, or so low
@@ -503,10 +491,9 @@ public class MlpNetworkTrainer implements LearningEventListener {
     /// a new random value between the MIN and MAX
     if (NetworkProperties.getRandomizeMomentum()) {
       Random momentumRandomNg = new Random();
-      double momentum = momentumRandomNg.nextDouble()
+      ret = momentumRandomNg.nextDouble()
           * (NetworkProperties.getLearningRuleMomentumMax() - NetworkProperties.getLearningRuleMomentumMin())
           + NetworkProperties.getLearningRuleMomentumMin();
-      ret = momentum;
     }
     log.info("Momentum value: " + ret);
     return ret;
@@ -514,8 +501,6 @@ public class MlpNetworkTrainer implements LearningEventListener {
 
   /**
    * Validate the network for the specified years.
-   * 
-   * @param network
    */
   private void validateNetwork(MultiLayerPerceptron network) {
     int numberOfWinners = 0;
@@ -528,7 +513,7 @@ public class MlpNetworkTrainer implements LearningEventListener {
         + " **************");
     for (Integer yearToSimulate : metrics.getSimulationYears()) {
       int numberOfWinnersThisYear = 0;
-      int numberOfGamesThisYear = 0;
+      int numberOfGamesThisYear;
       List<TournamentResult> tournamentResults = pullTournamentResults(yearToSimulate);
       SeasonAnalytics seasonAnalytics = pullSeasonAnalytics(yearToSimulate);
       //
@@ -622,11 +607,7 @@ public class MlpNetworkTrainer implements LearningEventListener {
 
   /**
    * Simulate a single historical tournament game using the trained MLP network.
-   * 
-   * @param network
-   * @param seasonAnalytics
-   * @param tournamentResult
-   * 
+   *
    * @return int The number of correct picks for this simulation.
    */
   private int simulateSingleHistoricalTournamentGame(MultiLayerPerceptron network,
@@ -685,14 +666,7 @@ public class MlpNetworkTrainer implements LearningEventListener {
   /**
    * Figure out (compute) what the network predicted for the specified simulated historical
    * game. Returns true if the network predicted correctly, or false if it did not.
-   * 
-   * @param network
-   * @param tournamentResult
-   * @param seasonDataHomeTeam
-   * @param seasonDataAwayTeam
-   * @param simulationIndex
-   * @param networkOutput
-   * 
+   *
    * @return - Returns true if the network predicted correctly, or false if it did not.
    */
   private boolean computeNetworkPrediction(MultiLayerPerceptron network, TournamentResult tournamentResult,
@@ -701,8 +675,8 @@ public class MlpNetworkTrainer implements LearningEventListener {
     // Default to LHS (index 0 in the output array)
     String predictedWinner = seasonDataHomeTeam[simulationIndex].getTeamName();
     String predictedLoser = seasonDataAwayTeam[simulationIndex].getTeamName();
-    Double predictedWinningProbability = networkOutput[0];
-    Double predictedLosingProbability = networkOutput[1];
+    double predictedWinningProbability = networkOutput[0];
+    double predictedLosingProbability = networkOutput[1];
     NetworkMetrics metrics = networkMetricsCache.get(network);
     if (networkOutput[1] >= networkOutput[0]) {
       // Unless RHS (index 1 in the output array) wins
@@ -733,8 +707,6 @@ public class MlpNetworkTrainer implements LearningEventListener {
   /**
    * Computes final iteration stats and saves this network (for later use when running a real
    * prediction) if it meets the criteria (e.g., if it performs above a certain winning % threshold).
-   * 
-   * @param network
    */
   private void computeStatsAndSaveNetworkIfNecessary(MultiLayerPerceptron network) {
     //
@@ -783,8 +755,6 @@ public class MlpNetworkTrainer implements LearningEventListener {
    * make this more complicated, or subclasses could determine this however they
    * want.
    *
-   * @param network
-   * 
    * @return - Returns true if the network should be saved, false otherwise.
    */
   protected boolean networkShouldBeSaved(MultiLayerPerceptron network) {
@@ -888,7 +858,6 @@ public class MlpNetworkTrainer implements LearningEventListener {
 
   /**
    * Logs/prints metrics for the current CTV iteration of the network.
-   * @param network
    */
   private void logIterationStatsForNetwork(MultiLayerPerceptron network) {
     NetworkMetrics metrics = networkMetricsCache.get(network);
@@ -979,14 +948,13 @@ public class MlpNetworkTrainer implements LearningEventListener {
     log.info("*** NETWORK INFO ***");
 
     sb = new StringBuilder();
-    sb.append("Network Info:\n");
-    sb.append("\tUse Bias            : " + useBias + "\n");
-    sb.append("\tLearning Rate       : " + learningRate + "\n");
-    sb.append("\tMax Error           : " + maxError + "\n");
-    sb.append("\tMomentum            : " + momentum + "\n");
-    sb.append("\tLayer Structure     : " + metrics.getLayerStructure() + "\n");
-    sb.append("\tTotal Network Error : "
-        + BigDecimal.valueOf(learningRule.getTotalNetworkError() * 100.0).setScale(2, RoundingMode.HALF_UP));
+    sb.append("Network Info:\n")
+      .append("\tUse Bias            : ").append(useBias).append("\n")
+      .append("\tLearning Rate       : ").append(learningRate).append("\n")
+      .append("\tMax Error           : ").append(maxError).append("\n")
+      .append("\tMomentum            : ").append(momentum).append("\n")
+      .append("\tLayer Structure     : ").append(metrics.getLayerStructure()).append("\n")
+      .append("\tTotal Network Error : ").append(BigDecimal.valueOf(learningRule.getTotalNetworkError() * 100.0).setScale(2, RoundingMode.HALF_UP));
     log.info(sb.toString());
 
   }
@@ -1014,14 +982,13 @@ public class MlpNetworkTrainer implements LearningEventListener {
     // Return value is the network's output
     ret = network.getOutput();
     if (log.isTraceEnabled()) {
-      StringBuilder sb = new StringBuilder();
-      sb.append("Comparison: Input to Output:\n");
-      sb.append("Input : ");
-      sb.append(Arrays.toString(input));
-      sb.append('\n');
-      sb.append("Output: ");
-      sb.append(Arrays.toString(ret));
-      log.trace(sb.toString());
+      String sb = "Comparison: Input to Output:\n" +
+        "Input : " +
+        Arrays.toString(input) +
+        '\n' +
+        "Output: " +
+        Arrays.toString(ret);
+      log.trace(sb);
     }
     if (log.isTraceEnabled()) {
       log.trace("Network Input : " + Arrays.toString(input));
