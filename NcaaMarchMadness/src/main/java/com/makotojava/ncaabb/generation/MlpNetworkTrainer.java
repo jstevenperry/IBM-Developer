@@ -15,19 +15,15 @@
  */
 package com.makotojava.ncaabb.generation;
 
-import java.io.File;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.StringTokenizer;
-
+import com.makotojava.ncaabb.dao.SeasonAnalyticsDao;
+import com.makotojava.ncaabb.dao.SeasonDataDao;
+import com.makotojava.ncaabb.dao.TournamentResultDao;
+import com.makotojava.ncaabb.model.SeasonAnalytics;
+import com.makotojava.ncaabb.model.SeasonData;
+import com.makotojava.ncaabb.model.TournamentResult;
+import com.makotojava.ncaabb.springconfig.ApplicationConfig;
+import com.makotojava.ncaabb.util.NetworkProperties;
+import com.makotojava.ncaabb.util.NetworkUtils;
 import org.apache.log4j.Logger;
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.data.DataSet;
@@ -43,15 +39,18 @@ import org.neuroph.util.TransferFunctionType;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.makotojava.ncaabb.dao.SeasonAnalyticsDao;
-import com.makotojava.ncaabb.dao.SeasonDataDao;
-import com.makotojava.ncaabb.dao.TournamentResultDao;
-import com.makotojava.ncaabb.model.SeasonAnalytics;
-import com.makotojava.ncaabb.model.SeasonData;
-import com.makotojava.ncaabb.model.TournamentResult;
-import com.makotojava.ncaabb.springconfig.ApplicationConfig;
-import com.makotojava.ncaabb.util.NetworkProperties;
-import com.makotojava.ncaabb.util.NetworkUtils;
+import java.io.File;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.StringTokenizer;
 
 /**
  * Trains Multilayer Perceptron Networks. Saves the ones that perform above the threshold.
@@ -352,7 +351,9 @@ public class MlpNetworkTrainer implements LearningEventListener {
    */
   private void trainNetwork(DataSet trainingData, MultiLayerPerceptron network) {
     //
-    // Shuffle the training data. Adds an element of randomness to the data.
+    // Shuffle the training data a few times. Adds an element of randomness to the data.
+    trainingData.shuffle();
+    trainingData.shuffle();
     trainingData.shuffle();
     //
     // Now learn, you!
