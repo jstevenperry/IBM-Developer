@@ -37,6 +37,10 @@ if [[ "$DEBUG" == "true" ]]; then echo "Script arguments: $@"; fi
 # Below is an example that works on my Mac.
 # Change this to match your source location.
 ROOT_DIR=/Users/sperry/home/development/projects/IBM-Developer/NcaaMarchMadness
+NETWORK_PROPERTIES_FILE=/Users/sperry/home/development/projects/ScienceFair-2020-21/network.properties
+if [[ "$DEBUG" == "true" ]]; then echo "Network properties file: $NETWORK_PROPERTIES_FILE"; fi
+
+JAVA_OPTS=-Dnetwork.properties.file=$NETWORK_PROPERTIES_FILE
 
 # Make sure ROOT_DIR is set or bail out
 if [[ -z "$ROOT_DIR" ]]

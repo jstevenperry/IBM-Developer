@@ -3,7 +3,7 @@
 # Script to run the MlpNetworkTrainer program.
 #
 # Program version
-PROGRAM_VERSION=1.1.0
+PROGRAM_VERSION=1.2.0
 # Set DEBUG to something other than true to turn it off
 DEBUG=true
 # Add network.properties.file system property to JAVA_OPTS to use an external properties file.
@@ -14,7 +14,9 @@ DEBUG=true
 
 function usage {
   echo "Usage: $0 td_year [td_year2 ... td_yearN] v_year [,v_year2,...v_yearN]"
-  echo "Description: creates training data for the specified years"
+  echo "Description: trains a MLP network using training data for the specified years,"
+  echo "             and then validates the network from data for the specified years"
+  echo "             as described below."
   echo "Where:"
   echo -e "\ttd_year1 is the first (and possibly only) year for which training data is to be used to train the network."
   echo -e "\tyear2 (optional) is the second year (if specified) for which training data is to be used to train the network."
@@ -41,6 +43,10 @@ if [[ "$DEBUG" == "true" ]]; then echo "Script arguments: $@"; fi
 # Below is an example that works on my Mac.
 # Change this to match your source location.
 ROOT_DIR=/Users/sperry/home/development/projects/IBM-Developer/NcaaMarchMadness
+NETWORK_PROPERTIES_FILE=/Users/sperry/home/development/projects/ScienceFair-2020-21/network.properties
+if [[ "$DEBUG" == "true" ]]; then echo "Network properties file: $NETWORK_PROPERTIES_FILE"; fi
+
+JAVA_OPTS=-Dnetwork.properties.file=$NETWORK_PROPERTIES_FILE
 
 # Make sure ROOT_DIR is set or bail out
 if [[ -z "$ROOT_DIR" ]]
