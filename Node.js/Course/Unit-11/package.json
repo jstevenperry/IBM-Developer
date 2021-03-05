@@ -34,7 +34,7 @@
     "http-errors": "~1.6.2",
     "log4js": "^3.0.2",
     "morgan": "~1.9.1",
-    "pug": "^2.0.3",
+    "pug": "^3.0.1",
     "sqlite3": "^4.0.2"
   },
   "devDependencies": {
