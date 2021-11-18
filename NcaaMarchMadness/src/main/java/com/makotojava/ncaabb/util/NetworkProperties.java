@@ -178,7 +178,7 @@ public class NetworkProperties {
   }
 
   public static Double getMinWeight() {
-    return getDoublePropertyValue("min.weight", -1.0);
+    return getDoublePropertyValue("min.weight", -2.0);
   }
 
   public static Double getMomentumDefaultValue() {
