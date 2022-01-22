@@ -35,7 +35,7 @@
     "express": "~4.16.0",
     "express-validator": "^5.3.0",
     "http-errors": "~1.6.2",
-    "log4js": "^3.0.2",
+    "log4js": "^6.4.0",
     "mongodb": "^3.1.13",
     "mongoose": "^5.7.5",
     "morgan": "~1.9.1",
