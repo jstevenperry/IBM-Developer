@@ -30,7 +30,7 @@
     "url": "https://github.com/jstevenperry/node-modules.git"
   },
   "dependencies": {
-    "log4js": "^3.0.2",
+    "log4js": "^6.4.0",
     "winston": "^3.0.0"
   },
   "devDependencies": {
