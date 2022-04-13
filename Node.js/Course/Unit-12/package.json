@@ -28,7 +28,7 @@
     "npm"
   ],
   "dependencies": {
-    "async": "^2.6.1",
+    "async": "^3.2.2",
     "cookie-parser": "~1.4.3",
     "dateformat": "^3.0.3",
     "debug": "~2.6.9",
