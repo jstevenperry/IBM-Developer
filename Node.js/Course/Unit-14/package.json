@@ -34,7 +34,7 @@
     "dateformat": "^3.0.3",
     "debug": "~2.6.9",
     "express": "~4.17.3",
-    "express-validator": "^5.3.0",
+    "express-validator": "^7.0.1",
     "http-errors": "~1.6.2",
     "log4js": "^6.4.0",
     "mongodb": "^3.7.4",
